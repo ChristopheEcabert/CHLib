@@ -10,6 +10,7 @@
 #include "chlib/ogl/camera.hpp"
 
 #include "chlib/core/math/vector.hpp"
+#include "chlib/core/math/matrix.hpp"
 
 /**
  *  @namespace  CHLib
