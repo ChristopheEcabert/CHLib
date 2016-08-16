@@ -10,9 +10,8 @@
 #ifndef __CHLIB_OGL_CAMERA__
 #define __CHLIB_OGL_CAMERA__
 
-#include "glm/vec3.hpp"
-
 #include "chlib/core/library_export.hpp"
+#include "chlib/core/math/vector.hpp"
 
 /**
  *  @namespace  CHLib
@@ -52,31 +51,31 @@ class CHLIB_EXPORTS OGLCamera {
 
   /**
    *  @name set_position
-   *  @fn void set_position(const glm::vec3& position)
+   *  @fn void set_position(const Vector3<float>& position)
    *  @brief  Set a new camera position
    *  @param[in]  position  New camera position
    */
-  void set_position(const glm::vec3& position) {
+  void set_position(const Vector3<float>& position) {
     position_ = position;
   }
 
   /**
    *  @name set_target
-   *  @fn void set_target(const glm::vec3& target)
+   *  @fn void set_target(const Vector3<float>& target)
    *  @brief  Set a new target direction
    *  @param[in]  target  New targeted direction
    */
-  void set_target(const glm::vec3& target) {
+  void set_target(const Vector3<float>& target) {
     target_ = target;
   }
 
   /**
    *  @name set_up
-   *  @fn void set_up(const glm::vec3& up)
+   *  @fn void set_up(const Vector3<float>& up)
    *  @brief  Set a new up direction
    *  @param[in]  up  New up direction
    */
-  void set_up(const glm::vec3& up) {
+  void set_up(const Vector3<float>& up) {
     up_ = up;
   }
 
@@ -86,11 +85,11 @@ class CHLIB_EXPORTS OGLCamera {
  private:
 
   /** Camera position */
-  glm::vec3 position_;
+  Vector3<float> position_;
   /** Traget */
-  glm::vec3 target_;
+  Vector3<float> target_;
   /** Up direction */
-  glm::vec3 up_;
+  Vector3<float> up_;
 
 };
 

@@ -83,29 +83,24 @@ int Mesh<T>::Load(const std::string& filename) {
     std::string ext = filename.substr(pos + 1, filename.length());
     FileExt file_ext = this->HashExt(ext);
     switch (file_ext) {
-        // OBJ
+      // OBJ
       case kObj: {
         err = this->LoadOBJ(filename);
       }
         break;
-        // PLY
+      // PLY
       case kPly: {
         err = this->LoadPLY(filename);
       }
         break;
-        // Triangulation only
-      case kTri: {
-        err = this->LoadTri(filename);
-      }
-        break;
-
-        case kUndef:
+      // Not supported yet
+      case kUndef:
       default:  std::cout << "Error, unsported extension type : " << ext;
         std::cout << std::endl;
         err = -1;
         break;
     }
-    if (!err && (file_ext != FileExt::kTri)) {
+    if (!err) {
       this->BuildConnectivity();
     }
   }
@@ -196,8 +191,6 @@ typename Mesh<T>::FileExt Mesh<T>::HashExt(const std::string& ext) {
     fext = kObj;
   } else if (ext == "ply") {
     fext = kPly;
-  } else if (ext == "tri") {
-    fext = kTri;
   }
   return fext;
 }
@@ -348,94 +341,6 @@ template<typename T>
 int Mesh<T>::SavePLY(const std::string& path) const {
   int error = -1;
   // TODO: Need to be implemented !
-  return error;
-}
-
-/*
- *  @name LoadTri
- *  @fn int LoadTri(const std::string& path)
- *  @brief  Load mesh triangulation from .tri file
- *  @param[in]  path  Path to .tri file
- *  @return -1 if error, 0 otherwise
- */
-template<typename T>
-int Mesh<T>::LoadTri(const std::string& path) {
-  int error = -1;
-  FILE* file_id = fopen(path.c_str(), "r");
-  if(file_id) {
-    const int LINE_SIZE = 1024;
-    char buffer[LINE_SIZE];
-    int n_line = 0;
-    bool ok = true;
-    // Start to loop over
-    while(ok && fgets(buffer, LINE_SIZE, file_id) != NULL) {
-      n_line++;
-      char* line_ptr = buffer;
-      char* end_ptr = buffer + strlen(buffer);
-      // Find first non-white space character
-      while(isspace(*line_ptr) && line_ptr < end_ptr) {line_ptr++;}
-      // Check command, (expected to be 'f')
-      const char* cmd = line_ptr;
-      // Skip over non-whitespace
-      while( !isspace(*line_ptr) && line_ptr < end_ptr) {line_ptr++;}
-      //  terminate command
-      if (line_ptr < end_ptr) {
-        *line_ptr = '\0';
-        line_ptr++;
-      }
-      // in the OBJ format the first characters determine how to interpret
-      // the line:
-      if (strcmp(cmd, "f") == 0) {
-        Triangle tri;
-        int* tri_ptr = &tri.x_;
-        int vertex_cnt = 0;
-
-        while (ok && line_ptr < end_ptr) {
-          //  find the first non-whitespace character
-          while (isspace(*line_ptr) && line_ptr < end_ptr) { line_ptr++; }
-          //  there is still data left on this line
-          if (line_ptr < end_ptr) {
-            int vertex_idx, t_coord_idx, normal_idx;
-            if (sscanf(line_ptr,
-                       "%d",
-                       &vertex_idx) == 1) {
-              // Shape polygon
-              tri_ptr[vertex_cnt] = vertex_idx - 1;
-              vertex_cnt++;
-            } else if (sscanf(line_ptr,
-                              "%d/%d",
-                              &vertex_idx,
-                              &t_coord_idx) == 2) {
-              // Shape polygon
-              tri_ptr[vertex_cnt] = vertex_idx - 1;
-              vertex_cnt++;
-            } else if (sscanf(line_ptr,
-                              "%d/%d/%d",
-                              &vertex_idx,
-                              &t_coord_idx,
-                              &normal_idx) == 3) {
-              // Shape polygon
-              tri_ptr[vertex_cnt] = vertex_idx - 1;
-              vertex_cnt++;
-            } else {
-              std::cout << "Error reading 'f' at line : " <<
-              n_line << std::endl;
-              ok = false;
-            }
-            //  skip over what we just read
-            //  (find the first whitespace character)
-            while (!isspace(*line_ptr) && line_ptr < end_ptr) { line_ptr++; }
-          }
-        }
-        assert(vertex_cnt == 3);
-        tri_.push_back(tri);
-      }
-    }
-    fclose(file_id);
-    error = ok ? 0 : -1;
-  } else {
-    std::cerr << "Can't load triangulation file !!!" << std::endl;
-  }
   return error;
 }
 

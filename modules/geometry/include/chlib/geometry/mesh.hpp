@@ -47,7 +47,7 @@ class CHLIB_EXPORTS Mesh {
   /** Vertex color */
   using Color = CHLib::Vector4<T>;
   /** Tangente space */
-  using Tengent = CHLib::Vector3<T>;
+  using Tangent = CHLib::Vector3<T>;
   /** Triangle */
   using Triangle = CHLib::Vector3<int>;
 
@@ -88,15 +88,15 @@ class CHLIB_EXPORTS Mesh {
 
   /**
    *  @name ~Mesh
-   *  @fn ~Mesh(void)
+   *  @fn virtual ~Mesh(void)
    *  @brief  Destructor
    */
-  ~Mesh(void);
+  virtual ~Mesh(void);
 
   /**
    *  @name Load
-   *  @fn int Load(const std::string& filename, const LTS5::OGLProgram& program)
-   *  @brief  Load mesh from supported file : .obj, .ply, .tri
+   *  @fn virtual int Load(const std::string& filename)
+   *  @brief  Load mesh from supported file : .obj, .ply
    *  @param[in]  filename  Path to the mesh file
    *  @return -1 if error, 0 otherwise
    */
@@ -104,7 +104,7 @@ class CHLIB_EXPORTS Mesh {
 
   /**
    *  @name Save
-   *  @fn int Save(const std::string& filename)
+   *  @fn virtual int Save(const std::string& filename)
    *  @brief  Save mesh to supported file format: .ply/.obj
    *  @return -1 if error, 0 otherwise
    */
@@ -188,6 +188,27 @@ class CHLIB_EXPORTS Mesh {
   const std::vector<TCoord>& get_tex_coord(void) const {
     return tex_coord_;
   }
+  
+  /**
+   *  @name get_tangent
+   *  @fn const std::vector<Tangent>& get_tangent(void) const
+   *  @brief  Give reference to internal tangent storage, can not be
+   *          modified.
+   *  @return Tangent array (Normal mapping)
+   */
+  const std::vector<Tangent>& get_tangent(void) const {
+    return tangent_;
+  }
+  
+  /**
+   *  @name get_tangent
+   *  @fn std::vector<Tangent>& get_tangent(void)
+   *  @brief  Give reference to internal tangent storage
+   *  @return Tangent array (Normal mapping)
+   */
+  std::vector<Tangent>& get_tangent(void) {
+    return tangent_;
+  }
 
   /**
    *  @name get_tex_coord
@@ -252,8 +273,8 @@ class CHLIB_EXPORTS Mesh {
   }
 
 #pragma mark -
-#pragma mark Private
- private:
+#pragma mark Protected
+ protected:
 
   /**
    *  @enum FileExt
@@ -266,8 +287,6 @@ class CHLIB_EXPORTS Mesh {
     kObj,
     /** .ply */
     kPly,
-    /** .tri */
-    kTri
   };
 
   /** Vertex */
@@ -276,16 +295,22 @@ class CHLIB_EXPORTS Mesh {
   std::vector<Normal> normal_;
   /** Texture coordinate */
   std::vector<TCoord> tex_coord_;
+  /** Tangent coordinate */
+  std::vector<Tangent> tangent_;
   /** Vertex color */
   std::vector<Color> vertex_color_;
   /** Triangulation */
   std::vector<Triangle> tri_;
   /** Connectivity - vertex interconnection */
   std::vector<std::vector<int>> vertex_con_;
-  /** Boundary box, {x_min, x_max, y_min, y_max, z_min, z_max, } */
+  /** Boundary box */
   AABB<T> bbox_;
   /** Wether or not the bounding box has been computed already or not */
   bool bbox_is_computed_;
+  
+#pragma mark -
+#pragma mark Private
+private:
 
   /**
    *  @name HashExt
@@ -331,16 +356,6 @@ class CHLIB_EXPORTS Mesh {
    *  @return -1 if error, 0 otherwise
    */
   int SavePLY(const std::string& path) const;
-
-  /**
-   *  @name LoadTri
-   *  @fn int LoadTri(const std::string path)
-   *  @brief  Load mesh triangulation from .tri file
-   *  @param[in]  path  Path to .tri file
-   *  @return -1 if error, 0 otherwise
-   */
-  int LoadTri(const std::string& path);
-  
 };
 
 }  // namespace CHLib

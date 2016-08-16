@@ -10,6 +10,15 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
+#import "callback_wrapper.h"
+
 @interface OGLView : NSOpenGLView
+
+/**
+ *  @name addCallbacks
+ *  @brief  Add callback for this view
+ *  @param[in]  callback  Wrapper for OGLCallbacks interface
+ */
+-(void) addCallbacks:(OGLCallbacksWrapper*) callback;
 
 @end

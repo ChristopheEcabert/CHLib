@@ -7,16 +7,25 @@
 //
 
 #import "AppDelegate.h"
+#import "callback_wrapper.h"
+#import "ogl_view.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+  /** Callback */
+  OGLCallbacksWrapper* callback_;
+}
 
 @property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet OGLView* ogl_view;
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   // Insert code here to initialize your application
+  callback_ = [[OGLCallbacksWrapper alloc] init];
+  // Add callback to view
+  [_ogl_view addCallbacks:callback_];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
