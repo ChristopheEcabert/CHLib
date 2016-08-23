@@ -1,6 +1,7 @@
 /**
  *  @file   ogl_view.mm
  *  @brief  Custom Cocoa OpenGL view
+ *  @see    https://developer.apple.com/library/mac/qa/qa1385/_index.html
  *
  *  @author Christophe Ecabert
  *  @date   31/07/16
@@ -13,6 +14,8 @@
 #import "callback_wrapper.h"
 
 @interface OGLView() {
+  /** Display link for managing rendering thread */
+  CVDisplayLinkRef display_link_;
   /** OGL Callback wrapper */
   OGLCallbacksWrapper* callback_;
 }
@@ -22,6 +25,66 @@
 
 #pragma mark -
 #pragma mark OpenGL Event
+
+/**
+ *  @name prepareOpenGL
+ *  @brief  Create OpenGL context and CVDisplayLink
+ */
+-(void) prepareOpenGL {
+  // The reshape function may have changed the thread to which our OpenGL
+  // context is attached before prepareOpenGL and initGL are called.  So call
+  // makeCurrentContext to ensure that our OpenGL context current to this
+  // thread (i.e. makeCurrentContext directs all OpenGL calls on this thread
+  // to [self openGLContext])
+  [[self openGLContext] makeCurrentContext];
+  // Synchronize buffer swaps with vertical refresh rate
+  GLint swapInt = 1;
+  [[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+  // Create a display link capable of being used with all active displays
+  CVDisplayLinkCreateWithActiveCGDisplays(&display_link_);
+  // Set the renderer output callback function
+  CVDisplayLinkSetOutputCallback(display_link_,
+                                 &renderCallback,
+                                 (__bridge void * )self);
+  // Set the display link for the current renderer
+  CGLContextObj cglContext = [[self openGLContext] CGLContextObj];
+  CGLPixelFormatObj cglPixelFormat = [[self pixelFormat] CGLPixelFormatObj];
+  CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(display_link_,
+                                                    cglContext,
+                                                    cglPixelFormat);
+  
+  // Activate the display link
+  CVDisplayLinkStart(display_link_);
+}
+
+/**
+ *  @name   getFrameForTime
+ *  @brief  Invoked when rendering is needed
+ */
+
+- (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime {
+  // There is no autorelease pool when this method is called
+  // because it will be called from a background thread.
+  // It's important to create one or app can leak objects.
+  @autoreleasepool {
+    [self drawView];
+  }
+  return kCVReturnSuccess;
+}
+
+/**
+ *  @name   renderCallback
+ *  @brief  This is the renderer output callback function
+ */
+static CVReturn renderCallback(CVDisplayLinkRef displayLink,
+                               const CVTimeStamp* now,
+                               const CVTimeStamp* outputTime,
+                               CVOptionFlags flagsIn,
+                               CVOptionFlags* flagsOut,
+                               void* displayLinkContext) {
+  CVReturn res = [(__bridge OGLView*) displayLinkContext getFrameForTime:outputTime];
+  return res;
+}
 
 /**
  *  @name awakeFromNib
@@ -61,21 +124,75 @@
     [self setOpenGLContext:ctx];
     // Set context as current
     [[self openGLContext] makeCurrentContext];
+    // Set bounds
+    NSRect b = [self bounds];
+    glViewport(0, 0, b.size.width, b.size.height);
   }
 }
 
 -(void) drawRect:(NSRect)dirtyRect {
-  [super drawRect:dirtyRect];
-  // If callback callit, otherwise, render black scquare
+  // Called during resize operations
+  // Avoid flickering during resize by drawiing
+  [self drawView];
+}
+
+-(void) drawView {
+  [[self openGLContext] makeCurrentContext];
+  // We draw on a secondary thread through the display link
+  // When resizing the view, -reshape is called automatically on the main
+  // thread. Add a mutex around to avoid the threads accessing the context
+  // simultaneously when resizing
+  CGLLockContext([[self openGLContext] CGLContextObj]);
   if (callback_) {
     [callback_ onRender];
   } else {
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
-
+    
   }
   // Swap buffer
-  [[self openGLContext] flushBuffer];
+  CGLFlushDrawable([[self openGLContext] CGLContextObj]);
+  CGLUnlockContext([[self openGLContext] CGLContextObj]);
+}
+
+- (void) windowWillClose:(NSNotification*)notification {
+  // Stop the display link when the window is closing because default
+  // OpenGL render buffers will be destroyed.  If display link continues to
+  // fire without renderbuffers, OpenGL draw calls will set errors.
+  CVDisplayLinkStop(display_link_);
+}
+
+- (void)reshape {
+  [super reshape];
+  
+  // We draw on a secondary thread through the display link. However, when
+  // resizing the view, -drawRect is called on the main thread.
+  // Add a mutex around to avoid the threads accessing the context
+  // simultaneously when resizing.
+  CGLLockContext([[self openGLContext] CGLContextObj]);
+  
+  // Get the view size in Points
+  NSRect viewRectPoints = [self bounds];
+  // Set the new dimensions in our renderer
+  glViewport(0, 0, viewRectPoints.size.width, viewRectPoints.size.height);
+  
+  //TODO Camera aspect ratio should be updated
+  
+  // Unlock context
+  CGLUnlockContext([[self openGLContext] CGLContextObj]);
+}
+
+/** 
+ *  @name   dealloc
+ *  @brief  destructor, do not need to call [super dealloc]
+ *  @see  http://stackoverflow.com/questions/7292119/custom-dealloc-and-arc-objective-c
+ */
+-(void) dealloc {
+  // Stop the display link BEFORE releasing anything in the view
+  // otherwise the display link thread may call into the view and crash
+  // when it encounters something that has been release
+  CVDisplayLinkStop(display_link_);
+  CVDisplayLinkRelease(display_link_);
 }
 
 #pragma mark -

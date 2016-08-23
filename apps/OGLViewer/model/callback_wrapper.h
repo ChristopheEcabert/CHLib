@@ -48,6 +48,13 @@ typedef enum {
 -(id) initWithPointer: (void*) pointer;
 
 /**
+ *  @name setPointer
+ *  @brief  Set native callbacks
+ *  @param[in]  pointer Pointer to OGLCallbacks instance
+ */
+-(void) setPointer:(void*) pointer;
+
+/**
  *  @name onKeyboard
  *  @fn
  *  @brief  Keyboard callback

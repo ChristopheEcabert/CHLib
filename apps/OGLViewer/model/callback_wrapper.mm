@@ -49,6 +49,15 @@
 }
 
 /*
+ *  @name setPointer
+ *  @brief  Set native callbacks
+ *  @param[in]  pointer Pointer to OGLCallbacks instance
+ */
+-(void) setPointer:(void*) pointer {
+  callbacks_ = (CHLib::OGLCallbacks*)pointer;
+}
+
+/*
  *  @name onKeyboard
  *  @fn
  *  @brief  Keyboard callback
@@ -106,8 +115,8 @@
   if (callbacks_) {
     callbacks_->OGLRenderCb();
   } else {
-    glClearColor(0.f, 0.5f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.f, 0.0f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
 }
 

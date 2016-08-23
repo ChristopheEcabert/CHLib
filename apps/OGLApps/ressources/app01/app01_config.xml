@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<!-- Scene -->
+<SCENE>
+  <!-- List of Lights in the scene-->
+  <LIGHTS>
+  </LIGHTS>
+  
+  <!-- Camera definition -->
+  <CAMERA>
+    <!-- Camera position in world space -->
+    <position x="0.0" y ="0.0" z="1.0"/>
+    <!-- Location where camera look at -->
+    <target x="0.0" y ="0.0" z="0.0"/>
+    <!-- Camera parameters -->
+    <parameters fov="30.0" near="0.01" far="100.0"/>
+  </CAMERA>
+  
+  <!-- List of objects in the scene -->
+  <OBJECTS>
+      <!-- Object0 -->
+      <Object0>
+        <!-- Where to place the object -->
+        <Transform>
+          <!-- translation in world space -->
+          <translation x="0.0" y ="0.0" z="0.0"/>
+          <!-- scaling factor in {x,y,z} direction -->
+          <scale x="1.0" y ="1.0" z="1.0"/>
+          <!-- Rotation, axis + angle -->
+          <rotation x="1.0" y ="1.0" z="1.0" angle="0.0"/>
+        </Transform>
+        <!-- Shaders -->
+        <Shaders>
+          <!-- Path to shaders, .vs .gs, fs -->
+          <File="path.vs">
+        </Shaders>
+        <!-- Model filename -->
+        <Model path="toto.obj" tex="texture.tga"/>
+      </Object0>
+  </OBJECTS>
+      
+</SCENE>
