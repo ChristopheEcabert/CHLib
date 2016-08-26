@@ -65,7 +65,8 @@
     NSString* default_path;
     for (NSDictionary* app in apps) {
       NSString* app_name = [app objectForKey:@"Name"];
-      NSString* app_path = [[NSBundle mainBundle] pathForResource:[app objectForKey:@"Path"] ofType:@"xml"] ;
+      NSString* app_path = [[NSBundle mainBundle] pathForResource:[app objectForKey:@"Path"]
+                                                           ofType:@"xml"] ;
       [app_configs_ insertObject:app_path atIndex:idx];
       [self.app_selector insertItemWithTitle:app_name atIndex:idx];
       if (!idx) {
@@ -90,9 +91,7 @@
   }
 }
 
-- (IBAction)appSelectorClicked:(id)sender {
-  NSLog(@"Selection : %@", [self.app_selector titleOfSelectedItem]);
-  
+- (IBAction)appSelectorClicked:(id)sender {  
   NSMenuItem* item = [self.app_selector selectedItem];
   NSString* item_name = [item title];
   NSInteger item_idx = [self.app_selector indexOfItemWithTitle: item_name];

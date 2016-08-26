@@ -15,6 +15,8 @@
 #include <dispatch/dispatch.h>
 #endif
 
+#include "ply.h"
+
 #include "chlib/geometry/mesh.hpp"
 
 /**
@@ -25,6 +27,60 @@ namespace CHLib {
 
 #pragma mark -
 #pragma mark Type definition
+  
+/**
+ *  @struct PLYVertex
+ *  @brief  Data object to read ply file
+ */
+template<typename T>
+struct PLYVertex {
+  /** Vertex typedef */
+  using Vertex = typename Mesh<T>::Vertex;
+  /** Normal typedef */
+  using Normal = typename Mesh<T>::Normal;
+  
+  /** Position */
+  Vertex vertex;
+  /** Normal */
+  Normal normal;
+  
+  /**
+   *  @name PLYVertex
+   *  @fn PLYVertex(void)
+   *  @brief  Constructor
+   */
+  PLYVertex(void) : vertex(-1.0, -1.0, -1.0),
+                    normal(-1.0, -1.0, -1.0) {}
+};
+  
+/**
+ *  @struct PLYFace
+ *  @brief  Data object to read ply file
+ */
+template<typename T>
+struct PLYFace {
+  /** Triangle typedef */
+  using Triangle = typename Mesh<T>::Triangle;
+  /** Texture coordinate typedef */
+  using TCoord = typename Mesh<T>::TCoord;
+  
+  /** number of vertex in the face */
+  int n_vertex;
+  /** List of vertex indices */
+  Triangle* list_idx;
+  /** number of tcoord */
+  int n_tcoord;
+  /** List of texture coordinate */
+  TCoord* list_tcoord;
+  
+  /**
+   *  @name PLYFace(void)
+   *  @fn PLYFace(void)
+   *  @brief  Constructor
+   */
+  PLYFace(void) : list_idx(nullptr),
+                  list_tcoord(nullptr) {}
+};
 
 #pragma mark -
 #pragma mark Initialization
@@ -272,7 +328,132 @@ int Mesh<T>::LoadOBJ(const std::string& path) {
 template<typename T>
 int Mesh<T>::LoadPLY(const std::string& path) {
   int error = -1;
-  // TODO: Need to be implemented !
+  // Read ply file
+  PlyFile* ply_file;
+  int n_elem;
+  char ** elem_list;
+  int file_type;
+  float version;
+  /* open a PLY file for reading */
+  ply_file = ply_open_for_reading(const_cast<char*>(path.c_str()),
+                                  &n_elem,
+                                  &elem_list,
+                                  &file_type, &version);
+  if (ply_file) {
+    // list of property information for a vertex
+    int type = sizeof(T) == 4 ? PLY_FLOAT : PLY_DOUBLE;
+    PlyProperty vertex_prop[]  = {
+      {"x", PLY_FLOAT, type, offsetof(PLYVertex<T>,vertex.x_), 0, 0, 0, 0},
+      {"y", PLY_FLOAT, type, offsetof(PLYVertex<T>,vertex.y_), 0, 0, 0, 0},
+      {"z", PLY_FLOAT, type, offsetof(PLYVertex<T>,vertex.z_), 0, 0, 0, 0},
+      {"nx", PLY_FLOAT, type, offsetof(PLYVertex<T>,normal.x_), 0, 0, 0, 0},
+      {"ny", PLY_FLOAT, type, offsetof(PLYVertex<T>,normal.y_), 0, 0, 0, 0},
+      {"nz", PLY_FLOAT, type, offsetof(PLYVertex<T>,normal.z_), 0, 0, 0, 0}
+    };
+    PlyProperty face_prop[] = {
+      {"vertex_indices", PLY_INT, PLY_INT, offsetof(PLYFace<T>, list_idx),
+        1, PLY_INT, PLY_INT, offsetof(PLYFace<T>, n_vertex)},
+      {"texcoord", PLY_FLOAT, type, offsetof(PLYFace<T>, list_tcoord),
+        1, PLY_INT, PLY_INT, offsetof(PLYFace<T>, n_tcoord)}
+    };
+    
+    // go through each kind of element that we learned is in the file
+    // and read them
+    for (int i = 0; i < n_elem; ++i) {
+      // get the description of the first element
+      int num_elems;
+      int n_props;
+      char* elem_name = elem_list[i];
+      ply_get_element_description(ply_file,
+                                  elem_name,
+                                  &num_elems,
+                                  &n_props);
+      // if we're on vertex elements, read them in
+      if (equal_strings ("vertex", elem_name)) {
+        // Get position
+        ply_get_property(ply_file, elem_name, &vertex_prop[0]);
+        ply_get_property(ply_file, elem_name, &vertex_prop[1]);
+        ply_get_property(ply_file, elem_name, &vertex_prop[2]);
+        // Get normal
+        ply_get_property(ply_file, elem_name, &vertex_prop[3]);
+        ply_get_property(ply_file, elem_name, &vertex_prop[4]);
+        ply_get_property(ply_file, elem_name, &vertex_prop[5]);
+        
+        // Init bbox
+        bbox_.min_.x_ = std::numeric_limits<T>::max();
+        bbox_.max_.x_ = std::numeric_limits<T>::lowest();
+        bbox_.min_.y_ = std::numeric_limits<T>::max();
+        bbox_.max_.y_ = std::numeric_limits<T>::lowest();
+        bbox_.min_.z_ = std::numeric_limits<T>::max();
+        bbox_.max_.z_ = std::numeric_limits<T>::lowest();
+        
+        /* grab all the vertex elements */
+        for (int j = 0; j < num_elems; ++j) {
+          PLYVertex<T> vert;
+          ply_get_element(ply_file, reinterpret_cast<void*>(&vert));
+          // Push data into structure
+          vertex_.push_back(vert.vertex);
+          // Compute boundary box
+          bbox_.min_.x_ = (bbox_.min_.x_ < vert.vertex.x_ ?
+                           bbox_.min_.x_ :
+                           vert.vertex.x_);
+          bbox_.max_.x_ = (bbox_.max_.x_ > vert.vertex.x_ ?
+                           bbox_.max_.x_ :
+                           vert.vertex.x_);
+          bbox_.min_.y_ = (bbox_.min_.y_ < vert.vertex.y_ ?
+                           bbox_.min_.y_ :
+                           vert.vertex.y_);
+          bbox_.max_.y_ = (bbox_.max_.y_ > vert.vertex.y_ ?
+                           bbox_.max_.y_ :
+                           vert.vertex.y_);
+          bbox_.min_.z_ = (bbox_.min_.z_ < vert.vertex.z_ ?
+                           bbox_.min_.z_ :
+                           vert.vertex.z_);
+          bbox_.max_.z_ = (bbox_.max_.z_ > vert.vertex.z_ ?
+                           bbox_.max_.z_ :
+                           vert.vertex.z_);
+          // Normal if present
+          if ((vert.normal.x_ != -1.0f) &&
+              (vert.normal.y_ != -1.0f) &&
+              (vert.normal.z_ != -1.0f)) {
+            normal_.push_back(vert.normal);
+          }
+        }
+        bbox_.center_ = (bbox_.min_ + bbox_.max_) * T(0.5);
+        bbox_is_computed_ = true;
+      }
+      // if we're on face elements, read them in
+      if (equal_strings ("face", elem_name)) {
+        // set up for getting face elements
+        ply_get_property (ply_file, elem_name, &face_prop[0]);
+        ply_get_property (ply_file, elem_name, &face_prop[1]);
+        // grab all the face elements
+        for (int j = 0; j < num_elems; j++) {
+          PLYFace<T> face;
+          ply_get_element(ply_file, reinterpret_cast<void*>(&face));
+          if (face.n_vertex != 3) {
+            std::cout << "Support only triangle mesh !" << std::endl;
+            return error;
+          }
+          if (face.list_idx != nullptr) {
+            tri_.push_back(face.list_idx[0]);
+          }
+          if (face.list_tcoord != nullptr) {
+            assert(face.n_tcoord == 6);
+            tex_coord_.push_back(face.list_tcoord[0]);
+            tex_coord_.push_back(face.list_tcoord[1]);
+            tex_coord_.push_back(face.list_tcoord[2]);
+          }
+        }
+      }
+    }
+    // close the PLY file
+    ply_close (ply_file);
+    // Shall we free elem_list ?
+    free(elem_list);
+    // Done
+    error = 0;
+  }
   return error;
 }
 
