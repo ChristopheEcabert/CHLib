@@ -63,6 +63,8 @@ int OGLMesh<T>::InitOpenGLContext(void) {
     // Init buffers
     glBindVertexArray(vao_);
     glGenBuffers(sizeof(vbo_)/sizeof(vbo_[0]), &vbo_[0]);
+  } else {
+    glBindVertexArray(vao_);
   }
   // Init buffers, VERTEX
   GLenum data_t = sizeof(T) == 4 ? GL_FLOAT : GL_DOUBLE;

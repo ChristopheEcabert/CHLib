@@ -11,7 +11,12 @@
 #include <OpenGL/gl3.h>
 #endif
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/string_cast.hpp"
+
 #include "app00.hpp"
+#include "chlib/core/string_util.hpp"
 
 
 /**
@@ -29,7 +34,12 @@ namespace CHLib {
  *  @brief  Constructor
  */
 App00::App00(void) {
-  
+  // Mesh
+  mesh_ = new CHLib::OGLMesh<float>();
+  // Camera
+  camera_ = new CHLib::OGLCamera();
+  // Technique
+  technique_ = new CHLib::OGLTechnique();
 }
 
 /*
@@ -38,7 +48,18 @@ App00::App00(void) {
  *  @brief  Destructor
  */
 App00::~App00(void) {
-  
+  if (mesh_) {
+    delete mesh_;
+    mesh_ = nullptr;
+  }
+  if (camera_) {
+    delete camera_;
+    camera_ = nullptr;
+  }
+  if (technique_) {
+    delete technique_;
+    technique_ = nullptr;
+  }
 }
 
 /*
@@ -50,6 +71,27 @@ App00::~App00(void) {
  */
 int App00::Load(const std::string& config) {
   int err = -1;
+  std::string dir, file, ext;
+  CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
+  // Load mesh
+  err = mesh_->Load(dir + "bunny.ply");
+  mesh_->ComputeVertexNormal();
+  err |= mesh_->InitOpenGLContext();
+  if (!err) {
+    // Setup technique
+    std::vector<std::string> shaders_file = {dir + "vertex-shader.vs",
+      dir + "fragment-shader.fs"};
+    err = technique_->Init(shaders_file);
+    err |= technique_->Finalize();
+    // Setup camera
+    camera_->LookAt(Vector3<float>(0.f, 0.1f, 0.4f),
+                    Vector3<float>(0.f, 0.1f, 0.f));
+
+    // update uniform
+    technique_->Use();
+    technique_->SetUniform("camera", camera_->get_transform());
+    technique_->StopUsing();
+  }
   return err;
 }
 
@@ -74,8 +116,24 @@ void App00::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
  * @brief Callback invoked when scene need to be rendered
  */
 void App00::OGLRenderCb(void) {
-  glClearColor(0.f, 0.0f, 0.7f, 1.f);
+  glClearColor(0.f, 0.0f, 0.f, 1.f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  // Enable VAO
+  mesh_->Bind();
+  // Enable program
+  technique_->Use();
+  // Draw triangle
+  const std::vector<OGLMesh<float>::Triangle>& tri = mesh_->get_triangle();
+  glDrawElementsBaseVertex(GL_TRIANGLES,
+                           static_cast<GLsizei>(tri.size() * 3),
+                           GL_UNSIGNED_INT,
+                           0,
+                           0);
+  // Make sure the VAO is not changed from the outside
+  mesh_->Unbind();
+  // Stop program
+  technique_->StopUsing();
 }
   
 }  // namespace CHLib

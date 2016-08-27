@@ -11,6 +11,9 @@
 #define __CHLIB_APP00__
 
 #include "base_app.hpp"
+#include "chlib/ogl/ogl_mesh.hpp"
+#include "chlib/ogl/camera.hpp"
+#include "chlib/ogl/technique.hpp"
 
 /**
  *  @namespace  CHLib
@@ -89,6 +92,17 @@ class App00 : public BaseApp {
    * @brief Callback invoked when scene need to be rendered
    */
   void OGLRenderCb(void);
+  
+#pragma mark -
+#pragma mark Private
+ private:
+  /** Mesh */
+  CHLib::OGLMesh<float>* mesh_;
+  /** Camera */
+  CHLib::OGLCamera* camera_;
+  /** Technique */
+  CHLib::OGLTechnique* technique_;
+  
 };
 }  // namespace CHLib
 #endif /* __CHLIB_APP00__ */

@@ -127,6 +127,13 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
     // Set bounds
     NSRect b = [self bounds];
     glViewport(0, 0, b.size.width, b.size.height);
+    
+    glFrontFace(GL_CCW);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
   }
 }
 
@@ -145,10 +152,10 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
   CGLLockContext([[self openGLContext] CGLContextObj]);
   if (callback_) {
     [callback_ onRender];
+    NSLog(@"render_Cb");
   } else {
     glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
   }
   // Swap buffer
   CGLFlushDrawable([[self openGLContext] CGLContextObj]);

@@ -33,7 +33,7 @@ OGLCamera::OGLCamera(void) :  position_(0.f, 0.f, 1.f),
 target_(0.f, 0.f, 0.f),
 aspect_(1.25f),
 near_(0.01f),
-far_(1000.f),
+far_(100.f),
 fov_(M_PI/6.f) {
   // Define view
   this->LookAt(position_, target_);
@@ -83,9 +83,9 @@ void OGLCamera::LookAt(const Vec3& position, const Vec3& target) {
   target_.Normalize();
   // Define right
   Vec3 worldUp(0.f, 1.f, 0.f);
-  right_ = target_ ^ worldUp;
+  right_ = worldUp ^ target_;
   // Define up vector
-  up_ = target_ ^ up_;
+  up_ = target_ ^ right_;
   // Define view transform
   this->UpdateViewTransform();
 }
@@ -118,8 +118,8 @@ void OGLCamera::UpdateProjectionTransform(const float fovy,
   projection_[0] = 1.f  / (aspect * tanHalfFovy);
   projection_[5] = 1.f  / tanHalfFovy;
   projection_[10] = - (far_ + near_) / (far_ - near_);
-  projection_[14] = -1.f;
-  projection_[11] = - (2.f * far_ * near_) / (far_ - near_);
+  projection_[11] = -1.f;
+  projection_[14] = - (2.f * far_ * near_) / (far_ - near_);
   projection_[15] = 0;
 }
   
