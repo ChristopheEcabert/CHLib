@@ -15,6 +15,10 @@
 @interface AppsWrapper() {
   /** Application pointer */
   CHLib::BaseApp* app_;
+  /** View width */
+  float width_;
+  /** View height */
+  float height_;
 }
 
 @end
@@ -29,9 +33,11 @@
  *  @brief  Initialize apps with a given configuration
  *  @param[in]  config  Path to configuration file
  */
--(id) initApp:(NSString*)app_name withConfig:(NSString*) config {
+-(id) initApp:(NSString*)app_name withConfig:(NSString*) config withSize:(NSSize)size {
   self = [super init];
   if (self) {
+    width_ = size.width;
+    height_ = size.height;
     [self loadApp:app_name withConfig:config];
   }
   return self;
@@ -51,10 +57,10 @@
   // Load proper app
   const char* name = [app_name UTF8String];
   if (strncmp(name, "Debug", 5) == 0) {
-    app_ = new CHLib::App00();
+    app_ = new CHLib::App00(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
   } else if (strncmp(name, "Basic Lighting", 5) == 0) {
-    app_ = new CHLib::App01();
+    app_ = new CHLib::App01(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
   }
   

@@ -62,19 +62,12 @@ class OGLCallbacks {
   virtual void OGLPassiveMouseCb(const float x, const float y) {}
   
   /**
-   * @name  OGLRenderCb
-   * @fn  virtual void OGLRenderCb(void)
-   * @brief Callback invoked when scene need to be rendered
-   */
-  virtual void OGLRenderCb(void) {}
-  
-  /**
    * @name  OGLMouseCb
    * @fn  virtual void OGLMouseCb(const OGLMouse& button, 
                                   const OGLKeyState& state,
                                   const float x,
                                   const float y)
-   * @brief
+   * @brief Callback invoked when mouse is clicked
    * @param[in] button  Button that trigger the callback
    * @param[in] state   Button's state at that time
    * @param[in] x       Mouse's X coordinate
@@ -84,6 +77,22 @@ class OGLCallbacks {
                           const OGLKeyState& state,
                           const float x,
                           const float y) {}
+  
+  /**
+   * @name  OGLRenderCb
+   * @fn  virtual void OGLRenderCb(void)
+   * @brief Callback invoked when scene need to be rendered
+   */
+  virtual void OGLRenderCb(void) {}
+  
+  /**
+   *  @name OGLResizeCb
+   *  @fn virtual void OGLResizeCb(const float width, const float height)
+   *  @brief  Callback invoked when the view is resized
+   *  @param[in]  width   New width of the view
+   *  @param[in]  height  New height of the view
+   */
+  virtual void OGLResizeCb(const float width, const float height) {}
 };
   
 }  // namespace CHLib

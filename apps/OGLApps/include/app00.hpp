@@ -35,10 +35,12 @@ class App00 : public BaseApp {
   
   /**
    *  @name App00
-   *  @fn App00(void)
+   *  @fn App01(void)
    *  @brief  Constructor
+   *  @param[in]  win_width   View's width
+   *  @param[in]  win_height  View's height
    */
-  App00(void);
+  App00(const float win_width, const float win_height);
   
   /**
    *  @name App00
@@ -92,6 +94,41 @@ class App00 : public BaseApp {
    * @brief Callback invoked when scene need to be rendered
    */
   void OGLRenderCb(void);
+  
+  /**
+   * @name  OGLPassiveMouseCb
+   * @fn  void OGLPassiveMouseCb(const float x, const float y)
+   * @brief Callback handling mouse movement inside OpenGL window
+   * @param[in] x   Mouse's X coordinate
+   * @param[in] y   Mouse's Y coordinate
+   */
+  void OGLPassiveMouseCb(const float x, const float y);
+  
+  /**
+   * @name  OGLMouseCb
+   * @fn  void OGLMouseCb(const OGLMouse& button,
+                           const OGLKeyState& state,
+                           const float x,
+                           const float y)
+   * @brief Callback invoked when mouse is clicked
+   * @param[in] button  Button that trigger the callback
+   * @param[in] state   Button's state at that time
+   * @param[in] x       Mouse's X coordinate
+   * @param[in] y       Mouse's Y coordinate
+   */
+  void OGLMouseCb(const OGLMouse& button,
+                  const OGLKeyState& state,
+                  const float x,
+                  const float y);
+  
+  /**
+   *  @name OGLResize
+   *  @fn void OGLResize(const float widht, const float hieght)
+   *  @brief  Callbkac invoked when view resize
+   *  @param[in]  width   View's width
+   *  @param[in]  height  View's height
+   */
+  void OGLResizeCb(const float width, const float height);
   
 #pragma mark -
 #pragma mark Private

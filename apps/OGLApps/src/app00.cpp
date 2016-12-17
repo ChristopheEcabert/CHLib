@@ -11,12 +11,14 @@
 #include <OpenGL/gl3.h>
 #endif
 
-#include "glm/glm.hpp"
+/*#include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtx/string_cast.hpp"
+#include "glm/gtx/string_cast.hpp"*/
 
 #include "app00.hpp"
 #include "chlib/core/string_util.hpp"
+
+#include "chlib/core/math/quaternion.hpp"
 
 
 /**
@@ -30,14 +32,18 @@ namespace CHLib {
   
 /*
  *  @name App00
- *  @fn App00(void)
+ *  @fn App01(void)
  *  @brief  Constructor
+ *  @param[in]  win_width   View's width
+ *  @param[in]  win_height  View's height
  */
-App00::App00(void) {
+App00::App00(const float win_width, const float win_height) : BaseApp(win_width,
+                                                                      win_height) {
   // Mesh
   mesh_ = new CHLib::OGLMesh<float>();
   // Camera
   camera_ = new CHLib::OGLCamera();
+  camera_->set_window_dimension(this->win_width_, this->win_height_);
   // Technique
   technique_ = new CHLib::OGLTechnique();
 }
@@ -107,7 +113,8 @@ int App00::Load(const std::string& config) {
  * @param[in] state   Key state at that time
  */
 void App00::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
-  
+  // Pass event to camera
+  camera_->OnKeyboard(key, state);
 }
 
 /*
@@ -123,6 +130,7 @@ void App00::OGLRenderCb(void) {
   mesh_->Bind();
   // Enable program
   technique_->Use();
+  technique_->SetUniform("camera", camera_->get_transform());
   // Draw triangle
   const std::vector<OGLMesh<float>::Triangle>& tri = mesh_->get_triangle();
   glDrawElementsBaseVertex(GL_TRIANGLES,
@@ -134,6 +142,54 @@ void App00::OGLRenderCb(void) {
   mesh_->Unbind();
   // Stop program
   technique_->StopUsing();
+}
+  
+/*
+ * @name  OGLPassiveMouseCb
+ * @fn  void OGLPassiveMouseCb(const float x, const float y)
+ * @brief Callback handling mouse movement inside OpenGL window
+ * @param[in] x   Mouse's X coordinate
+ * @param[in] y   Mouse's Y coordinate
+ */
+void App00::OGLPassiveMouseCb(const float x, const float y) {
+  camera_->OnMouseMove(static_cast<int>(x), static_cast<int>(y));
+}
+  
+/*
+ * @name  OGLMouseCb
+ * @fn  void OGLMouseCb(const OGLMouse& button,
+                         const OGLKeyState& state,
+                         const float x,
+                         const float y)
+ * @brief Callback invoked when mouse is clicked
+ * @param[in] button  Button that trigger the callback
+ * @param[in] state   Button's state at that time
+ * @param[in] x       Mouse's X coordinate
+ * @param[in] y       Mouse's Y coordinate
+ */
+void App00::OGLMouseCb(const OGLMouse& button,
+                const OGLKeyState& state,
+                const float x,
+                const float y) {
+  camera_->OnMouseClick(button,
+                        state,
+                        static_cast<int>(x),
+                        static_cast<int>(y));
+}
+  
+/*
+ *  @name OGLResize
+ *  @fn void OGLResize(const float widht, const float hieght)
+ *  @brief  Callbkac invoked when view resize
+ *  @param[in]  width   View's width
+ *  @param[in]  height  View's height
+ */
+void App00::OGLResizeCb(const float width, const float height) {
+  // Update camera
+  this->win_width_ = width;
+  this->win_height_ = height;
+  camera_->set_window_dimension(this->win_width_, this->win_height_);
+  camera_->UpdateProjectionTransform();
 }
   
 }  // namespace CHLib

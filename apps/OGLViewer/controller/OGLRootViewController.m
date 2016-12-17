@@ -78,7 +78,8 @@
     // Init default apps, first one in the list -> apps[0]
     if (!app_) {
       app_ = [[AppsWrapper alloc] initApp: default_name
-                               withConfig:default_path];
+                               withConfig:default_path
+                                 withSize:[self.ogl_view bounds].size];
       callback_ = [[OGLCallbacksWrapper alloc]
                    initWithPointer:[app_ callbacks]];
       

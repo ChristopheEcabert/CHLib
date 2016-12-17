@@ -107,6 +107,7 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
     NSOpenGLPFADoubleBuffer,
     NSOpenGLPFAColorSize, 24,
     NSOpenGLPFAAlphaSize, 8,
+    NSOpenGLPFADepthSize, 32,
     NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
     NSOpenGLPFAAccelerated,
     NSOpenGLPFANoRecovery,
@@ -128,6 +129,7 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
     NSRect b = [self bounds];
     glViewport(0, 0, b.size.width, b.size.height);
     
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
@@ -152,7 +154,6 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
   CGLLockContext([[self openGLContext] CGLContextObj]);
   if (callback_) {
     [callback_ onRender];
-    NSLog(@"render_Cb");
   } else {
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
@@ -184,6 +185,10 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
   glViewport(0, 0, viewRectPoints.size.width, viewRectPoints.size.height);
   
   //TODO Camera aspect ratio should be updated
+  if (callback_) {
+    [callback_ onResizeWidth:viewRectPoints.size.width
+                   andHeight:viewRectPoints.size.height];
+  }
   
   // Unlock context
   CGLUnlockContext([[self openGLContext] CGLContextObj]);
@@ -287,7 +292,8 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
 -(void) mouseDragged:(NSEvent *)theEvent {
   if ([theEvent type] == NSLeftMouseDragged && callback_) {
     NSPoint pos = [self convertPoint: [theEvent locationInWindow] fromView:nil];
-    [callback_ onMouseClick: kMouseLeftButton withState:kKeyPressed at:&pos];
+    //[callback_ onMouseClick: kMouseLeftButton withState:kKeyPressed at:&pos];
+    [callback_ onMouseMove:&pos];
   } else {
     [super mouseDragged:theEvent];
   }

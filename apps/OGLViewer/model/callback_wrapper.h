@@ -56,7 +56,7 @@ typedef enum {
 
 /**
  *  @name onKeyboard
- *  @fn
+ *  @fn -(void) onKeyboard:(char) key withState:(KeyState) state
  *  @brief  Keyboard callback
  *  @param[in]  key   Value of the key that trigger the event
  *  @param[in]  state State of the key
@@ -73,7 +73,9 @@ typedef enum {
 
 /**
  *  @name onMouseClick
- *  @fn
+ *  @fn -(void) onMouseClick:(MouseKey) key 
+                   withState:(KeyState)
+                    state at:(NSPoint*) position
  *  @brief  Mouse click callback
  *  @param[in]  key       Which key of the mouse has triggered the event
  *  @param[in]  state     Sate of the \p key
@@ -83,9 +85,18 @@ typedef enum {
 
 /**
  *  @name onRender
- *  @fn
+ *  @fn -(void) onRender
  *  @brief Rendering callback
  */
 -(void) onRender;
+
+/**
+ *  @name onResizeWidth
+ *  @fn
+ *  @brief  Invoked when window change dimension
+ *  @param[in]  width   New width
+ *  @param[in]  hieght  New height
+ */
+-(void) onResizeWidth: (float)width andHeight: (float) height;
 
 @end

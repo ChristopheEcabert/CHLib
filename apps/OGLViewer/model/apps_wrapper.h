@@ -19,7 +19,7 @@
  *  @brief  Initialize apps with a given configuration
  *  @param[in]  config  Path to configuration file
  */
--(id) initApp:(NSString*)app_name withConfig:(NSString*) config;
+-(id) initApp:(NSString*)app_name withConfig:(NSString*) config withSize:(NSSize)size;
 
 /**
  *  @name   loadApp

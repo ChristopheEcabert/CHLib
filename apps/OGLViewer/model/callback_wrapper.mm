@@ -71,7 +71,6 @@
                                     CHLib::OGLKeyState::kRelease);
     callbacks_->OGLKeyboardCb((CHLib::OGLKey)key, key_state);
   }
-  NSLog(@"char:%c",key);
 }
 
 /*
@@ -116,6 +115,19 @@
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (callbacks_) {
     callbacks_->OGLRenderCb();
+  }
+}
+
+/*
+ *  @name onResizeWidth
+ *  @fn
+ *  @brief  Invoked when window change dimension
+ *  @param[in]  width   New width
+ *  @param[in]  hieght  New height
+ */
+-(void) onResizeWidth: (float)width andHeight: (float) height {
+  if (callbacks_) {
+    callbacks_->OGLResizeCb(width, height);
   }
 }
 

@@ -33,6 +33,18 @@ class BaseApp : public OGLCallbacks {
 #pragma mark Initialization
   
   /**
+   *  @name BaseApp
+   *  @fn BaseApp(const float win_width, const float win_height)
+   *  @brief  Basic constructor
+   *  @param[in]  win_width   View's width
+   *  @param[in]  win_height  View's height
+   */
+  BaseApp(const float win_width, const float win_height) :
+    win_width_(win_width),
+    win_height_(win_height) {
+  }
+  
+  /**
    *  @name ~BaseApp
    *  @fn virtual ~BaseApp(void)
    *  @brief  Destructor
@@ -47,6 +59,14 @@ class BaseApp : public OGLCallbacks {
    *  @return -1 if error, 0 otherwise
    */
   virtual int Load(const std::string& config) = 0;
+  
+#pragma mark -
+#pragma mark Protected
+ protected:
+  /** Window dimension - width */
+  float win_width_;
+  /** Window dimension - hieght */
+  float win_height_;
   
 };
 }  // namespace CHLib

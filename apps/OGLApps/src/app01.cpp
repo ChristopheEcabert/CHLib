@@ -22,14 +22,16 @@ namespace CHLib {
   
 #pragma mark -
 #pragma mark Initialization
-  
+
 /*
  *  @name App01
  *  @fn App01(void)
  *  @brief  Constructor
+ *  @param[in]  win_width   View's width
+ *  @param[in]  win_height  View's height
  */
-App01::App01(void) {
-  
+App01::App01(const float win_width, const float win_height) : BaseApp(win_width,
+                                                                      win_height) {
 }
 
 /*

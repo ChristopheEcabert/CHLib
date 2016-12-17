@@ -113,6 +113,13 @@ class CHLIB_EXPORTS OGLCamera {
                                  const float aspect);
   
   /**
+   *  @name UpdateProjectionTransform
+   *  @fn void UpdateProjectionTransform();
+   *  @brief  Update projection transform
+   */
+  void UpdateProjectionTransform(void);
+  
+  /**
    *  @name OnKeyboard
    *  @fn void OnKeyboard(const OGLKey& key, const OGLKeyState& state);
    *  @brief  Handle keyboard event for camera navigation
@@ -120,9 +127,45 @@ class CHLIB_EXPORTS OGLCamera {
    *  @param[in]  state State of the key (Pressed or released)
    */
   void OnKeyboard(const OGLKey& key, const OGLKeyState& state);
+  
+  /**
+   *  @name
+   *  @fn
+   *  @brief  Handle click event for camera object
+   *  @param[in]  button  Which button has triggered the event
+   *  @param[in]  state   Button's state
+   *  @param[in]  x       X Position in the view
+   *  @param[in]  y       Y Position in the view
+   */
+  void OnMouseClick(const OGLMouse& button,
+                    const OGLKeyState& state,
+                    const int x,
+                    const int y);
+  
+  /**
+   * @name  OnMouseMove
+   * @fn    void OnMouseMove(const int x, const int y)
+   * @brief Method to invoke when mouse moves on the screen
+   * @param x   Current cursor X position
+   * @param y   Current cursor Y position
+   */
+  void OnMouseMove(const int x, const int y);
 
 #pragma mark -
 #pragma mark Accessors
+  
+  /**
+   *  @name set_window_dimension
+   *  @fn void set_window_dimension(const float width, const float height)
+   *  @brief  Set window dimension
+   *  @param[in]  width   View's width
+   *  @param[in]  height  View's height
+   */
+  void set_window_dimension(const float width, const float height) {
+    win_width_ = width;
+    win_height_ = height;
+    fov_ = win_width_ / win_height_;
+  }
 
   /**
    *  @name get_position
@@ -166,15 +209,41 @@ class CHLIB_EXPORTS OGLCamera {
  private:
   
   /**
+   * @enum  CameraState
+   * @brief List all possible state in the trackball state machine
+   */
+  enum CameraState {
+    /** Nothing currently happening */
+    kNone,
+    /** Doing rotation */
+    kRotate
+  };
+  
+  /**
    *  @name UpdateViewTransform
    *  @fn void UpdateViewTransform(void);
    *  @brief  Update view transform
    */
   void UpdateViewTransform(void);
+  
+  /**
+   * @name  GetMouseProjectionOnBall
+   * @fn void GetMouseProjectionOnBall(const int x,
+                                       const int y,
+                                       Vector3<float>3* pts)
+   * @brief Project screen loation onto ball
+   * @param[in] x       Cursor X position on the screen
+   * @param[in] y       Cursor Y position on the screen
+   * @param[out] pts    Corresponding points on sphere
+   * @see https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Arcball
+   */
+  void GetMouseProjectionOnBall(const int x,
+                                const int y,
+                                Vector3<float>* pts);
 
   /** Camera position */
   Vec3 position_;
-  /** Traget */
+  /** Target */
   Vec3 target_;
   /** Up direction */
   Vec3 up_;
@@ -192,6 +261,20 @@ class CHLIB_EXPORTS OGLCamera {
   Mat4 view_;
   /** Projection transform */
   Mat4 projection_;
+  /** Window width */
+  float win_width_;
+  /** Window hieght */
+  float win_height_;
+  /** State machine */
+  CameraState state_;
+  /** Displacement speed */
+  float move_speed_;
+  /** Rotation speed */
+  float rotation_speed_;
+  /** Rotation starting position */
+  Vector3<float> rotations_start_;
+  /** Rotation end position */
+  Vector3<float> rotations_end_;
 
 };
 
