@@ -169,27 +169,12 @@ int OGLTechnique::Finalize(void) {
     // Show error
     throw CHLib::CHError(CHError::kGeneric, msg, FUNC_NAME);
   } else {
-    /*// Validate program
-    glValidateProgram(program_);
-    glGetProgramiv(program_, GL_VALIDATE_STATUS, &status);
-    if (!status) {
-      std::string msg("Program validation failure :\n");
-      GLint infoLogLength;
-      glGetProgramiv(program_, GL_INFO_LOG_LENGTH, &infoLogLength);
-      char* strInfoLog = new char[infoLogLength + 1];
-      glGetProgramInfoLog(program_, infoLogLength, NULL, strInfoLog);
-      msg += strInfoLog;
-      delete[] strInfoLog;
-      // Show error
-      std::cout << msg << std::endl;
-    } else {*/
-      // Everything went smooth, release shader object
-      for (auto& shader : shaders_) {
-        glDeleteShader(shader);
-      }
-      shaders_.clear();
-      err = glGetError() == GL_NO_ERROR ? 0 : -1;
-    //}
+    // Everything went smooth, release shader object
+    for (auto& shader : shaders_) {
+      glDeleteShader(shader);
+    }
+    shaders_.clear();
+    err = glGetError() == GL_NO_ERROR ? 0 : -1;
   }
   return err;
 }

@@ -356,6 +356,13 @@ private:
    *  @return -1 if error, 0 otherwise
    */
   int SavePLY(const std::string& path) const;
+  
+  /**
+   *  @name   PlaceToOrigin
+   *  @fn     void PlaceToOrigin(void)
+   *  @brief  Place mest to world origin (i.e. remove center of graviaty).
+   */
+  void PlaceToOrigin(void);
 };
 
 }  // namespace CHLib

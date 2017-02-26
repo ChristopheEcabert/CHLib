@@ -37,8 +37,8 @@ namespace CHLib {
  *  @param[in]  win_width   View's width
  *  @param[in]  win_height  View's height
  */
-App00::App00(const float win_width, const float win_height) : BaseApp(win_width,
-                                                                      win_height) {
+App00::App00(const float win_width, const float win_height) :
+  BaseApp(win_width, win_height) {
   // Mesh
   mesh_ = new CHLib::OGLMesh<float>();
   // Camera
@@ -90,8 +90,8 @@ int App00::Load(const std::string& config) {
     err = technique_->Init(shaders_file);
     err |= technique_->Finalize();
     // Setup camera
-    camera_->LookAt(Vector3<float>(0.f, 0.1f, 0.4f),
-                    Vector3<float>(0.f, 0.1f, 0.f));
+    camera_->LookAt(Vector3<float>(0.f, 0.0f, 0.4f),
+                    Vector3<float>(0.f, 0.0f, 0.f));
 
     // update uniform
     technique_->Use();

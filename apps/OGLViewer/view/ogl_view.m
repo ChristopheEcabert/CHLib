@@ -128,7 +128,6 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
     // Set bounds
     NSRect b = [self bounds];
     glViewport(0, 0, b.size.width, b.size.height);
-    
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);

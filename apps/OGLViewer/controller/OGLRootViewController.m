@@ -96,6 +96,8 @@
   NSMenuItem* item = [self.app_selector selectedItem];
   NSString* item_name = [item title];
   NSInteger item_idx = [self.app_selector indexOfItemWithTitle: item_name];
+  // Disable rendering
+  [self.ogl_view addCallbacks:nil];
   // Load app
   [app_ loadApp: item_name
      withConfig: [app_configs_ objectAtIndex: item_idx]];

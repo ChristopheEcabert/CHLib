@@ -36,10 +36,13 @@ template<typename T>
 OGLMesh<T>::~OGLMesh(void) {
   // Clear buffer
   if (vbo_[0] != 0) {
+    // Ensure VBO is unbind
+    glBindVertexArray(vao_);
     glDeleteBuffers(6, &vbo_[0]);
     memset(reinterpret_cast<void*>(&vbo_[0]),
            0,
            sizeof(vbo_) / sizeof(vbo_[0]));
+    glBindVertexArray(0);
   }
   // Clear vao
   if (vao_) {

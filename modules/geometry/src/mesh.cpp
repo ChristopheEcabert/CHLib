@@ -80,6 +80,17 @@ struct PLYFace {
    */
   PLYFace(void) : list_idx(nullptr),
                   list_tcoord(nullptr) {}
+  
+  ~PLYFace(void) {
+    if (list_idx) {
+      free(list_idx);
+      list_idx = nullptr;
+    }
+    if (list_tcoord) {
+      free(list_tcoord);
+      list_tcoord = nullptr;
+    }
+  }
 };
 
 #pragma mark -
@@ -157,11 +168,12 @@ int Mesh<T>::Load(const std::string& filename) {
         break;
     }
     if (!err) {
+      this->PlaceToOrigin();
       this->BuildConnectivity();
     }
   }
   if (!err && !bbox_is_computed_) {
-    ComputeBoundingBox();
+    this->ComputeBoundingBox();
   }
   return err;
 }
@@ -470,7 +482,7 @@ int Mesh<T>::SaveOBJ(const std::string& path) {
   std::ofstream out_stream(path, std::ios_base::out);
   if (out_stream.is_open()) {
     // Header
-    out_stream << "# wavefront obj file written by LTS5 c++ library" << std::endl;
+    out_stream << "# wavefront file written by CHLib c++ library" << std::endl;
 
     // Vertex
     if (vertex_.size() > 0) {
@@ -501,7 +513,8 @@ int Mesh<T>::SaveOBJ(const std::string& path) {
       size_t n_tri = tri_.size();
       for (size_t i = 0; i < n_tri; ++i) {
         const Triangle & tri = tri_[i];
-        out_stream << "f " << tri.x_ << " " << tri.y_ << " " << tri.z_ << std::endl;
+        out_stream << "f " << tri.x_ << " " << tri.y_ << " " << tri.z_;
+        out_stream << std::endl;
       }
     }
     // Done
@@ -602,6 +615,31 @@ void Mesh<T>::ComputeBoundingBox(void) {
  }
  bbox_.center_ = (bbox_.min_ + bbox_.max_) * T(0.5);
  bbox_is_computed_ = true;
+}
+                 
+/*
+ *  @name   PlaceToOrigin
+ *  @fn     void PlaceToOrigin(void)
+ *  @brief  Place mest to world origin (i.e. remove center of graviaty).
+ */
+template<typename T>
+void Mesh<T>::PlaceToOrigin(void) {
+  // Get center of gravity
+  Vertex cog;
+  for (const auto& v : this->vertex_) {
+    cog += v;
+  }
+  cog /= static_cast<T>(this->vertex_.size());
+  // Center all vertex
+  for (auto& v : this->vertex_) {
+    v -= cog;
+  }
+  // Update bbox as well
+  if (bbox_is_computed_) {
+    bbox_.min_ -= cog;
+    bbox_.max_ -= cog;
+    bbox_.center_ -= cog;
+  }
 }
 
 #pragma mark -
