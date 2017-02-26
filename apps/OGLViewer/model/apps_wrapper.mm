@@ -59,7 +59,7 @@
   if (strncmp(name, "Debug", 5) == 0) {
     app_ = new CHLib::App00(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
-  } else if (strncmp(name, "Basic Lighting", 5) == 0) {
+  } else if (strncmp(name, "Geometry Shader", 5) == 0) {
     app_ = new CHLib::App01(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
   }

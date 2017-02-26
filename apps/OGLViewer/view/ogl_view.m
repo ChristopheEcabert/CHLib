@@ -152,9 +152,9 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
   // simultaneously when resizing
   CGLLockContext([[self openGLContext] CGLContextObj]);
   if (callback_) {
-    [callback_ StartRendering];
+    [callback_ start];
     [callback_ onRender];
-    [callback_ StopRendering];
+    [callback_ stop];
   } else {
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 

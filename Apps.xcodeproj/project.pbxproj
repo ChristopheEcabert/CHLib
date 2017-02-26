@@ -13,7 +13,9 @@
 		9D65408C1D71BC04005D1890 /* fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408A1D71BC04005D1890 /* fragment-shader.fs */; };
 		9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408B1D71BC04005D1890 /* vertex-shader.vs */; };
 		9D6540901D71BD64005D1890 /* bunny.ply in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408F1D71BD64005D1890 /* bunny.ply */; };
-		9D6540921D71CFDF005D1890 /* crate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9D6540911D71CFDF005D1890 /* crate.obj */; };
+		9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */; };
+		9D7BE8651E632FE7001D7AAA /* app01-geometry-shader.gs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */; };
+		9D7BE8661E632FE7001D7AAA /* app01-vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */; };
 		9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */; };
 		9D9AF0C21D6CA4EC00CDA5CB /* OGLRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0C11D6CA4EC00CDA5CB /* OGLRootViewController.m */; };
 		9D9AF0C41D6CAB7D00CDA5CB /* app_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0C31D6CAB7D00CDA5CB /* app_info.plist */; };
@@ -60,7 +62,9 @@
 		9D65408A1D71BC04005D1890 /* fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "fragment-shader.fs"; path = "apps/OGLApps/ressources/app00/fragment-shader.fs"; sourceTree = "<group>"; };
 		9D65408B1D71BC04005D1890 /* vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "vertex-shader.vs"; path = "apps/OGLApps/ressources/app00/vertex-shader.vs"; sourceTree = "<group>"; };
 		9D65408F1D71BD64005D1890 /* bunny.ply */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bunny.ply; path = apps/OGLApps/ressources/app00/bunny.ply; sourceTree = "<group>"; };
-		9D6540911D71CFDF005D1890 /* crate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crate.obj; path = apps/OGLApps/ressources/app00/crate.obj; sourceTree = "<group>"; };
+		9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-fragment-shader.fs"; path = "apps/OGLApps/ressources/app01/app01-fragment-shader.fs"; sourceTree = "<group>"; };
+		9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-geometry-shader.gs"; path = "apps/OGLApps/ressources/app01/app01-geometry-shader.gs"; sourceTree = "<group>"; };
+		9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-vertex-shader.vs"; path = "apps/OGLApps/ressources/app01/app01-vertex-shader.vs"; sourceTree = "<group>"; };
 		9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = base_app.hpp; path = apps/OGLApps/include/base_app.hpp; sourceTree = "<group>"; };
 		9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app00.cpp; path = apps/OGLApps/src/app00.cpp; sourceTree = "<group>"; };
 		9D9AF0BE1D6C9C4B00CDA5CB /* app00.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app00.hpp; path = apps/OGLApps/include/app00.hpp; sourceTree = "<group>"; };
@@ -175,7 +179,6 @@
 		9D9AF0CC1D6CCFA300CDA5CB /* app00 */ = {
 			isa = PBXGroup;
 			children = (
-				9D6540911D71CFDF005D1890 /* crate.obj */,
 				9D65408F1D71BD64005D1890 /* bunny.ply */,
 				9D65408A1D71BC04005D1890 /* fragment-shader.fs */,
 				9D65408B1D71BC04005D1890 /* vertex-shader.vs */,
@@ -188,6 +191,9 @@
 			isa = PBXGroup;
 			children = (
 				9D9AF0CD1D6CD48000CDA5CB /* app01_config.xml */,
+				9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */,
+				9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */,
+				9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */,
 			);
 			name = app01;
 			sourceTree = "<group>";
@@ -324,14 +330,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D6540921D71CFDF005D1890 /* crate.obj in Resources */,
 				9D6540901D71BD64005D1890 /* bunny.ply in Resources */,
 				9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */,
 				9DD47C061D4EA288003110D9 /* Assets.xcassets in Resources */,
+				9D7BE8661E632FE7001D7AAA /* app01-vertex-shader.vs in Resources */,
+				9D7BE8651E632FE7001D7AAA /* app01-geometry-shader.gs in Resources */,
 				9D9AF0CB1D6CCF5700CDA5CB /* app00_config.xml in Resources */,
 				9DD47C091D4EA29D003110D9 /* MainMenu.xib in Resources */,
 				9D9AF0CE1D6CD48000CDA5CB /* app01_config.xml in Resources */,
 				9D9AF0C41D6CAB7D00CDA5CB /* app_info.plist in Resources */,
+				9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */,
 				9D65408C1D71BC04005D1890 /* fragment-shader.fs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

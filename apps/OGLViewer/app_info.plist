@@ -10,7 +10,7 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Basic Lighting</string>
+		<string>Geometry Shader</string>
 		<key>Path</key>
 		<string>app01_config</string>
 	</dict>
