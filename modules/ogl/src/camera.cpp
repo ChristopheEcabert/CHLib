@@ -31,16 +31,16 @@ namespace CHLib {
  *  @brief  Constructor
  */
 OGLCamera::OGLCamera(void) :  position_(0.f, 0.f, 1.f),
-  target_(0.f, 0.f, 0.f),
-  aspect_(1.25f),
-  near_(0.01f),
-  far_(100.f),
-  fov_(M_PI/6.f),
-  state_(kNone),
-  move_speed_(0.05f),
-  rotation_speed_(1.f),
-  rotations_start_(0.f, 0.f, 0.f),
-  rotations_end_(0.f, 0.f, 0.f) {
+                              target_(0.f, 0.f, 0.f),
+                              aspect_(1.25f),
+                              near_(0.01f),
+                              far_(100.f),
+                              fov_(M_PI/6.f),
+                              state_(kNone),
+                              move_speed_(0.002f),
+                              rotation_speed_(1.f),
+                              rotations_start_(0.f, 0.f, 0.f),
+                              rotations_end_(0.f, 0.f, 0.f) {
   // Define view
   this->LookAt(position_, target_);
   // Define projection
@@ -62,7 +62,7 @@ OGLCamera::OGLCamera(const Vec3& position, const Vec3& target) :
   far_(1000.f),
   fov_(M_PI/6.f),
   state_(kNone),
-  move_speed_(0.05f),
+  move_speed_(5.f),
   rotation_speed_(1.f),
   rotations_start_(0.f, 0.f, 0.f),
   rotations_end_(0.f, 0.f, 0.f) {
@@ -155,15 +155,18 @@ void OGLCamera::UpdateProjectionTransform(void) {
  *  @brief  Handle keyboard event for camera navigation
  *  @param[in]  key   Which key trigger the event
  *  @param[in]  state State of the key (Pressed or released)
+ *  @param[in]  dt    Delta time between each rendering pass
  */
-void OGLCamera::OnKeyboard(const OGLKey& key, const OGLKeyState& state) {
+void OGLCamera::OnKeyboard(const OGLKey& key,
+                           const OGLKeyState& state,
+                           const float dt) {
   // Action based on key
   switch (key) {
-    case OGLKey::kw : position_ -= target_ * move_speed_;
+    case OGLKey::kw : position_ -= target_ * move_speed_ * dt;
       this->UpdateViewTransform();
       break;
       
-    case OGLKey::ks : position_ += target_ * move_speed_;
+    case OGLKey::ks : position_ += target_ * move_speed_ * dt;
       this->UpdateViewTransform();
       break;
       

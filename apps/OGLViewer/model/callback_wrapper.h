@@ -99,4 +99,18 @@ typedef enum {
  */
 -(void) onResizeWidth: (float)width andHeight: (float) height;
 
+/**
+ *  @name   start
+ *  @fn
+ *  @brief  Measure time at the begining of the rendering pass
+ */
+-(void) start;
+
+/**
+ *  @name   stop
+ *  @fn
+ *  @brief  Stop measuring rendering time.
+ */
+-(void) stop;
+
 @end

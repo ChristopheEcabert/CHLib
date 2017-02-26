@@ -131,4 +131,26 @@
   }
 }
 
+/*
+ *  @name   StartRendering
+ *  @fn
+ *  @brief  Measure time at the begining of the rendering pass
+ */
+-(void) start {
+  if (callbacks_) {
+    callbacks_->OGLStart();
+  }
+}
+
+/*
+ *  @name   StopRendering
+ *  @fn
+ *  @brief  Stop measuring rendering time.
+ */
+-(void) stop {
+  if (callbacks_) {
+    callbacks_->OGLStop();
+  }
+}
+
 @end

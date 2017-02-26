@@ -11,6 +11,8 @@
 #ifndef __CHLIB_CALLBACKS__
 #define __CHLIB_CALLBACKS__
 
+#include <chrono>
+
 #include "chlib/ogl/key_types.hpp"
 
 /**
@@ -29,8 +31,24 @@ namespace CHLib {
 class OGLCallbacks {
   
   public :
+  
+#pragma mark -
+#pragma mark Type definitions
+  /** Time point */
+  using TimePoint = std::chrono::high_resolution_clock::time_point;
+  
 #pragma mark -
 #pragma mark Initialization
+  
+  /**
+   * @name  OGLCallback
+   * @fn    OGLCallback()
+   * @brief Constructor
+   */
+  OGLCallbacks(void) : delta_time_(0.f) {
+    // Get starting time to avoid large delta time
+    last_time_ = std::chrono::high_resolution_clock::now();
+  }
   
   /**
    * @name  ~OGLCallback
@@ -93,6 +111,23 @@ class OGLCallbacks {
    *  @param[in]  height  New height of the view
    */
   virtual void OGLResizeCb(const float width, const float height) {}
+  
+  void OGLStart(void) {
+    current_time_ = std::chrono::high_resolution_clock::now();
+    delta_time_ = std::chrono::duration_cast<std::chrono::milliseconds>(current_time_ - last_time_).count();
+  }
+  
+  void OGLStop(void) {
+    last_time_ = current_time_;
+  }
+  
+ protected:
+  /** Current time */
+  TimePoint current_time_;
+  /** Last time */
+  TimePoint last_time_;
+  /** Delta time in milliseconds */
+  float delta_time_;
 };
   
 }  // namespace CHLib

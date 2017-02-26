@@ -11,6 +11,8 @@
 #ifndef __CHLIB_OGL_CAMERA__
 #define __CHLIB_OGL_CAMERA__
 
+#include <chrono>
+
 #include "chlib/core/library_export.hpp"
 #include "chlib/core/math/vector.hpp"
 #include "chlib/core/math/matrix.hpp"
@@ -39,6 +41,8 @@ class CHLIB_EXPORTS OGLCamera {
   using Vec3 = Vector3<float>;
   /** Matrix type */
   using Mat4 = Matrix4<float>;
+  /** Time point */
+  using TimePoint = std::chrono::high_resolution_clock::time_point;
 
 #pragma mark -
 #pragma mark Initialization
@@ -125,8 +129,9 @@ class CHLIB_EXPORTS OGLCamera {
    *  @brief  Handle keyboard event for camera navigation
    *  @param[in]  key   Which key trigger the event
    *  @param[in]  state State of the key (Pressed or released)
+   *  @param[in]  dt    Delta time between each rendering pass
    */
-  void OnKeyboard(const OGLKey& key, const OGLKeyState& state);
+  void OnKeyboard(const OGLKey& key, const OGLKeyState& state, const float dt);
   
   /**
    *  @name
@@ -275,7 +280,6 @@ class CHLIB_EXPORTS OGLCamera {
   Vector3<float> rotations_start_;
   /** Rotation end position */
   Vector3<float> rotations_end_;
-
 };
 
 }  // namespace CHLib

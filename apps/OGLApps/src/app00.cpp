@@ -114,7 +114,7 @@ int App00::Load(const std::string& config) {
  */
 void App00::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
   // Pass event to camera
-  camera_->OnKeyboard(key, state);
+  camera_->OnKeyboard(key, state, this->delta_time_);
 }
 
 /*
