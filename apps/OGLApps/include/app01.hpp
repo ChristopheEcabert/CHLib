@@ -130,16 +130,6 @@ class App01 : public BaseApp {
    *  @param[in]  height  View's height
    */
   void OGLResizeCb(const float width, const float height);
-  
-#pragma mark -
-#pragma mark Private
-private:
-  /** Mesh */
-  CHLib::OGLMesh<float>* mesh_;
-  /** Camera */
-  CHLib::OGLCamera* camera_;
-  /** Technique */
-  CHLib::OGLTechnique* technique_;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_APP01__ */

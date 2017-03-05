@@ -16,6 +16,7 @@
 		9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */; };
 		9D7BE8651E632FE7001D7AAA /* app01-geometry-shader.gs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */; };
 		9D7BE8661E632FE7001D7AAA /* app01-vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */; };
+		9D8C8C511E6CC2BA003FC0DD /* app02.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8C501E6CC2BA003FC0DD /* app02.cpp */; };
 		9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */; };
 		9D9AF0C21D6CA4EC00CDA5CB /* OGLRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0C11D6CA4EC00CDA5CB /* OGLRootViewController.m */; };
 		9D9AF0C41D6CAB7D00CDA5CB /* app_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0C31D6CAB7D00CDA5CB /* app_info.plist */; };
@@ -23,6 +24,11 @@
 		9D9AF0CB1D6CCF5700CDA5CB /* app00_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0CA1D6CCF5700CDA5CB /* app00_config.xml */; };
 		9D9AF0CE1D6CD48000CDA5CB /* app01_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0CD1D6CD48000CDA5CB /* app01_config.xml */; };
 		9D9AF0D11D6CD62C00CDA5CB /* app01.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */; };
+		9DC3AF001E6CBBA3006CD74E /* app02_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */; };
+		9DC3AF011E6CBBA3006CD74E /* app02-crate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */; };
+		9DC3AF021E6CBBA3006CD74E /* app02-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFD1E6CBBA3006CD74E /* app02-fragment-shader.fs */; };
+		9DC3AF031E6CBBA3006CD74E /* app02-vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFE1E6CBBA3006CD74E /* app02-vertex-shader.vs */; };
+		9DC3AF041E6CBBA3006CD74E /* app02-wooden-crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFF1E6CBBA3006CD74E /* app02-wooden-crate.jpg */; };
 		9DD47BFF1D4EA1F9003110D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD47BFE1D4EA1F9003110D9 /* main.m */; };
 		9DD47C011D4EA212003110D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD47C001D4EA212003110D9 /* AppDelegate.m */; };
 		9DD47C061D4EA288003110D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD47C051D4EA288003110D9 /* Assets.xcassets */; };
@@ -65,6 +71,8 @@
 		9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-fragment-shader.fs"; path = "apps/OGLApps/ressources/app01/app01-fragment-shader.fs"; sourceTree = "<group>"; };
 		9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-geometry-shader.gs"; path = "apps/OGLApps/ressources/app01/app01-geometry-shader.gs"; sourceTree = "<group>"; };
 		9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-vertex-shader.vs"; path = "apps/OGLApps/ressources/app01/app01-vertex-shader.vs"; sourceTree = "<group>"; };
+		9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app02.hpp; path = apps/OGLApps/include/app02.hpp; sourceTree = "<group>"; };
+		9D8C8C501E6CC2BA003FC0DD /* app02.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app02.cpp; path = apps/OGLApps/src/app02.cpp; sourceTree = "<group>"; };
 		9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = base_app.hpp; path = apps/OGLApps/include/base_app.hpp; sourceTree = "<group>"; };
 		9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app00.cpp; path = apps/OGLApps/src/app00.cpp; sourceTree = "<group>"; };
 		9D9AF0BE1D6C9C4B00CDA5CB /* app00.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app00.hpp; path = apps/OGLApps/include/app00.hpp; sourceTree = "<group>"; };
@@ -81,6 +89,11 @@
 		9DBFE8441D4D05B500182698 /* OGLViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OGLViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBFE8471D4D05B500182698 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = apps/OGLViewer/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		9DC042F81D4EA52100F1B9B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = apps/OGLViewer/Info.plist; sourceTree = SOURCE_ROOT; };
+		9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = app02_config.xml; path = apps/OGLApps/ressources/app02/app02_config.xml; sourceTree = "<group>"; };
+		9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "app02-crate.obj"; path = "apps/OGLApps/ressources/app02/app02-crate.obj"; sourceTree = "<group>"; };
+		9DC3AEFD1E6CBBA3006CD74E /* app02-fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app02-fragment-shader.fs"; path = "apps/OGLApps/ressources/app02/app02-fragment-shader.fs"; sourceTree = "<group>"; };
+		9DC3AEFE1E6CBBA3006CD74E /* app02-vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app02-vertex-shader.vs"; path = "apps/OGLApps/ressources/app02/app02-vertex-shader.vs"; sourceTree = "<group>"; };
+		9DC3AEFF1E6CBBA3006CD74E /* app02-wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "app02-wooden-crate.jpg"; path = "apps/OGLApps/ressources/app02/app02-wooden-crate.jpg"; sourceTree = "<group>"; };
 		9DD47BFE1D4EA1F9003110D9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = apps/OGLViewer/main.m; sourceTree = SOURCE_ROOT; };
 		9DD47C001D4EA212003110D9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = apps/OGLViewer/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		9DD47C051D4EA288003110D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = apps/OGLViewer/Assets.xcassets; sourceTree = SOURCE_ROOT; };
@@ -141,10 +154,11 @@
 		9D9AF0B91D6C978300CDA5CB /* include */ = {
 			isa = PBXGroup;
 			children = (
-				9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */,
-				9D9AF0D31D6CD6F600CDA5CB /* apps.hpp */,
 				9D9AF0BE1D6C9C4B00CDA5CB /* app00.hpp */,
 				9D9AF0D21D6CD66600CDA5CB /* app01.hpp */,
+				9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */,
+				9D9AF0D31D6CD6F600CDA5CB /* apps.hpp */,
+				9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -154,6 +168,7 @@
 			children = (
 				9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */,
 				9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */,
+				9D8C8C501E6CC2BA003FC0DD /* app02.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -172,6 +187,7 @@
 			children = (
 				9D9AF0CC1D6CCFA300CDA5CB /* app00 */,
 				9D9AF0CF1D6CD48600CDA5CB /* app01 */,
+				9DC3AEFA1E6CBB73006CD74E /* app02 */,
 			);
 			name = ressources;
 			sourceTree = "<group>";
@@ -239,6 +255,18 @@
 				9DD47BFE1D4EA1F9003110D9 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9DC3AEFA1E6CBB73006CD74E /* app02 */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */,
+				9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */,
+				9DC3AEFD1E6CBBA3006CD74E /* app02-fragment-shader.fs */,
+				9DC3AEFE1E6CBBA3006CD74E /* app02-vertex-shader.vs */,
+				9DC3AEFF1E6CBBA3006CD74E /* app02-wooden-crate.jpg */,
+			);
+			name = app02;
 			sourceTree = "<group>";
 		};
 		9DD47BEA1D4EA0EA003110D9 /* Dependencies */ = {
@@ -330,6 +358,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC3AF011E6CBBA3006CD74E /* app02-crate.obj in Resources */,
 				9D6540901D71BD64005D1890 /* bunny.ply in Resources */,
 				9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */,
 				9DD47C061D4EA288003110D9 /* Assets.xcassets in Resources */,
@@ -338,9 +367,13 @@
 				9D9AF0CB1D6CCF5700CDA5CB /* app00_config.xml in Resources */,
 				9DD47C091D4EA29D003110D9 /* MainMenu.xib in Resources */,
 				9D9AF0CE1D6CD48000CDA5CB /* app01_config.xml in Resources */,
+				9DC3AF031E6CBBA3006CD74E /* app02-vertex-shader.vs in Resources */,
 				9D9AF0C41D6CAB7D00CDA5CB /* app_info.plist in Resources */,
 				9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */,
+				9DC3AF021E6CBBA3006CD74E /* app02-fragment-shader.fs in Resources */,
+				9DC3AF041E6CBBA3006CD74E /* app02-wooden-crate.jpg in Resources */,
 				9D65408C1D71BC04005D1890 /* fragment-shader.fs in Resources */,
+				9DC3AF001E6CBBA3006CD74E /* app02_config.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +388,7 @@
 				9D21D6FC1D63743A00C37B4A /* ogl_view.m in Sources */,
 				9D21D6F51D6368E900C37B4A /* callback_wrapper.mm in Sources */,
 				9D9AF0C81D6CC20E00CDA5CB /* apps_wrapper.mm in Sources */,
+				9D8C8C511E6CC2BA003FC0DD /* app02.cpp in Sources */,
 				9D9AF0D11D6CD62C00CDA5CB /* app01.cpp in Sources */,
 				9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */,
 				9DD47BFF1D4EA1F9003110D9 /* main.m in Sources */,

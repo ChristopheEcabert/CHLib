@@ -13,6 +13,9 @@
 #include <string>
 
 #include "chlib/ogl/callbacks.hpp"
+#include "chlib/ogl/ogl_mesh.hpp"
+#include "chlib/ogl/camera.hpp"
+#include "chlib/ogl/technique.hpp"
 
 /**
  *  @namespace  CHLib
@@ -33,23 +36,24 @@ class BaseApp : public OGLCallbacks {
 #pragma mark Initialization
   
   /**
-   *  @name BaseApp
-   *  @fn BaseApp(const float win_width, const float win_height)
-   *  @brief  Basic constructor
-   *  @param[in]  win_width   View's width
-   *  @param[in]  win_height  View's height
-   */
-  BaseApp(const float win_width, const float win_height) :
-    win_width_(win_width),
-    win_height_(win_height) {
-  }
-  
-  /**
    *  @name ~BaseApp
    *  @fn virtual ~BaseApp(void)
    *  @brief  Destructor
    */
-  virtual ~BaseApp(void) {}
+  virtual ~BaseApp(void) {
+    if (this->mesh_) {
+      delete mesh_;
+      mesh_ = nullptr;
+    }
+    if (this->camera_) {
+      delete camera_;
+      camera_ = nullptr;
+    }
+    if (this->technique_) {
+      delete technique_;
+      technique_ = nullptr;
+    }
+  }
   
   /**
    *  @name Load
@@ -63,11 +67,12 @@ class BaseApp : public OGLCallbacks {
 #pragma mark -
 #pragma mark Protected
  protected:
-  /** Window dimension - width */
-  float win_width_;
-  /** Window dimension - hieght */
-  float win_height_;
-  
+  /** Mesh */
+  OGLMesh<float>* mesh_;
+  /** Camera */
+  OGLCamera* camera_;
+  /** Technique */
+  OGLTechnique* technique_;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_BASE_APP__ */

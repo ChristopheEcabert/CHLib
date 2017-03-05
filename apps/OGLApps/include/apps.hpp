@@ -12,7 +12,9 @@
 
 /** Debug */
 #include "app00.hpp"
-/** Basic Lighting */
+/** Geometry shader */
 #include "app01.hpp"
+/** Texture */
+#include "app02.hpp"
 
 #endif /* __CHLIB_APPS__ */

@@ -33,15 +33,14 @@ namespace CHLib {
  *  @param[in]  win_width   View's width
  *  @param[in]  win_height  View's height
  */
-App00::App00(const float win_width, const float win_height) :
-BaseApp(win_width, win_height) {
+App00::App00(const float win_width, const float win_height) {
   // Mesh
-  mesh_ = new CHLib::OGLMesh<float>();
+  this->mesh_ = new CHLib::OGLMesh<float>();
   // Camera
-  camera_ = new CHLib::OGLCamera();
-  camera_->set_window_dimension(this->win_width_, this->win_height_);
+  this->camera_ = new CHLib::OGLCamera();
+  this->camera_->set_window_dimension(win_width, win_height);
   // Technique
-  technique_ = new CHLib::OGLTechnique();  
+  this->technique_ = new CHLib::OGLTechnique();
 }
 
 /*
@@ -50,18 +49,7 @@ BaseApp(win_width, win_height) {
  *  @brief  Destructor
  */
 App00::~App00(void) {
-  if (mesh_) {
-    delete mesh_;
-    mesh_ = nullptr;
-  }
-  if (camera_) {
-    delete camera_;
-    camera_ = nullptr;
-  }
-  if (technique_) {
-    delete technique_;
-    technique_ = nullptr;
-  }
+  BaseApp::~BaseApp();
 }
 
 /*
@@ -76,23 +64,23 @@ int App00::Load(const std::string& config) {
   std::string dir, file, ext;
   CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
-  err = mesh_->Load(dir + "bunny.ply");
-  mesh_->ComputeVertexNormal();
-  err |= mesh_->InitOpenGLContext();
+  err = this->mesh_->Load(dir + "bunny.ply");
+  this->mesh_->ComputeVertexNormal();
+  err |= this->mesh_->InitOpenGLContext();
   if (!err) {
     // Setup technique
     std::vector<std::string> shaders_file = {dir + "vertex-shader.vs",
       dir + "fragment-shader.fs"};
-    err = technique_->Init(shaders_file);
-    err |= technique_->Finalize();
+    err = this->technique_->Init(shaders_file);
+    err |= this->technique_->Finalize();
     // Setup camera
-    camera_->LookAt(Vector3<float>(0.f, 0.0f, 0.4f),
-                    Vector3<float>(0.f, 0.0f, 0.f));
+    this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 0.4f),
+                          Vector3<float>(0.f, 0.0f, 0.f));
 
     // update uniform
-    technique_->Use();
-    technique_->SetUniform("camera", camera_->get_transform());
-    technique_->StopUsing();
+    this->technique_->Use();
+    this->technique_->SetUniform("camera", camera_->get_transform());
+    this->technique_->StopUsing();
   }
   return err;
 }
@@ -110,7 +98,7 @@ int App00::Load(const std::string& config) {
  */
 void App00::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
   // Pass event to camera
-  camera_->OnKeyboard(key, state, this->delta_time_);
+  this->camera_->OnKeyboard(key, state, this->delta_time_);
 }
 
 /*
@@ -123,21 +111,21 @@ void App00::OGLRenderCb(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   // Enable VAO
-  mesh_->Bind();
+  this->mesh_->Bind();
   // Enable program
-  technique_->Use();
-  technique_->SetUniform("camera", camera_->get_transform());
+  this->technique_->Use();
+  this->technique_->SetUniform("camera", this->camera_->get_transform());
   // Draw triangle
-  const std::vector<OGLMesh<float>::Triangle>& tri = mesh_->get_triangle();
+  const auto& tri = this->mesh_->get_triangle();
   glDrawElementsBaseVertex(GL_TRIANGLES,
                            static_cast<GLsizei>(tri.size() * 3),
                            GL_UNSIGNED_INT,
                            0,
                            0);
   // Make sure the VAO is not changed from the outside
-  mesh_->Unbind();
+  this->mesh_->Unbind();
   // Stop program
-  technique_->StopUsing();
+  this->technique_->StopUsing();
 }
   
 /*
@@ -148,7 +136,7 @@ void App00::OGLRenderCb(void) {
  * @param[in] y   Mouse's Y coordinate
  */
 void App00::OGLPassiveMouseCb(const float x, const float y) {
-  camera_->OnMouseMove(static_cast<int>(x), static_cast<int>(y));
+  this->camera_->OnMouseMove(static_cast<int>(x), static_cast<int>(y));
 }
   
 /*
@@ -164,13 +152,13 @@ void App00::OGLPassiveMouseCb(const float x, const float y) {
  * @param[in] y       Mouse's Y coordinate
  */
 void App00::OGLMouseCb(const OGLMouse& button,
-                const OGLKeyState& state,
-                const float x,
-                const float y) {
-  camera_->OnMouseClick(button,
-                        state,
-                        static_cast<int>(x),
-                        static_cast<int>(y));
+                       const OGLKeyState& state,
+                       const float x,
+                       const float y) {
+  this->camera_->OnMouseClick(button,
+                              state,
+                              static_cast<int>(x),
+                              static_cast<int>(y));
 }
   
 /*
@@ -182,10 +170,8 @@ void App00::OGLMouseCb(const OGLMouse& button,
  */
 void App00::OGLResizeCb(const float width, const float height) {
   // Update camera
-  this->win_width_ = width;
-  this->win_height_ = height;
-  camera_->set_window_dimension(this->win_width_, this->win_height_);
-  camera_->UpdateProjectionTransform();
+  this->camera_->set_window_dimension(width, height);
+  this->camera_->UpdateProjectionTransform();
 }
   
 }  // namespace CHLib

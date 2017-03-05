@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <string>
 #include <istream>
+#include <fstream>
 
 /**
  *  @namespace  CHLib
@@ -64,7 +65,7 @@ class Image {
   
   /**
    *  @name Load
-   *  @fn virtual int Load(const std::string& filename) = 0
+   *  @fn int Load(const std::string& filename)
    *  @brief  Load image from dist
    *  @param[in]  filename  Path to ressource on the disk
    *  @return -1 if error, 0 otherwise
@@ -82,21 +83,21 @@ class Image {
   
   /**
    *  @name Save
-   *  @fn virtual int Save(const std::string& filename) = 0
+   *  @fn virtual int Save(const std::string& filename) const = 0
    *  @brief  Save image to dist
    *  @param[in]  filename  Path to ressource on the disk
    *  @return -1 if error, 0 otherwise
    */
-  virtual int Save(const std::string& filename) = 0;
+  virtual int Save(const std::string& filename) const = 0;
   
   /**
    *  @name Save
-   *  @fn virtual int Save(std::ostream& stream) = 0
+   *  @fn virtual int Save(std::ostream& stream) const = 0
    *  @brief  Load image to dist
    *  @param[in]  stream  Binary stream to where to save the ressource
    *  @return -1 if error, 0 otherwise
    */
-  virtual int Save(std::ostream& stream) = 0;
+  virtual int Save(std::ostream& stream) const = 0;
   
 #pragma mark -
 #pragma mark accessors
@@ -151,7 +152,5 @@ class Image {
   /** Image data */
   unsigned char* data_;
 };
-  
 }  // namespace CHLib
-
 #endif /* __CHLIB_IMAGE__ */

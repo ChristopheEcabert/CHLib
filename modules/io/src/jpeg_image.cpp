@@ -69,7 +69,7 @@ JPEGImage::~JPEGImage(void) {
   
 /*
  *  @name Load
- *  @fn virtual int Load(const std::string& filename) = 0
+ *  @fn int Load(const std::string& filename)
  *  @brief  Load image from dist
  *  @param[in]  filename  Path to ressource on the disk
  *  @return -1 if error, 0 otherwise
@@ -192,7 +192,7 @@ int JPEGImage::Load(std::istream& stream) {
  *  @param[in]  filename  Path to ressource on the disk
  *  @return -1 if error, 0 otherwise
  */
-int JPEGImage::Save(const std::string& filename) {
+int JPEGImage::Save(const std::string& filename) const {
   int err = -1;
   // Check filename
   std::string dir, file, ext, f;
@@ -223,7 +223,7 @@ int JPEGImage::Save(const std::string& filename) {
  *  @param[in]  stream  Binary stream to where to save the ressource
  *  @return -1 if error, 0 otherwise
  */
-int JPEGImage::Save(std::ostream& stream) {
+int JPEGImage::Save(std::ostream& stream) const {
   int err = -1;
   if (stream.good() && this->data_) {
     // This struct contains the JPEG compression parameters and pointers to

@@ -39,6 +39,23 @@ class JPEGImage : public Image {
   JPEGImage(void);
   
   /**
+   *  @name JPEGImage
+   *  @fn JPEGImage(const JPEGImage& other) = delete
+   *  @brief  Copy Constructor
+   *  @param[in]  other Object to copy
+   */
+  JPEGImage(const JPEGImage& other) = delete;
+  
+  /**
+   *  @name operator=
+   *  @fn JPEGImage& operator=(const JPEGImage& rhs) = delete
+   *  @brief  Assignment operator
+   *  @param[in]  rhs Object to assign form
+   *  @return Newly assign object
+   */
+  JPEGImage& operator=(const JPEGImage& rhs) = delete;
+  
+  /**
    *  @name ~JPEGImage
    *  @fn ~JPEGImage(void)
    *  @brief  Destructor
@@ -65,23 +82,21 @@ class JPEGImage : public Image {
   
   /**
    *  @name Save
-   *  @fn int Save(const std::string& filename)
+   *  @fn int Save(const std::string& filename) const
    *  @brief  Save image to dist
    *  @param[in]  filename  Path to ressource on the disk
    *  @return -1 if error, 0 otherwise
    */
-  int Save(const std::string& filename);
+  int Save(const std::string& filename) const;
   
   /**
    *  @name Save
-   *  @fn int Save(std::ostream& stream)
+   *  @fn int Save(std::ostream& stream) const
    *  @brief  Load image to dist
    *  @param[in]  stream  Binary stream to where to save the ressource
    *  @return -1 if error, 0 otherwise
    */
-  int Save(std::ostream& stream);
-  
-  
+  int Save(std::ostream& stream) const;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_JPEG_IMAGE__ */

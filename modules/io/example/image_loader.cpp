@@ -12,6 +12,7 @@
 #include "chlib/core/cmd_parser.hpp"
 #include "chlib/core/string_util.hpp"
 #include "chlib/io/jpeg_image.hpp"
+#include "chlib/io/tga_image.hpp"
 
 int main(const int argc, const char** argv) {
   // Define argument needed
@@ -33,7 +34,7 @@ int main(const int argc, const char** argv) {
     if (ext == "jpg") {
       image = new CHLib::JPEGImage();
     } else if (ext == "tga") {
-      
+      image = new CHLib::TGAImage();
     } else {
       std::cout << "Unknown image type" << std::endl;
       err = -1;
@@ -43,7 +44,10 @@ int main(const int argc, const char** argv) {
     if (!err) {
       err = image->Load(imagepath);
       if (!err) {
-        image->Save("toto");
+        std::string f = (dir.empty() ?
+                         file + "_save" :
+                         dir + "/" + file + "_save");
+        image->Save(f);
       }
     }
     std::cout << "Done : " << (!err ? "Success" : "Fail") << std::endl;

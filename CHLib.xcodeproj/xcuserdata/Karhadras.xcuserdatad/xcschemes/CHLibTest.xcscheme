@@ -64,7 +64,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-i wooden-crate.jpg"
+            argument = "-i Lara_Hair_D.tga"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

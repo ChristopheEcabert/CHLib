@@ -9,8 +9,8 @@
 
 #import "apps_wrapper.h"
 
-#import "base_app.hpp"
-#import "apps.hpp"
+#include "base_app.hpp"
+#include "apps.hpp"
 
 @interface AppsWrapper() {
   /** Application pointer */
@@ -55,15 +55,18 @@
     delete app_;
   }
   // Load proper app
-  const char* name = [app_name UTF8String];
-  if (strncmp(name, "Debug", 5) == 0) {
+  std::string name([app_name UTF8String]);
+  if (name == "Hello World") {
     app_ = new CHLib::App00(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
-  } else if (strncmp(name, "Geometry Shader", 5) == 0) {
+  } else if (name == "Geometry Shader") {
     app_ = new CHLib::App01(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
+  } else if (name == "Texture") {
+    app_ = new CHLib::App02(width_, height_);
+    err = app_->Load(std::string([config UTF8String]));
   }
-  
+
   return err;
 }
 
