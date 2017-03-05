@@ -7,8 +7,8 @@
  *  Copyright © 2017 Christophe Ecabert. All rights reserved.
  */
 
-#ifndef __CHLIB_APP01__
-#define __CHLIB_APP01__
+#ifndef __CHLIB_APP02__
+#define __CHLIB_APP02__
 
 #include "base_app.hpp"
 
@@ -139,4 +139,4 @@ class App02 : public BaseApp {
   OGLTexture* texture_;
 };
 }  // namespace CHLib
-#endif /* __CHLIB_APP01__ */
+#endif /* __CHLIB_APP02__ */

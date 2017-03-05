@@ -194,6 +194,10 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
 
   /** Float attribute and uniform setters */
   OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLfloat);
+  /** Int attribute and uniform setters */
+  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLint);
+  /** Unsigned Int attribute and uniform setters */
+  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLuint);
   
   /**
    * @name  SetUniformMat3

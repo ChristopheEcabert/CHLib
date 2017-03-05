@@ -70,8 +70,7 @@ int App02::Load(const std::string& config) {
   std::string dir, file, ext;
   CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
-  err = this->mesh_->Load(dir + "bunny.ply");
-  this->mesh_->ComputeVertexNormal();
+  err = this->mesh_->Load(dir + "app02-crate.obj");
   err |= this->mesh_->InitOpenGLContext();
   // Load image + texture
   JPEGImage image;
@@ -86,7 +85,7 @@ int App02::Load(const std::string& config) {
     err = this->technique_->Init(shaders_file);
     err |= this->technique_->Finalize();
     // Setup camera
-    this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 2.0f),
+    this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 10.0f),
                           Vector3<float>(0.f, 0.0f, 0.f));
     
     // update uniform
@@ -129,6 +128,7 @@ void App02::OGLRenderCb(void) {
   // Enable program
   this->technique_->Use();
   this->technique_->SetUniform("camera", camera_->get_transform());
+  this->technique_->SetUniform("obj_texture", 0);
   // Draw triangle
   const auto& tri = mesh_->get_triangle();
   glDrawElementsBaseVertex(GL_TRIANGLES,

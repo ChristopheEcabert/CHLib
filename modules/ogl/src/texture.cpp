@@ -108,7 +108,7 @@ int OGLTexture::Upload(const Image& image,
       // Texutre
       glTexImage2D(GL_TEXTURE_2D,
                    0,
-                   this->format_,
+                   static_cast<GLint>(this->format_),
                    static_cast<GLsizei>(this->widht_),
                    static_cast<GLsizei>(this->height_),
                    0,

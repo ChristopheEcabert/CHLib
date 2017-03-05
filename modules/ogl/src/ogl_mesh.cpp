@@ -108,7 +108,7 @@ int OGLMesh<T>::InitOpenGLContext(void) {
                  reinterpret_cast<GLvoid*>(this->tangent_.data()),
                  GL_STATIC_DRAW);
     glEnableVertexAttribArray(kTangent);
-    glVertexAttribPointer(kTCoord, 3, data_t, GL_FALSE, 0, NULL);
+    glVertexAttribPointer(kTangent, 3, data_t, GL_FALSE, 0, NULL);
   }
   // Vertex color
   if (this->vertex_color_.size() > 0) {

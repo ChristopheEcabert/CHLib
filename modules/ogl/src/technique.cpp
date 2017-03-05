@@ -286,6 +286,8 @@ void OGLTechnique::SetUniform4v(const GLchar* name, const OGL_TYPE* v, GLsizei c
   
 /** Float attribute and uniform setters implementation */
 ATTRIB_N_UNIFORM_SETTERS(GLfloat, , f);
+ATTRIB_N_UNIFORM_SETTERS(GLint, I, i);
+ATTRIB_N_UNIFORM_SETTERS(GLuint, I, ui);
   
 /*
  * @name  SetUniformMat3
