@@ -107,8 +107,7 @@ Mesh<T>::Mesh(void) : bbox_is_computed_(false) {
 
 /*
  *  @name Mesh
- *  @fn Mesh(const std::string& filename,
- const LTS5::OGLProgram& program)
+ *  @fn Mesh(const std::string& filename)
  *  @brief  Load mesh from supported file :
  *            .obj, .ply, .tri
  */

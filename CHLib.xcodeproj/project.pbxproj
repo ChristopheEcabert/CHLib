@@ -17,6 +17,10 @@
 		9D62BD7F1D70D074000DD363 /* technique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD7E1D70D074000DD363 /* technique.cpp */; };
 		9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD811D70E51C000DD363 /* string_util.cpp */; };
 		9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6A33D91D4EAB650060261F /* OpenGL.framework */; };
+		9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */; };
+		9DC3AEEB1E6C61EA006CD74E /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC3AEEA1E6C61EA006CD74E /* libjpeg.a */; };
+		9DC3AEF01E6C6280006CD74E /* image_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEEF1E6C6280006CD74E /* image_loader.cpp */; };
+		9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEF11E6C62DA006CD74E /* cmd_parser.cpp */; };
 		9DD47BE81D4E9F09003110D9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DD47BE71D4E9F09003110D9 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +72,12 @@
 		9D62BD811D70E51C000DD363 /* string_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = string_util.cpp; path = modules/core/src/string_util.cpp; sourceTree = SOURCE_ROOT; };
 		9D6A33D91D4EAB650060261F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		9DBFE8611D4D073400182698 /* libCHLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCHLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DC3AEE41E6C57F5006CD74E /* image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = image.hpp; path = modules/io/include/chlib/io/image.hpp; sourceTree = SOURCE_ROOT; };
+		9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = jpeg_image.hpp; path = modules/io/include/chlib/io/jpeg_image.hpp; sourceTree = SOURCE_ROOT; };
+		9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jpeg_image.cpp; path = modules/io/src/jpeg_image.cpp; sourceTree = SOURCE_ROOT; };
+		9DC3AEEA1E6C61EA006CD74E /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = 3rd_party/install/lib/libjpeg.a; sourceTree = "<group>"; };
+		9DC3AEEF1E6C6280006CD74E /* image_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image_loader.cpp; path = modules/io/example/image_loader.cpp; sourceTree = "<group>"; };
+		9DC3AEF11E6C62DA006CD74E /* cmd_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cmd_parser.cpp; path = modules/core/src/cmd_parser.cpp; sourceTree = SOURCE_ROOT; };
 		9DCE74AD1E03E8F200D1B68D /* quaternion.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = quaternion.hpp; path = modules/core/include/chlib/core/math/quaternion.hpp; sourceTree = SOURCE_ROOT; };
 		9DD47BE71D4E9F09003110D9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -87,6 +97,7 @@
 			files = (
 				9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */,
 				9DD47BE81D4E9F09003110D9 /* Cocoa.framework in Frameworks */,
+				9DC3AEEB1E6C61EA006CD74E /* libjpeg.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +155,7 @@
 			children = (
 				9D04F1711D51162800E6E828 /* error.cpp */,
 				9D62BD811D70E51C000DD363 /* string_util.cpp */,
+				9DC3AEF11E6C62DA006CD74E /* cmd_parser.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -173,6 +185,7 @@
 			children = (
 				9DD47BE91D4E9F25003110D9 /* Dependencies */,
 				9DBFE8631D4D073400182698 /* modules */,
+				9DC3AEED1E6C622E006CD74E /* test */,
 				9DBFE8621D4D073400182698 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -191,6 +204,7 @@
 			children = (
 				9D3362071D4D1C4A009C36CF /* core */,
 				9D04F1731D51173900E6E828 /* geometry */,
+				9DC3AEE21E6C57CA006CD74E /* io */,
 				9DBFE86F1D4D07A300182698 /* ogl */,
 			);
 			name = modules;
@@ -229,9 +243,60 @@
 			name = include;
 			sourceTree = "<group>";
 		};
+		9DC3AEE21E6C57CA006CD74E /* io */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEE51E6C57FF006CD74E /* include */,
+				9DC3AEE31E6C57D4006CD74E /* src */,
+			);
+			name = io;
+			sourceTree = "<group>";
+		};
+		9DC3AEE31E6C57D4006CD74E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		9DC3AEE51E6C57FF006CD74E /* include */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEE41E6C57F5006CD74E /* image.hpp */,
+				9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		9DC3AEEC1E6C61EE006CD74E /* jpeg */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEEA1E6C61EA006CD74E /* libjpeg.a */,
+			);
+			name = jpeg;
+			sourceTree = "<group>";
+		};
+		9DC3AEED1E6C622E006CD74E /* test */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEEE1E6C6238006CD74E /* io */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		9DC3AEEE1E6C6238006CD74E /* io */ = {
+			isa = PBXGroup;
+			children = (
+				9DC3AEEF1E6C6280006CD74E /* image_loader.cpp */,
+			);
+			name = io;
+			sourceTree = "<group>";
+		};
 		9DD47BE91D4E9F25003110D9 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				9DC3AEEC1E6C61EE006CD74E /* jpeg */,
 				9D62BD7C1D70C92F000DD363 /* ply */,
 				9DD47BE71D4E9F09003110D9 /* Cocoa.framework */,
 				9D6A33D91D4EAB650060261F /* OpenGL.framework */,
@@ -328,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC3AEF01E6C6280006CD74E /* image_loader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +408,8 @@
 				9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */,
 				9D04F1721D51162800E6E828 /* error.cpp in Sources */,
 				9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */,
+				9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */,
+				9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +487,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/modules/core/include $(PROJECT_DIR)/modules/geometry/include $(PROJECT_DIR)/modules/ogl/include $(PROJECT_DIR)/3rd_party";
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/modules/core/include $(PROJECT_DIR)/modules/io/include $(PROJECT_DIR)/modules/geometry/include $(PROJECT_DIR)/modules/ogl/include $(PROJECT_DIR)/3rd_party $(PROJECT_DIR)/3rd_party/install/include";
 			};
 			name = Debug;
 		};
@@ -459,7 +527,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/modules/core/include $(PROJECT_DIR)/modules/geometry/include $(PROJECT_DIR)/modules/ogl/include $(PROJECT_DIR)/3rd_party";
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/modules/core/include $(PROJECT_DIR)/modules/io/include $(PROJECT_DIR)/modules/geometry/include $(PROJECT_DIR)/modules/ogl/include $(PROJECT_DIR)/3rd_party $(PROJECT_DIR)/3rd_party/install/include";
 			};
 			name = Release;
 		};
@@ -474,6 +542,10 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd_party/install/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -489,6 +561,10 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd_party/install/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

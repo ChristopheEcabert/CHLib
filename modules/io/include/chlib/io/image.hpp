@@ -1,0 +1,157 @@
+/**
+ *  @file   image.hpp
+ *  @brief  Image abstraction class
+ *
+ *  @author Christophe Ecabert
+ *  @date   05.03.17
+ *  Copyright © 2017 Christophe Ecabert. All rights reserved.
+ */
+
+#ifndef __CHLIB_IMAGE__
+#define __CHLIB_IMAGE__
+
+#include <cstdio>
+#include <string>
+#include <istream>
+
+/**
+ *  @namespace  CHLib
+ *  @brief      Chris dev space
+ */
+namespace CHLib {
+  
+/**
+ *  @class  Image
+ *  @brief  Image abstraction layer
+ *  @author Christophe Ecabert
+ *  @date   05.03.17
+ */
+class Image {
+ public:
+  
+#pragma mark -
+#pragma mark Type definition
+  
+  /**
+   *  @enum   Format
+   *  @brief  List of possible image format
+   */
+  enum Format {
+    /** Grayscale */
+    kGrayscale = 1,
+    /** Color - RGB */
+    kRGB = 3,
+    /** Color - RGBA */
+    kRGBA = 4
+  };
+  
+#pragma mark -
+#pragma mark Initialization
+  
+  /**
+   *  @name Image
+   *  @fn Image(void)
+   *  @brief  Constructor
+   */
+  Image(void) : format_(kGrayscale), width_(0), height_(0), data_(nullptr) {}
+  
+  /**
+   *  @name ~Image
+   *  @fn virtual ~Image(void)
+   *  @brief  Destructor
+   */
+  virtual ~Image(void) {}
+  
+  /**
+   *  @name Load
+   *  @fn virtual int Load(const std::string& filename) = 0
+   *  @brief  Load image from dist
+   *  @param[in]  filename  Path to ressource on the disk
+   *  @return -1 if error, 0 otherwise
+   */
+  virtual int Load(const std::string& filename) = 0;
+  
+  /**
+   *  @name Load
+   *  @fn virtual int Load(std::istream& stream) = 0
+   *  @brief  Load image from dist
+   *  @param[in]  stream  Binary stream from where to load the ressource
+   *  @return -1 if error, 0 otherwise
+   */
+  virtual int Load(std::istream& stream) = 0;
+  
+  /**
+   *  @name Save
+   *  @fn virtual int Save(const std::string& filename) = 0
+   *  @brief  Save image to dist
+   *  @param[in]  filename  Path to ressource on the disk
+   *  @return -1 if error, 0 otherwise
+   */
+  virtual int Save(const std::string& filename) = 0;
+  
+  /**
+   *  @name Save
+   *  @fn virtual int Save(std::ostream& stream) = 0
+   *  @brief  Load image to dist
+   *  @param[in]  stream  Binary stream to where to save the ressource
+   *  @return -1 if error, 0 otherwise
+   */
+  virtual int Save(std::ostream& stream) = 0;
+  
+#pragma mark -
+#pragma mark accessors
+  
+  /**
+   *  @name   format
+   *  @fn     const Format& format(void) const
+   *  @brief  Provide image format
+   *  @return Image format
+   */
+  const Format& format(void) const {
+    return format_;
+  }
+  
+  /**
+   *  @name   width
+   *  @fn     const size_t& width(void) const
+   *  @brief  Provide image width
+   *  @return Image width
+   */
+  const size_t& width(void) const {
+    return width_;
+  }
+  
+  /**
+   *  @name   height
+   *  @fn     const size_t& height(void) const
+   *  @brief  Provide image height
+   *  @return Image height
+   */
+  const size_t& height(void) const {
+    return height_;
+  }
+  
+  /**
+   *  @name   data
+   *  @fn     const unsigned char* data(void) const
+   *  @brief  Provide image data
+   *  @return Image data
+   */
+  const unsigned char* data(void) const {
+    return data_;
+  }
+  
+ protected:
+  /** Image format */
+  Format format_;
+  /** Image width */
+  size_t width_;
+  /** Image height */
+  size_t height_;
+  /** Image data */
+  unsigned char* data_;
+};
+  
+}  // namespace CHLib
+
+#endif /* __CHLIB_IMAGE__ */

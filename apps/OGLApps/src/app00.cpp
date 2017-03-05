@@ -14,7 +14,7 @@
 #include "app00.hpp"
 #include "chlib/core/string_util.hpp"
 
-#include "chlib/core/math/quaternion.hpp"
+#include "chlib/io/jpeg_image.hpp"
 
 
 /**
@@ -34,14 +34,14 @@ namespace CHLib {
  *  @param[in]  win_height  View's height
  */
 App00::App00(const float win_width, const float win_height) :
-  BaseApp(win_width, win_height) {
+BaseApp(win_width, win_height) {
   // Mesh
   mesh_ = new CHLib::OGLMesh<float>();
   // Camera
   camera_ = new CHLib::OGLCamera();
   camera_->set_window_dimension(this->win_width_, this->win_height_);
   // Technique
-  technique_ = new CHLib::OGLTechnique();
+  technique_ = new CHLib::OGLTechnique();  
 }
 
 /*

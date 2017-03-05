@@ -19,7 +19,7 @@
       #pragma warning (disable : 4068 )
     #endif
   #else
-    #define LTS5_EXPORTS __declspec(dllimport)
+    #define CHLIB_EXPORTS __declspec(dllimport)
   #endif
 #else
   #define CHLIB_EXPORTS

@@ -64,6 +64,8 @@ void StringUtil::ExtractDirectory(const std::string& path,
   if (pext != std::string::npos) {
     *file = path.substr(pdir, pext - pdir);
     *ext = path.substr(pext + 1, path.length() - pext - 1);
+  } else {
+    *file = path.substr(pdir);
   }
 }
   
