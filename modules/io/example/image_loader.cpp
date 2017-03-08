@@ -12,6 +12,7 @@
 #include "chlib/core/cmd_parser.hpp"
 #include "chlib/core/string_util.hpp"
 #include "chlib/io/jpeg_image.hpp"
+#include "chlib/io/png_image.hpp"
 #include "chlib/io/tga_image.hpp"
 
 int main(const int argc, const char** argv) {
@@ -35,6 +36,8 @@ int main(const int argc, const char** argv) {
       image = new CHLib::JPEGImage();
     } else if (ext == "tga") {
       image = new CHLib::TGAImage();
+    } else if (ext == "png") {
+      image = new CHLib::PNGImage();
     } else {
       std::cout << "Unknown image type" << std::endl;
       err = -1;

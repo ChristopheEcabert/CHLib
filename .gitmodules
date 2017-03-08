@@ -1,3 +1,6 @@
 [submodule "3rd_party/libjpeg-turbo"]
 	path = 3rd_party/libjpeg-turbo
 	url = https://github.com/libjpeg-turbo/libjpeg-turbo.git
+[submodule "3rd_party/libpng"]
+	path = 3rd_party/libpng
+	url = https://github.com/glennrp/libpng.git

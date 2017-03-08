@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		9D04F1721D51162800E6E828 /* error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D04F1711D51162800E6E828 /* error.cpp */; };
 		9D04F1781D51185F00E6E828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D04F1771D51185F00E6E828 /* mesh.cpp */; };
+		9D21C0951E6D94B2006C0E8E /* png_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21C0941E6D94B2006C0E8E /* png_image.cpp */; };
+		9D21C0971E6D9D56006C0E8E /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21C0961E6D9D56006C0E8E /* libpng16.a */; };
+		9D21C09B1E6D9F09006C0E8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21C09A1E6D9F09006C0E8E /* libz.tbd */; };
 		9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */; };
 		9D21D6EC1D634FDC00C37B4A /* libCHLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBFE8611D4D073400182698 /* libCHLib.dylib */; };
 		9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D3362021D4D0B3F009C36CF /* camera.cpp */; };
@@ -55,6 +58,10 @@
 		9D04F1761D51179500E6E828 /* mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = mesh.hpp; path = modules/geometry/include/chlib/geometry/mesh.hpp; sourceTree = SOURCE_ROOT; };
 		9D04F1771D51185F00E6E828 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mesh.cpp; path = modules/geometry/src/mesh.cpp; sourceTree = SOURCE_ROOT; };
 		9D04F1791D511D0800E6E828 /* aabb.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = aabb.hpp; path = modules/geometry/include/chlib/geometry/aabb.hpp; sourceTree = SOURCE_ROOT; };
+		9D21C0931E6D9430006C0E8E /* png_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = png_image.hpp; path = modules/io/include/chlib/io/png_image.hpp; sourceTree = SOURCE_ROOT; };
+		9D21C0941E6D94B2006C0E8E /* png_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = png_image.cpp; path = modules/io/src/png_image.cpp; sourceTree = SOURCE_ROOT; };
+		9D21C0961E6D9D56006C0E8E /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = 3rd_party/install/lib/libpng16.a; sourceTree = "<group>"; };
+		9D21C09A1E6D9F09006C0E8E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9D21D6DC1D634B0600C37B4A /* ogl_mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ogl_mesh.hpp; path = modules/ogl/include/chlib/ogl/ogl_mesh.hpp; sourceTree = SOURCE_ROOT; };
 		9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ogl_mesh.cpp; path = modules/ogl/src/ogl_mesh.cpp; sourceTree = SOURCE_ROOT; };
 		9D21D6E31D634F3700C37B4A /* CHLibTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CHLibTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +109,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D21C09B1E6D9F09006C0E8E /* libz.tbd in Frameworks */,
+				9D21C0971E6D9D56006C0E8E /* libpng16.a in Frameworks */,
 				9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */,
 				9DD47BE81D4E9F09003110D9 /* Cocoa.framework in Frameworks */,
 				9DC3AEEB1E6C61EA006CD74E /* libjpeg.a in Frameworks */,
@@ -135,6 +144,22 @@
 				9D04F1791D511D0800E6E828 /* aabb.hpp */,
 			);
 			name = include;
+			sourceTree = "<group>";
+		};
+		9D21C0981E6D9D5A006C0E8E /* png */ = {
+			isa = PBXGroup;
+			children = (
+				9D21C0961E6D9D56006C0E8E /* libpng16.a */,
+			);
+			name = png;
+			sourceTree = "<group>";
+		};
+		9D21C0991E6D9F08006C0E8E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9D21C09A1E6D9F09006C0E8E /* libz.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9D3362071D4D1C4A009C36CF /* core */ = {
@@ -194,6 +219,7 @@
 				9DBFE8631D4D073400182698 /* modules */,
 				9DC3AEED1E6C622E006CD74E /* test */,
 				9DBFE8621D4D073400182698 /* Products */,
+				9D21C0991E6D9F08006C0E8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */,
+				9D21C0941E6D94B2006C0E8E /* png_image.cpp */,
 				9DC3AEF31E6C8CC8006CD74E /* tga_image.cpp */,
 			);
 			name = src;
@@ -276,6 +303,7 @@
 				9DC3AEE41E6C57F5006CD74E /* image.hpp */,
 				9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */,
 				9DC3AEF51E6C8D05006CD74E /* tga_image.hpp */,
+				9D21C0931E6D9430006C0E8E /* png_image.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -307,6 +335,7 @@
 		9DD47BE91D4E9F25003110D9 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				9D21C0981E6D9D5A006C0E8E /* png */,
 				9DC3AEEC1E6C61EE006CD74E /* jpeg */,
 				9D62BD7C1D70C92F000DD363 /* ply */,
 				9DD47BE71D4E9F09003110D9 /* Cocoa.framework */,
@@ -422,6 +451,7 @@
 				9DC3AEF41E6C8CC8006CD74E /* tga_image.cpp in Sources */,
 				9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */,
 				9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */,
+				9D21C0951E6D94B2006C0E8E /* png_image.cpp in Sources */,
 				9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */,
 				9DC3AEF81E6CADF0006CD74E /* texture.cpp in Sources */,
 			);
@@ -443,7 +473,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -453,7 +483,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -496,7 +526,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -537,7 +566,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -560,6 +588,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/3rd_party/install/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -579,6 +608,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/3rd_party/install/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

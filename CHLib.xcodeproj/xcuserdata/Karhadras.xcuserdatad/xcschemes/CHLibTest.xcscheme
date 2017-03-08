@@ -64,7 +64,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-i wooden-crate.jpg"
+            argument = "-i body_dif.png"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
