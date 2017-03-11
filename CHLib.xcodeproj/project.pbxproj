@@ -14,6 +14,8 @@
 		9D21C09B1E6D9F09006C0E8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21C09A1E6D9F09006C0E8E /* libz.tbd */; };
 		9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */; };
 		9D21D6EC1D634FDC00C37B4A /* libCHLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBFE8611D4D073400182698 /* libCHLib.dylib */; };
+		9D229CFB1E742F08005C40C1 /* texture_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D229CFA1E742F08005C40C1 /* texture_manager.cpp */; };
+		9D229CFE1E743736005C40C1 /* image_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D229CFD1E743736005C40C1 /* image_loader.cpp */; };
 		9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D3362021D4D0B3F009C36CF /* camera.cpp */; };
 		9D62BD7A1D70C92B000DD363 /* ply.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D62BD781D70C92B000DD363 /* ply.h */; };
 		9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD791D70C92B000DD363 /* plyfile.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -67,6 +69,10 @@
 		9D21D6E31D634F3700C37B4A /* CHLibTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CHLibTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D21D6ED1D6362D000C37B4A /* key_types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = key_types.hpp; path = modules/ogl/include/chlib/ogl/key_types.hpp; sourceTree = SOURCE_ROOT; };
 		9D21D6EE1D63638000C37B4A /* callbacks.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = callbacks.hpp; path = modules/ogl/include/chlib/ogl/callbacks.hpp; sourceTree = SOURCE_ROOT; };
+		9D229CF91E742EB8005C40C1 /* texture_manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = texture_manager.hpp; path = modules/ogl/include/chlib/ogl/texture_manager.hpp; sourceTree = SOURCE_ROOT; };
+		9D229CFA1E742F08005C40C1 /* texture_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_manager.cpp; path = modules/ogl/src/texture_manager.cpp; sourceTree = SOURCE_ROOT; };
+		9D229CFC1E743622005C40C1 /* image_loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = image_loader.hpp; path = modules/io/include/chlib/io/image_loader.hpp; sourceTree = SOURCE_ROOT; };
+		9D229CFD1E743736005C40C1 /* image_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image_loader.cpp; path = modules/io/src/image_loader.cpp; sourceTree = SOURCE_ROOT; };
 		9D3362021D4D0B3F009C36CF /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = camera.cpp; path = modules/ogl/src/camera.cpp; sourceTree = SOURCE_ROOT; };
 		9D3362041D4D171E009C36CF /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = camera.hpp; path = modules/ogl/include/chlib/ogl/camera.hpp; sourceTree = SOURCE_ROOT; };
 		9D3362051D4D196B009C36CF /* tarball.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = tarball.hpp; path = modules/ogl/include/chlib/ogl/tarball.hpp; sourceTree = SOURCE_ROOT; };
@@ -260,6 +266,7 @@
 				9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */,
 				9D62BD7E1D70D074000DD363 /* technique.cpp */,
 				9DC3AEF71E6CADF0006CD74E /* texture.cpp */,
+				9D229CFA1E742F08005C40C1 /* texture_manager.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -274,6 +281,7 @@
 				9D21D6EE1D63638000C37B4A /* callbacks.hpp */,
 				9D62BD7D1D70D02A000DD363 /* technique.hpp */,
 				9DC3AEF91E6CAE27006CD74E /* texture.hpp */,
+				9D229CF91E742EB8005C40C1 /* texture_manager.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */,
 				9D21C0941E6D94B2006C0E8E /* png_image.cpp */,
 				9DC3AEF31E6C8CC8006CD74E /* tga_image.cpp */,
+				9D229CFD1E743736005C40C1 /* image_loader.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -304,6 +313,7 @@
 				9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */,
 				9DC3AEF51E6C8D05006CD74E /* tga_image.hpp */,
 				9D21C0931E6D9430006C0E8E /* png_image.hpp */,
+				9D229CFC1E743622005C40C1 /* image_loader.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -444,12 +454,14 @@
 			files = (
 				9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */,
 				9D04F1781D51185F00E6E828 /* mesh.cpp in Sources */,
+				9D229CFE1E743736005C40C1 /* image_loader.cpp in Sources */,
 				9D62BD7F1D70D074000DD363 /* technique.cpp in Sources */,
 				9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */,
 				9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */,
 				9D04F1721D51162800E6E828 /* error.cpp in Sources */,
 				9DC3AEF41E6C8CC8006CD74E /* tga_image.cpp in Sources */,
 				9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */,
+				9D229CFB1E742F08005C40C1 /* texture_manager.cpp in Sources */,
 				9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */,
 				9D21C0951E6D94B2006C0E8E /* png_image.cpp in Sources */,
 				9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */,

@@ -14,7 +14,7 @@
 #include "app02.hpp"
 
 #include "chlib/core/string_util.hpp"
-#include "chlib/io/jpeg_image.hpp"
+#include "chlib/ogl/texture_manager.hpp"
 
 
 /**
@@ -52,10 +52,6 @@ App02::App02(const float win_width, const float win_height) {
  */
 App02::~App02(void) {
   BaseApp::~BaseApp();
-  if (texture_) {
-    delete texture_;
-    texture_ = nullptr;
-  }
 }
 
 /*
@@ -73,12 +69,11 @@ int App02::Load(const std::string& config) {
   err = this->mesh_->Load(dir + "app02-crate.obj");
   err |= this->mesh_->InitOpenGLContext();
   // Load image + texture
-  JPEGImage image;
-  err |= image.Load(dir + "app02-wooden-crate.jpg");
-  err |= this->texture_->Upload(image,
-                                OGLTexture::WrappingMode::kClampToBorder,
-                                OGLTexture::InterpolationMode::kLinear);
+  auto& manager = OGLTextureManager::Instance();
+  err = manager.Add(dir + "app02-wooden-crate.jpg", "crate");
   if (!err) {
+    // Get texture
+    this->texture_ = manager.Get("crate");
     // Setup technique
     std::vector<std::string> shaders_file = {dir + "app02-vertex-shader.vs",
                                              dir + "app02-fragment-shader.fs"};
