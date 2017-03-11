@@ -144,8 +144,23 @@ int OGLMesh<T>::InitOpenGLContext(void) {
  *  @brief  Bind vertex array object for drawing
  */
 template<typename T>
-void OGLMesh<T>::Bind(void) {
+void OGLMesh<T>::Bind(void) const {
   glBindVertexArray(vao_);
+}
+  
+/*
+ *  @name Render
+ *  @fn void Render(void) const
+ *  @brief  Render the object
+ */
+template<typename T>
+void OGLMesh<T>::Render(void) const {
+  // Render triangles
+  glDrawElementsBaseVertex(GL_TRIANGLES,
+                           static_cast<GLsizei>(this->tri_.size() * 3),
+                           GL_UNSIGNED_INT,
+                           0,
+                           0);
 }
 
 /*
@@ -154,7 +169,7 @@ void OGLMesh<T>::Bind(void) {
  *  @brief  Unbind vertex array object
  */
 template<typename T>
-void OGLMesh<T>::Unbind(void) {
+void OGLMesh<T>::Unbind(void) const {
   glBindVertexArray(0);
 }
   

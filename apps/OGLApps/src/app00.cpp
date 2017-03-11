@@ -116,12 +116,7 @@ void App00::OGLRenderCb(void) {
   this->technique_->Use();
   this->technique_->SetUniform("camera", this->camera_->get_transform());
   // Draw triangle
-  const auto& tri = this->mesh_->get_triangle();
-  glDrawElementsBaseVertex(GL_TRIANGLES,
-                           static_cast<GLsizei>(tri.size() * 3),
-                           GL_UNSIGNED_INT,
-                           0,
-                           0);
+  this->mesh_->Render();
   // Make sure the VAO is not changed from the outside
   this->mesh_->Unbind();
   // Stop program

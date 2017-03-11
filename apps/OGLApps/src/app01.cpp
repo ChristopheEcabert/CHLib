@@ -121,12 +121,7 @@ void App01::OGLRenderCb(void) {
   float time = epoch.count();
   this->technique_->SetUniform("time", time);
   // Draw triangle
-  const auto& tri = mesh_->get_triangle();
-  glDrawElementsBaseVertex(GL_TRIANGLES,
-                           static_cast<GLsizei>(tri.size() * 3),
-                           GL_UNSIGNED_INT,
-                           0,
-                           0);
+  this->mesh_->Render();
   // Make sure the VAO is not changed from the outside
   this->mesh_->Unbind();
   // Stop program

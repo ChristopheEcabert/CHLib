@@ -227,7 +227,7 @@ void OGLCamera::OnMouseMove(const int x, const int y) {
         // Save position
         rotations_start_ = rotations_end_;
         // Setup quaternion
-        Quaternion<float> quat(axis, angle);
+        Quaternion<float> quat(axis, -angle);
         quat.Normalize();
         // Get transformation
         Matrix3<float> rot;

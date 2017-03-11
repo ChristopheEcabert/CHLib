@@ -91,17 +91,24 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
   
   /** 
    *  @name Bind
-   *  @fn void Bind(void)
+   *  @fn void Bind(void) const
    *  @brief  Bind vertex array object for drawing
    */
-  void Bind(void);
+  void Bind(void) const;
+  
+  /**
+   *  @name Render
+   *  @fn void Render(void) const
+   *  @brief  Render the object
+   */
+  void Render(void) const;
   
   /**
    *  @name Unbind
-   *  @fn void Unbind(void)
+   *  @fn void Unbind(void) const
    *  @brief  Unbind vertex array object
    */
-  void Unbind(void);
+  void Unbind(void) const;
   
 #pragma mark -
 #pragma mark Accessors
@@ -136,7 +143,6 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
 
   
 };
-  
 }  // namespace CHLib
 
 
