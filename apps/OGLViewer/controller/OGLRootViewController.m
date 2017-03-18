@@ -102,7 +102,11 @@
   [app_ loadApp: item_name
      withConfig: [app_configs_ objectAtIndex: item_idx]];
   // Update callback
-  callback_ = [[OGLCallbacksWrapper alloc] initWithPointer:[app_ callbacks]];
+  if (!callback_) {
+    callback_ = [[OGLCallbacksWrapper alloc] initWithPointer:[app_ callbacks]];
+  } else {
+    [callback_ setPointer:[app_ callbacks]];
+  }
   // Set callback to OGLView
   [self.ogl_view addCallbacks:callback_];
 }

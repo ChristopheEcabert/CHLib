@@ -17,6 +17,25 @@
  */
 namespace CHLib {
   
+void SetFormattedString(const OGLTexture::Type& type, std::string* str) {
+  switch (type) {
+    case OGLTexture::kDiffuse: {
+      str->assign("diffuse");
+    } break;
+      
+    case OGLTexture::kNormal: {
+      str->assign("normal");
+    } break;
+      
+    case OGLTexture::kSpecular: {
+      str->assign("specular");
+    } break;
+      
+    default:  str->assign("diffuse");
+      break;
+  }
+}
+  
 #pragma mark -
 #pragma mark Initialization
   
@@ -87,6 +106,7 @@ OGLTexture::~OGLTexture(void) {
  *  @return -1 if error, 0 otherwise
  */
 int OGLTexture::Upload(const Image& image,
+                       const Type texture_type,
                        const WrappingMode wrap_mode,
                        const InterpolationMode interp_mode) {
   int err = -1;
@@ -95,6 +115,8 @@ int OGLTexture::Upload(const Image& image,
     this->widht_ = image.width();
     this->height_ = image.height();
     this->format_ = ImageFormatConverter(image.format());
+    this->type_ = texture_type;
+    SetFormattedString(this->type_, &this->type_str_);
     // Continu
     if (this->format_ != -1) {
       glBindTexture(GL_TEXTURE_2D, tex_);

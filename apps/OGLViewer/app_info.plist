@@ -20,5 +20,11 @@
 		<key>Path</key>
 		<string>app02_config</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Model Loader</string>
+		<key>Path</key>
+		<string>app03_config</string>
+	</dict>
 </array>
 </plist>

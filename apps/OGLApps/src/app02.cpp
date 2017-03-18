@@ -40,9 +40,7 @@ App02::App02(const float win_width, const float win_height) {
   this->camera_ = new CHLib::OGLCamera();
   this->camera_->set_window_dimension(win_width, win_height);
   // Technique
-  this->technique_ = new CHLib::OGLTechnique();
-  // Texture
-  this->texture_ = new OGLTexture();
+  this->shader_ = new CHLib::OGLShader();
 }
 
 /*
@@ -51,7 +49,18 @@ App02::App02(const float win_width, const float win_height) {
  *  @brief  Destructor
  */
 App02::~App02(void) {
-  BaseApp::~BaseApp();
+  if (this->mesh_) {
+    delete mesh_;
+    mesh_ = nullptr;
+  }
+  if (this->camera_) {
+    delete camera_;
+    camera_ = nullptr;
+  }
+  if (this->shader_) {
+    delete shader_;
+    shader_ = nullptr;
+  }
 }
 
 /*
@@ -70,24 +79,28 @@ int App02::Load(const std::string& config) {
   err |= this->mesh_->InitOpenGLContext();
   // Load image + texture
   auto& manager = OGLTextureManager::Instance();
-  err = manager.Add(dir + "app02-wooden-crate.jpg", "crate");
+  err = (manager.Add(dir + "app02-wooden-crate.jpg", "crate") != nullptr ?
+         0 :
+         -1);
   if (!err) {
     // Get texture
-    this->texture_ = manager.Get("crate");
+    std::vector<OGLTexture*> textures;
+    textures.push_back(manager.Get("crate"));
+    this->mesh_->set_texture(textures);
     // Setup technique
     std::vector<std::string> shaders_file = {dir + "app02-vertex-shader.vs",
                                              dir + "app02-fragment-shader.fs"};
-    err = this->technique_->Init(shaders_file);
-    err |= this->technique_->Finalize();
+    err = this->shader_->Init(shaders_file);
+    err |= this->shader_->Finalize();
     // Setup camera
     this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 10.0f),
                           Vector3<float>(0.f, 0.0f, 0.f));
     
     // update uniform
-    this->technique_->Use();
-    this->technique_->SetUniform("camera", this->camera_->get_transform());
-    this->technique_->SetUniform("obj_texture", 0);
-    this->technique_->StopUsing();
+    this->shader_->Use();
+    this->shader_->SetUniform("camera", this->camera_->get_transform());
+    this->shader_->SetUniform("obj_texture", 0);
+    this->shader_->StopUsing();
   }
   return err;
 }
@@ -116,21 +129,13 @@ void App02::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
 void App02::OGLRenderCb(void) {
   using namespace std::chrono;
   
-  // Bind texture
-  this->texture_->Bind(0);
-  // Enable VAO
-  this->mesh_->Bind();
   // Enable program
-  this->technique_->Use();
-  this->technique_->SetUniform("camera", camera_->get_transform());
-  this->technique_->SetUniform("obj_texture", 0);
+  this->shader_->Use();
+  this->shader_->SetUniform("camera", camera_->get_transform());
   // Draw triangle
-  this->mesh_->Render();
-  // Make sure the VAO is not changed from the outside
-  this->mesh_->Unbind();
-  this->texture_->Unbind();
+  this->mesh_->Render(*this->shader_);
   // Stop program
-  this->technique_->StopUsing();
+  this->shader_->StopUsing();
 }
   
 /*

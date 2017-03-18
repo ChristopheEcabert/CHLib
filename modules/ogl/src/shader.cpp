@@ -14,7 +14,7 @@
 
 #include "chlib/core/error.hpp"
 #include "chlib/core/string_util.hpp"
-#include "chlib/ogl/technique.hpp"
+#include "chlib/ogl/shader.hpp"
 
 /**
  *  @namespace  CHLib
@@ -26,19 +26,19 @@ namespace CHLib {
 #pragma mark Initialization
   
 /*
- *  @name OGLTechnique
- *  @fn OGLTechnique(void)
+ *  @name OGLShader
+ *  @fn OGLShader(void)
  *  @brief  Consructor
  */
-OGLTechnique::OGLTechnique(void) : shaders_(0), program_(0) {
+OGLShader::OGLShader(void) : shaders_(0), program_(0) {
 }
 
 /*
- *  @name ~OGLTechnique
- *  @fn virtual ~OGLTechnique(void)
+ *  @name ~OGLShader
+ *  @fn virtual ~OGLShader(void)
  *  @brief  Destructor
  */
-OGLTechnique::~OGLTechnique(void) {
+OGLShader::~OGLShader(void) {
   // Delete the intermediate shader objects that have been added to the
   // program. The list will only contain something if shaders were compiled
   // but the object itself was destroyed prior to linking.
@@ -59,7 +59,7 @@ OGLTechnique::~OGLTechnique(void) {
  *  @param[in]  path  List of shader's files to initialize
  *  @return -1 if error, 0 otherwise
  */
-int OGLTechnique::Init(const std::vector<std::string>& paths) {
+int OGLShader::Init(const std::vector<std::string>& paths) {
   program_ = glCreateProgram();
   if (!program_) {
     std::cout << "Error while creating shader program" << std::endl;
@@ -67,7 +67,7 @@ int OGLTechnique::Init(const std::vector<std::string>& paths) {
   }
   int err = 0;
   for (auto& path : paths) {
-    err |= this->AddShader(path);
+    err |= this->Add(path);
   }
   return err;
 }
@@ -76,13 +76,13 @@ int OGLTechnique::Init(const std::vector<std::string>& paths) {
 #pragma mark Usage
   
 /*
- *  @nme  AddShader
- *  @fn int AddShader(const std::string& filename)
+ *  @nme  Add
+ *  @fn int Add(const std::string& filename)
  *  @brief  Add a shader to this technique
  *  @param[in]  filename  Path to the file holding shader
  *  @return -1 if error, 0 otherwise
  */
-int OGLTechnique::AddShader(const std::string& filename) {
+int OGLShader::Add(const std::string& filename) {
   int err = -1;
   // Open file
   std::ifstream in(filename.c_str(), std::ios_base::in|std::ios_base::binary);
@@ -91,9 +91,9 @@ int OGLTechnique::AddShader(const std::string& filename) {
     std::stringstream sstream;
     sstream << in.rdbuf();
     // Get type of shader
-    ShaderType type = this->ExtractShaderType(filename);
-    if (type != ShaderType::kUnknownShader) {
-      err = this->AddShader(sstream.str(), type);
+    Type type = this->ExtractType(filename);
+    if (type != Type::kUnknown) {
+      err = this->Add(sstream.str(), type);
     } else {
       std::cout << "Unknown shader type" << std::endl;
     }
@@ -104,14 +104,14 @@ int OGLTechnique::AddShader(const std::string& filename) {
 }
 
 /*
- *  @nme  AddShader
- *  @fn int AddShader(const std::string& code, const ShaderType& type)
+ *  @nme  Add
+ *  @fn int Add(const std::string& code, const Type& type)
  *  @brief  Add a shader to this technique
  *  @param[in]  code  Code of the shader to add
  *  @param[in]  type  Type of shader it is
  *  @return -1 if error, 0 otherwise
  */
-int OGLTechnique::AddShader(const std::string& code, const ShaderType& type) {
+int OGLShader::Add(const std::string& code, const Type& type) {
   int err = -1;
   GLuint shader = glCreateShader((GLenum)type);
   if (shader) {
@@ -152,7 +152,7 @@ int OGLTechnique::AddShader(const std::string& code, const ShaderType& type) {
  *  @brief  Link OpenGL program
  *  @return -1 if error, 0 othereise
  */
-int OGLTechnique::Finalize(void) {
+int OGLShader::Finalize(void) {
   int err = -1;
   GLint status;
   // Link OpenGL program
@@ -184,7 +184,7 @@ int OGLTechnique::Finalize(void) {
  *  @fn
  *  @brief  Activate technique
  */
-void OGLTechnique::Use(void) const {
+void OGLShader::Use(void) const {
   if (program_) {
     glUseProgram(program_);
   }
@@ -195,7 +195,7 @@ void OGLTechnique::Use(void) const {
  *  @fn
  *  @brief  Deactivate technique
  */
-void OGLTechnique::StopUsing(void) const {
+void OGLShader::StopUsing(void) const {
   glUseProgram(0);
 }
   
@@ -208,7 +208,7 @@ void OGLTechnique::StopUsing(void) const {
  *  @brief  Indicate if the current program is being used
  *  @return True if currently used
  */
-bool OGLTechnique::IsUsing(void) const {
+bool OGLShader::IsUsing(void) const {
   GLint curr_prog;
   glGetIntegerv(GL_CURRENT_PROGRAM, &curr_prog);
   return (curr_prog == static_cast<GLint>(program_));
@@ -222,7 +222,7 @@ bool OGLTechnique::IsUsing(void) const {
  *  @return The uniform index for the given name, as returned
  *          from glGetUniformLocation.
  */
-GLint OGLTechnique::Attrib(const GLchar* attrib_name) const {
+GLint OGLShader::Attrib(const GLchar* attrib_name) const {
   GLint attrib = -1;
   if (attrib_name != nullptr) {
     attrib = glGetAttribLocation(program_, attrib_name);
@@ -238,7 +238,7 @@ GLint OGLTechnique::Attrib(const GLchar* attrib_name) const {
  *  @return The uniform index for the given name, as returned
  *          from glGetUniformLocation.
  */
-GLint OGLTechnique::Uniform(const GLchar* uniform_name) const {
+GLint OGLShader::Uniform(const GLchar* uniform_name) const {
   GLint uniform = -1;
   if (uniform_name != nullptr) {
     uniform = glGetUniformLocation(program_, uniform_name);
@@ -248,40 +248,40 @@ GLint OGLTechnique::Uniform(const GLchar* uniform_name) const {
   
 #define ATTRIB_N_UNIFORM_SETTERS(OGL_TYPE, TYPE_PREFIX, TYPE_SUFFIX) \
 \
-void OGLTechnique::SetAttrib(const GLchar* name, OGL_TYPE v0) \
+void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 1 ## TYPE_SUFFIX (Attrib(name), v0); } \
-void OGLTechnique::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) \
+void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 2 ## TYPE_SUFFIX (Attrib(name), v0, v1); } \
-void OGLTechnique::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) \
+void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 3 ## TYPE_SUFFIX (Attrib(name), v0, v1, v2); } \
-void OGLTechnique::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) \
+void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 4 ## TYPE_SUFFIX (Attrib(name), v0, v1, v2, v3); } \
 \
-void OGLTechnique::SetAttrib1v(const GLchar* name, const OGL_TYPE* v) \
+void OGLShader::SetAttrib1v(const GLchar* name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 1 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLTechnique::SetAttrib2v(const GLchar* name, const OGL_TYPE* v) \
+void OGLShader::SetAttrib2v(const GLchar* name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 2 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLTechnique::SetAttrib3v(const GLchar* name, const OGL_TYPE* v) \
+void OGLShader::SetAttrib3v(const GLchar* name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 3 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLTechnique::SetAttrib4v(const GLchar* name, const OGL_TYPE* v) \
+void OGLShader::SetAttrib4v(const GLchar* name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 4 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
 \
-void OGLTechnique::SetUniform(const GLchar* name, OGL_TYPE v0) \
+void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0) const \
 { assert(IsUsing()); glUniform1 ## TYPE_SUFFIX (Uniform(name), v0); } \
-void OGLTechnique::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) \
+void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) const \
 { assert(IsUsing()); glUniform2 ## TYPE_SUFFIX (Uniform(name), v0, v1); } \
-void OGLTechnique::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) \
+void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
 { assert(IsUsing()); glUniform3 ## TYPE_SUFFIX (Uniform(name), v0, v1, v2); } \
-void OGLTechnique::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) \
+void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
 { assert(IsUsing()); glUniform4 ## TYPE_SUFFIX (Uniform(name), v0, v1, v2, v3); } \
 \
-void OGLTechnique::SetUniform1v(const GLchar* name, const OGL_TYPE* v, GLsizei count) \
+void OGLShader::SetUniform1v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
 { assert(IsUsing()); glUniform1 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLTechnique::SetUniform2v(const GLchar* name, const OGL_TYPE* v, GLsizei count) \
+void OGLShader::SetUniform2v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
 { assert(IsUsing()); glUniform2 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLTechnique::SetUniform3v(const GLchar* name, const OGL_TYPE* v, GLsizei count) \
+void OGLShader::SetUniform3v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
 { assert(IsUsing()); glUniform3 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLTechnique::SetUniform4v(const GLchar* name, const OGL_TYPE* v, GLsizei count) \
+void OGLShader::SetUniform4v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
 { assert(IsUsing()); glUniform4 ## TYPE_SUFFIX ## v (Uniform(name), count, v); }
   
 /** Float attribute and uniform setters implementation */
@@ -297,10 +297,10 @@ ATTRIB_N_UNIFORM_SETTERS(GLuint, I, ui);
  * @param[in] count         count (default=1)
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLTechnique::SetUniformMat3(const GLchar* name,
+void OGLShader::SetUniformMat3(const GLchar* name,
                                   const GLfloat* v,
                                   GLsizei count,
-                                  GLboolean transpose) {
+                                  GLboolean transpose) const {
   assert(IsUsing());
   glUniformMatrix3fv(Uniform(name), count, transpose, v);
 }
@@ -313,10 +313,10 @@ void OGLTechnique::SetUniformMat3(const GLchar* name,
  * @param[in] count         count (default=1)
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLTechnique::SetUniformMat4(const GLchar* name,
+void OGLShader::SetUniformMat4(const GLchar* name,
                                   const GLfloat* v,
                                   GLsizei count,
-                                  GLboolean transpose) {
+                                  GLboolean transpose) const {
   assert(IsUsing());
   glUniformMatrix4fv(Uniform(name), count, transpose, v);
 }
@@ -328,9 +328,9 @@ void OGLTechnique::SetUniformMat4(const GLchar* name,
  * @param[in] m             Matrix data
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLTechnique::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const GLchar* uniform_name,
                               const Matrix3<float>& m,
-                              GLboolean transpose) {
+                              GLboolean transpose) const {
   assert(IsUsing());
   glUniformMatrix3fv(Uniform(uniform_name), 1, transpose, m.data());
 }
@@ -342,9 +342,9 @@ void OGLTechnique::SetUniform(const GLchar* uniform_name,
  * @param[in] m             Matrix data
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLTechnique::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const GLchar* uniform_name,
                               const Matrix4<float>& m,
-                              GLboolean transpose) {
+                              GLboolean transpose) const {
   assert(IsUsing());
   glUniformMatrix4fv(Uniform(uniform_name), 1, transpose, m.data());
 }
@@ -355,8 +355,8 @@ void OGLTechnique::SetUniform(const GLchar* uniform_name,
  * @param[in] uniform_name  Uniform name variable to set
  * @param[in] v             Vector data
  */
-void OGLTechnique::SetUniform(const GLchar* uniform_name,
-                              const Vector3<float>& v) {
+void OGLShader::SetUniform(const GLchar* uniform_name,
+                              const Vector3<float>& v) const {
   SetUniform3v(uniform_name, &v.x_);
 }
 /*
@@ -365,8 +365,8 @@ void OGLTechnique::SetUniform(const GLchar* uniform_name,
  * @param[in] uniform_name  Uniform name variable to set
  * @param[in] v             Vector data
  */
-void OGLTechnique::SetUniform(const GLchar* uniform_name,
-                              const Vector4<float>& v) {
+void OGLShader::SetUniform(const GLchar* uniform_name,
+                              const Vector4<float>& v) const {
   SetUniform4v(uniform_name, &v.x_);
 }
 
@@ -374,24 +374,24 @@ void OGLTechnique::SetUniform(const GLchar* uniform_name,
 #pragma mark Private
   
 /*
- *  @name ExtractShaderType
- *  @fn ShaderType ExtractShaderType(const std::string& filename)
+ *  @name ExtractType
+ *  @fn Type ExtractType(const std::string& filename)
  *  @brief  Extract shader type based on file extension
  *  @param[in]  filename  Shader file
  *  @return Type of shader
  */
-OGLTechnique::ShaderType OGLTechnique::ExtractShaderType(const std::string& filename) const {
+OGLShader::Type OGLShader::ExtractType(const std::string& filename) const {
   // Extract extension
   std::string dir, file, ext;
   CHLib::StringUtil::ExtractDirectory(filename, &dir, &file, &ext);
   if (ext == "vs") {
-    return ShaderType::kVertexShader;
+    return Type::kVertex;
   } else if (ext == "gs") {
-    return ShaderType::kGeometryShader;
+    return Type::kGeometry;
   } else if (ext == "fs") {
-    return ShaderType::kFragmentShader;
+    return Type::kFragment;
   }
-  return ShaderType::kUnknownShader;
+  return Type::kUnknown;
 }
   
   

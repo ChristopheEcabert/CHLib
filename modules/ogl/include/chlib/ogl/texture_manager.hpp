@@ -72,14 +72,14 @@ class CHLIB_EXPORTS OGLTextureManager {
   
   /**
    *  @name Add
-   *  @fn int Add(const std::string& filename, const std::string& tex_id)
+   *  @fn OGLTexture* Add(const std::string& filename,const std::string& tex_id)
    *  @brief  Add a new texture into the manager
    *  @param[in]  filename  Path to the image file
    *  @param[in]  id       id for this texture, if empty use filename
-   *  @return -1 if error, 0 otherwise.
+   *  @return nullptr if error, reference to the new texture otherwise.
    */
    
-  int Add(const std::string& filename, const std::string& tex_id);
+  OGLTexture* Add(const std::string& filename, const std::string& tex_id);
   
   /**
    *  @name Get
@@ -89,6 +89,38 @@ class CHLIB_EXPORTS OGLTextureManager {
    *  @return OpenGL texture object
    */
   OGLTexture* Get(const std::string& tex_id) const;
+  
+  /**
+   *  @name Remove
+   *  @fn void Remove(const std::string& tex_id)
+   *  @biref  Release specific textures
+   *  @param[in]  tex_id  Texture ID to remove/release, if empty remove every
+   *                      textures
+   */
+  void Remove(const std::string& tex_id);
+  
+#pragma mark -
+#pragma mark Accessors
+  
+  /**
+   *  @name set_wraping_mode
+   *  @fn  void set_wraping_mode(const OGLTexture::WrappingMode& mode)
+   *  @brief  Set the texture type of wrapping
+   *  @param[in]  mode  Type of texture wrapping
+   */
+  void set_wraping_model(const OGLTexture::WrappingMode& mode) {
+    wrapping_mode_ = mode;
+  }
+  
+  /**
+   *  @name set_interpolation_mode
+   *  @fn void set_interpolation_mode(const OGLTexture::InterpolationMode& mode)
+   *  @brief  Set the texture type of interpolation
+   *  @param[in]  mode  Type of texture interpolation
+   */
+  void set_interpolation_mode(const OGLTexture::InterpolationMode& mode) {
+    interp_mode_ = mode;
+  }
   
 #pragma mark -
 #pragma mark Private
@@ -103,6 +135,10 @@ class CHLIB_EXPORTS OGLTextureManager {
   
   /** Texture map - hold all registered texture */
   std::unordered_map<std::string, OGLTexture*> texture_map_;
+  /** Type of wrapping */
+  OGLTexture::WrappingMode wrapping_mode_;
+  /** Type of interpolation */
+  OGLTexture::InterpolationMode interp_mode_;
 };
 }  // namespace CHLib
 

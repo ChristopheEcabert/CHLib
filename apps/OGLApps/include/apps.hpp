@@ -16,5 +16,7 @@
 #include "app01.hpp"
 /** Texture */
 #include "app02.hpp"
+/** Model */
+#include "app03.hpp"
 
 #endif /* __CHLIB_APPS__ */

@@ -78,7 +78,7 @@ void FlushData(png_structp png_ptr) {
 Image::Format PNGFormatConverter(int type) {
   if (type == PNG_COLOR_TYPE_GRAY) {
     return Image::Format::kGrayscale;
-  } else if (type == PNG_COLOR_TYPE_RGB) {
+  } else if (type == PNG_COLOR_TYPE_RGB || type == PNG_COLOR_TYPE_PALETTE) {
     return Image::Format::kRGB;
   } else if (type == PNG_COLOR_TYPE_RGBA) {
     return Image::Format::kRGBA;
@@ -178,6 +178,12 @@ int PNGImage::Load(std::istream& stream) {
                                             &colorType,
                                             nullptr, nullptr, nullptr);
           if (retval == 1) {
+            // Fix palettetype
+            if (colorType == PNG_COLOR_TYPE_PALETTE) {
+              png_set_palette_to_rgb(png_ptr);
+            }
+            // Update info
+            png_read_update_info(png_ptr, info_ptr);
             // Set prop
             this->width_ = static_cast<size_t>(width);
             this->height_ = static_cast<size_t>(height);

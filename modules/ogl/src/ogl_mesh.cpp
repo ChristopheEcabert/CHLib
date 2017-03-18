@@ -150,17 +150,51 @@ void OGLMesh<T>::Bind(void) const {
   
 /*
  *  @name Render
- *  @fn void Render(void) const
+ *  @fn void Render(const OGLShader& shader) const
  *  @brief  Render the object
+ *  @param[in] shader Shader to use while rendering
  */
 template<typename T>
-void OGLMesh<T>::Render(void) const {
+void OGLMesh<T>::Render(const OGLShader& shader) const {
+  
+  // Activate texture if any
+  int cnt_normal = 0;
+  int cnt_diffuse = 0;
+  int cnt_specular = 0;
+  int idx = 0;
+  for (int i = 0; i < textures_.size(); ++i) {
+    const auto* tex = textures_[i];
+    // Activate + bind
+    tex->Bind(i);
+    // Set uniform
+    if (tex->get_type() == OGLTexture::Type::kDiffuse) {
+      idx = cnt_diffuse++;
+    } else if(tex->get_type() == OGLTexture::Type::kNormal) {
+      idx = cnt_normal++;
+    } else {
+      idx = cnt_specular++;
+    }
+    std::string name = "texture_material[" + std::to_string(idx) + "].";
+    name += tex->get_type_str();
+    shader.SetUniform(name.c_str(), i);
+  }
+  
+  // Bind
+  this->Bind();
+  
   // Render triangles
   glDrawElementsBaseVertex(GL_TRIANGLES,
                            static_cast<GLsizei>(this->tri_.size() * 3),
                            GL_UNSIGNED_INT,
                            0,
                            0);
+  
+  // Unbind
+  this->Unbind();
+  
+  for (int i = 0; i < textures_.size(); ++i) {
+    textures_[i]->Unbind();
+  }
 }
 
 /*

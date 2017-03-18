@@ -13,7 +13,7 @@
 #include "base_app.hpp"
 
 #include "chlib/ogl/ogl_mesh.hpp"
-#include "chlib/ogl/technique.hpp"
+#include "chlib/ogl/shader.hpp"
 #include "chlib/ogl/camera.hpp"
 
 /**
@@ -130,6 +130,16 @@ class App01 : public BaseApp {
    *  @param[in]  height  View's height
    */
   void OGLResizeCb(const float width, const float height);
+  
+#pragma mark -
+#pragma mark Private
+ private:
+  /** Mesh */
+  OGLMesh<float>* mesh_;
+  /** Camera */
+  OGLCamera* camera_;
+  /** Technique */
+  OGLShader* shader_;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_APP01__ */

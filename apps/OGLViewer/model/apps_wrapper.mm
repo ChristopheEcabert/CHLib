@@ -9,6 +9,8 @@
 
 #import "apps_wrapper.h"
 
+#include "chlib/ogl/texture_manager.hpp"
+
 #include "base_app.hpp"
 #include "apps.hpp"
 
@@ -36,6 +38,9 @@
 -(id) initApp:(NSString*)app_name withConfig:(NSString*) config withSize:(NSSize)size {
   self = [super init];
   if (self) {
+    // Release already loaded texture
+    CHLib::OGLTextureManager::Instance().Remove("");
+    // Load new app
     width_ = size.width;
     height_ = size.height;
     [self loadApp:app_name withConfig:config];
@@ -64,6 +69,9 @@
     err = app_->Load(std::string([config UTF8String]));
   } else if (name == "Texture") {
     app_ = new CHLib::App02(width_, height_);
+    err = app_->Load(std::string([config UTF8String]));
+  } else if (name == "Model Loader") {
+    app_ = new CHLib::App03(width_, height_);
     err = app_->Load(std::string([config UTF8String]));
   }
 

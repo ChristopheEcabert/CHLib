@@ -19,6 +19,19 @@
  */
 namespace CHLib {
   
+OGLTexture::Type ConvertTypeFromString(const std::string& type) {
+  if (type == "diffuse" || type == "D") {
+    return OGLTexture::Type::kDiffuse;
+  } else if (type == "normal" || type == "N") {
+    return OGLTexture::Type::kNormal;
+  } else if (type == "specular" || type == "S") {
+    return OGLTexture::Type::kSpecular;
+  } else {
+    // Else diffuse by default
+    return OGLTexture::Type::kDiffuse;
+  }
+}
+  
 #pragma mark -
 #pragma mark Initialization
   
@@ -59,43 +72,48 @@ OGLTextureManager::~OGLTextureManager(void) {
  *  @return -1 if error, 0 otherwise.
  */
 
-int OGLTextureManager::Add(const std::string& filename,
-                           const std::string& tex_id) {
-  int err = 0;
-  std::string key;
+OGLTexture* OGLTextureManager::Add(const std::string& filename,
+                                   const std::string& tex_id) {
+  OGLTexture* tex = nullptr;
+  std::string key, dir, file, ext;
+  StringUtil::ExtractDirectory(filename, &dir, &file, &ext);
   // Check if ID is empty
-  if (tex_id.empty()) {
-    std::string dir, ext;
-    StringUtil::ExtractDirectory(filename, &dir, &key, &ext);
-  } else {
-    key = tex_id;
-  }
+  key = tex_id.empty() ? file : tex_id;
   // Already in it ?
   const auto it = texture_map_.find(key);
   if (it == texture_map_.end()) {
     // No, add it. First load image, if no isse create OGLTexture
     Image* img = nullptr;
-    err = ImageLoader::Load(filename, &img);
+    int err = ImageLoader::Load(filename, &img);
     if (!err) {
+      // Extrac type
+      std::vector<std::string> parts;
+      StringUtil::Split(file, "_", &parts);
       // Load texture
-      OGLTexture* tex = new OGLTexture();
+      OGLTexture::Type type;
+      tex = new OGLTexture();
+      type = ConvertTypeFromString(parts.back());
       err = tex->Upload(*img,
-                        OGLTexture::WrappingMode::kClampToBorder,
-                        OGLTexture::InterpolationMode::kLinear);
+                        type,
+                        this->wrapping_mode_,
+                        this->interp_mode_);
       if (!err) {
         texture_map_.emplace(key, tex);
       } else {
         std::cout << "Error, can not upload texture" << std::endl;
         // CLean up
         delete tex;
+        tex = nullptr;
       }
       // Clean up
       delete img;
     } else {
       std::cout << "Unable to open : " << filename << std::endl;
     }
+  } else {
+    tex = it->second;
   }
-  return err;
+  return tex;
 }
 
 /*
@@ -111,6 +129,31 @@ OGLTexture* OGLTextureManager::Get(const std::string& tex_id) const {
   return it != texture_map_.end() ? it->second : nullptr;
 }
   
+/*
+ *  @name Remove
+ *  @fn void Remove(const std::string& tex_id)
+ *  @biref  Release specific textures
+ *  @param[in]  tex_id  Texture ID to remove/release, if empty remove every
+ *                      textures
+ */
+void OGLTextureManager::Remove(const std::string& tex_id) {
+  if (tex_id.empty()) {
+    // Release all texture
+    for (auto it = texture_map_.begin(); it != texture_map_.end(); ++it) {
+      delete it->second;
+      it->second = nullptr;
+    }
+  } else {
+    // Remove only specific texture
+    auto it = texture_map_.find(tex_id);
+    if (it != texture_map_.end()) {
+      delete it->second;
+      it->second = nullptr;
+      texture_map_.erase(it);
+    }
+  }
+}
+  
 #pragma mark -
 #pragma mark Private
   
@@ -120,6 +163,8 @@ OGLTexture* OGLTextureManager::Get(const std::string& tex_id) const {
  *  @brief  Constructor
  */
 OGLTextureManager::OGLTextureManager(void) {
+  wrapping_mode_ = OGLTexture::WrappingMode::kClampToBorder;
+  interp_mode_ = OGLTexture::InterpolationMode::kLinear;
 }
   
 }  // namespace CHLib

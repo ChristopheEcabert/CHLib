@@ -16,6 +16,29 @@
 		9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */; };
 		9D7BE8651E632FE7001D7AAA /* app01-geometry-shader.gs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */; };
 		9D7BE8661E632FE7001D7AAA /* app01-vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */; };
+		9D8BFAF31E77283800DD2C0C /* app03_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAF01E77283800DD2C0C /* app03_config.xml */; };
+		9D8BFAF41E77283800DD2C0C /* app03-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAF11E77283800DD2C0C /* app03-fragment-shader.fs */; };
+		9D8BFAF51E77283800DD2C0C /* app03-vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAF21E77283800DD2C0C /* app03-vertex-shader.vs */; };
+		9D8BFAF71E77289C00DD2C0C /* app03.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D8BFAF61E77289C00DD2C0C /* app03.cpp */; };
+		9D8BFB0C1E772C5D00DD2C0C /* arm_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAF91E772C5D00DD2C0C /* arm_diffuse.png */; };
+		9D8BFB0D1E772C5D00DD2C0C /* arm_showroom_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFA1E772C5D00DD2C0C /* arm_showroom_normal.png */; };
+		9D8BFB0E1E772C5D00DD2C0C /* arm_showroom_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFB1E772C5D00DD2C0C /* arm_showroom_specular.png */; };
+		9D8BFB0F1E772C5D00DD2C0C /* body_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFC1E772C5D00DD2C0C /* body_diffuse.png */; };
+		9D8BFB101E772C5D00DD2C0C /* body_showroom_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFD1E772C5D00DD2C0C /* body_showroom_normal.png */; };
+		9D8BFB111E772C5D00DD2C0C /* body_showroom_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFE1E772C5D00DD2C0C /* body_showroom_specular.png */; };
+		9D8BFB121E772C5D00DD2C0C /* glass_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFAFF1E772C5D00DD2C0C /* glass_diffuse.png */; };
+		9D8BFB131E772C5D00DD2C0C /* glass_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB001E772C5D00DD2C0C /* glass_normal.png */; };
+		9D8BFB141E772C5D00DD2C0C /* hand_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB011E772C5D00DD2C0C /* hand_diffuse.png */; };
+		9D8BFB151E772C5D00DD2C0C /* hand_showroom_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB021E772C5D00DD2C0C /* hand_showroom_normal.png */; };
+		9D8BFB161E772C5D00DD2C0C /* hand_showroom_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB031E772C5D00DD2C0C /* hand_showroom_specular.png */; };
+		9D8BFB171E772C5D00DD2C0C /* helmet_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB041E772C5D00DD2C0C /* helmet_diffuse.png */; };
+		9D8BFB181E772C5D00DD2C0C /* helmet_showroom_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB051E772C5D00DD2C0C /* helmet_showroom_normal.png */; };
+		9D8BFB191E772C5D00DD2C0C /* helmet_showroom_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB061E772C5D00DD2C0C /* helmet_showroom_specular.png */; };
+		9D8BFB1A1E772C5D00DD2C0C /* leg_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB071E772C5D00DD2C0C /* leg_diffuse.png */; };
+		9D8BFB1B1E772C5D00DD2C0C /* leg_showroom_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB081E772C5D00DD2C0C /* leg_showroom_normal.png */; };
+		9D8BFB1C1E772C5D00DD2C0C /* leg_showroom_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB091E772C5D00DD2C0C /* leg_showroom_specular.png */; };
+		9D8BFB1D1E772C5D00DD2C0C /* nanosuit.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB0A1E772C5D00DD2C0C /* nanosuit.mtl */; };
+		9D8BFB1E1E772C5D00DD2C0C /* nanosuit.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9D8BFB0B1E772C5D00DD2C0C /* nanosuit.obj */; };
 		9D8C8C511E6CC2BA003FC0DD /* app02.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D8C8C501E6CC2BA003FC0DD /* app02.cpp */; };
 		9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */; };
 		9D9AF0C21D6CA4EC00CDA5CB /* OGLRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0C11D6CA4EC00CDA5CB /* OGLRootViewController.m */; };
@@ -71,6 +94,30 @@
 		9D7BE8611E632FE7001D7AAA /* app01-fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-fragment-shader.fs"; path = "apps/OGLApps/ressources/app01/app01-fragment-shader.fs"; sourceTree = "<group>"; };
 		9D7BE8621E632FE7001D7AAA /* app01-geometry-shader.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-geometry-shader.gs"; path = "apps/OGLApps/ressources/app01/app01-geometry-shader.gs"; sourceTree = "<group>"; };
 		9D7BE8631E632FE7001D7AAA /* app01-vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app01-vertex-shader.vs"; path = "apps/OGLApps/ressources/app01/app01-vertex-shader.vs"; sourceTree = "<group>"; };
+		9D8BFAED1E7727E200DD2C0C /* app03.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app03.hpp; path = apps/OGLApps/include/app03.hpp; sourceTree = "<group>"; };
+		9D8BFAF01E77283800DD2C0C /* app03_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = app03_config.xml; path = apps/OGLApps/ressources/app03/app03_config.xml; sourceTree = "<group>"; };
+		9D8BFAF11E77283800DD2C0C /* app03-fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app03-fragment-shader.fs"; path = "apps/OGLApps/ressources/app03/app03-fragment-shader.fs"; sourceTree = "<group>"; };
+		9D8BFAF21E77283800DD2C0C /* app03-vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "app03-vertex-shader.vs"; path = "apps/OGLApps/ressources/app03/app03-vertex-shader.vs"; sourceTree = "<group>"; };
+		9D8BFAF61E77289C00DD2C0C /* app03.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app03.cpp; path = apps/OGLApps/src/app03.cpp; sourceTree = "<group>"; };
+		9D8BFAF91E772C5D00DD2C0C /* arm_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arm_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/arm_diffuse.png; sourceTree = "<group>"; };
+		9D8BFAFA1E772C5D00DD2C0C /* arm_showroom_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arm_showroom_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/arm_showroom_normal.png; sourceTree = "<group>"; };
+		9D8BFAFB1E772C5D00DD2C0C /* arm_showroom_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arm_showroom_specular.png; path = apps/OGLApps/ressources/app03/nanosuit/arm_showroom_specular.png; sourceTree = "<group>"; };
+		9D8BFAFC1E772C5D00DD2C0C /* body_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = body_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/body_diffuse.png; sourceTree = "<group>"; };
+		9D8BFAFD1E772C5D00DD2C0C /* body_showroom_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = body_showroom_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/body_showroom_normal.png; sourceTree = "<group>"; };
+		9D8BFAFE1E772C5D00DD2C0C /* body_showroom_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = body_showroom_specular.png; path = apps/OGLApps/ressources/app03/nanosuit/body_showroom_specular.png; sourceTree = "<group>"; };
+		9D8BFAFF1E772C5D00DD2C0C /* glass_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glass_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/glass_diffuse.png; sourceTree = "<group>"; };
+		9D8BFB001E772C5D00DD2C0C /* glass_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glass_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/glass_normal.png; sourceTree = "<group>"; };
+		9D8BFB011E772C5D00DD2C0C /* hand_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hand_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/hand_diffuse.png; sourceTree = "<group>"; };
+		9D8BFB021E772C5D00DD2C0C /* hand_showroom_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hand_showroom_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/hand_showroom_normal.png; sourceTree = "<group>"; };
+		9D8BFB031E772C5D00DD2C0C /* hand_showroom_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hand_showroom_specular.png; path = apps/OGLApps/ressources/app03/nanosuit/hand_showroom_specular.png; sourceTree = "<group>"; };
+		9D8BFB041E772C5D00DD2C0C /* helmet_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helmet_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/helmet_diffuse.png; sourceTree = "<group>"; };
+		9D8BFB051E772C5D00DD2C0C /* helmet_showroom_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helmet_showroom_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/helmet_showroom_normal.png; sourceTree = "<group>"; };
+		9D8BFB061E772C5D00DD2C0C /* helmet_showroom_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helmet_showroom_specular.png; path = apps/OGLApps/ressources/app03/nanosuit/helmet_showroom_specular.png; sourceTree = "<group>"; };
+		9D8BFB071E772C5D00DD2C0C /* leg_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leg_diffuse.png; path = apps/OGLApps/ressources/app03/nanosuit/leg_diffuse.png; sourceTree = "<group>"; };
+		9D8BFB081E772C5D00DD2C0C /* leg_showroom_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leg_showroom_normal.png; path = apps/OGLApps/ressources/app03/nanosuit/leg_showroom_normal.png; sourceTree = "<group>"; };
+		9D8BFB091E772C5D00DD2C0C /* leg_showroom_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leg_showroom_specular.png; path = apps/OGLApps/ressources/app03/nanosuit/leg_showroom_specular.png; sourceTree = "<group>"; };
+		9D8BFB0A1E772C5D00DD2C0C /* nanosuit.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nanosuit.mtl; path = apps/OGLApps/ressources/app03/nanosuit/nanosuit.mtl; sourceTree = "<group>"; };
+		9D8BFB0B1E772C5D00DD2C0C /* nanosuit.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nanosuit.obj; path = apps/OGLApps/ressources/app03/nanosuit/nanosuit.obj; sourceTree = "<group>"; };
 		9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app02.hpp; path = apps/OGLApps/include/app02.hpp; sourceTree = "<group>"; };
 		9D8C8C501E6CC2BA003FC0DD /* app02.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app02.cpp; path = apps/OGLApps/src/app02.cpp; sourceTree = "<group>"; };
 		9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = base_app.hpp; path = apps/OGLApps/include/base_app.hpp; sourceTree = "<group>"; };
@@ -141,6 +188,43 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		9D8BFAEF1E77280A00DD2C0C /* app03 */ = {
+			isa = PBXGroup;
+			children = (
+				9D8BFAF81E772C5000DD2C0C /* nanosuit */,
+				9D8BFAF01E77283800DD2C0C /* app03_config.xml */,
+				9D8BFAF11E77283800DD2C0C /* app03-fragment-shader.fs */,
+				9D8BFAF21E77283800DD2C0C /* app03-vertex-shader.vs */,
+			);
+			name = app03;
+			sourceTree = "<group>";
+		};
+		9D8BFAF81E772C5000DD2C0C /* nanosuit */ = {
+			isa = PBXGroup;
+			children = (
+				9D8BFAF91E772C5D00DD2C0C /* arm_diffuse.png */,
+				9D8BFAFA1E772C5D00DD2C0C /* arm_showroom_normal.png */,
+				9D8BFAFB1E772C5D00DD2C0C /* arm_showroom_specular.png */,
+				9D8BFAFC1E772C5D00DD2C0C /* body_diffuse.png */,
+				9D8BFAFD1E772C5D00DD2C0C /* body_showroom_normal.png */,
+				9D8BFAFE1E772C5D00DD2C0C /* body_showroom_specular.png */,
+				9D8BFAFF1E772C5D00DD2C0C /* glass_diffuse.png */,
+				9D8BFB001E772C5D00DD2C0C /* glass_normal.png */,
+				9D8BFB011E772C5D00DD2C0C /* hand_diffuse.png */,
+				9D8BFB021E772C5D00DD2C0C /* hand_showroom_normal.png */,
+				9D8BFB031E772C5D00DD2C0C /* hand_showroom_specular.png */,
+				9D8BFB041E772C5D00DD2C0C /* helmet_diffuse.png */,
+				9D8BFB051E772C5D00DD2C0C /* helmet_showroom_normal.png */,
+				9D8BFB061E772C5D00DD2C0C /* helmet_showroom_specular.png */,
+				9D8BFB071E772C5D00DD2C0C /* leg_diffuse.png */,
+				9D8BFB081E772C5D00DD2C0C /* leg_showroom_normal.png */,
+				9D8BFB091E772C5D00DD2C0C /* leg_showroom_specular.png */,
+				9D8BFB0A1E772C5D00DD2C0C /* nanosuit.mtl */,
+				9D8BFB0B1E772C5D00DD2C0C /* nanosuit.obj */,
+			);
+			name = nanosuit;
+			sourceTree = "<group>";
+		};
 		9D9AF0B71D6C977400CDA5CB /* OGLApps */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +241,7 @@
 				9D9AF0BE1D6C9C4B00CDA5CB /* app00.hpp */,
 				9D9AF0D21D6CD66600CDA5CB /* app01.hpp */,
 				9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */,
+				9D8BFAED1E7727E200DD2C0C /* app03.hpp */,
 				9D9AF0D31D6CD6F600CDA5CB /* apps.hpp */,
 				9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */,
 			);
@@ -169,6 +254,7 @@
 				9D9AF0BC1D6C99EF00CDA5CB /* app00.cpp */,
 				9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */,
 				9D8C8C501E6CC2BA003FC0DD /* app02.cpp */,
+				9D8BFAF61E77289C00DD2C0C /* app03.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -188,6 +274,7 @@
 				9D9AF0CC1D6CCFA300CDA5CB /* app00 */,
 				9D9AF0CF1D6CD48600CDA5CB /* app01 */,
 				9DC3AEFA1E6CBB73006CD74E /* app02 */,
+				9D8BFAEF1E77280A00DD2C0C /* app03 */,
 			);
 			name = ressources;
 			sourceTree = "<group>";
@@ -260,11 +347,11 @@
 		9DC3AEFA1E6CBB73006CD74E /* app02 */ = {
 			isa = PBXGroup;
 			children = (
-				9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */,
-				9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */,
 				9DC3AEFD1E6CBBA3006CD74E /* app02-fragment-shader.fs */,
-				9DC3AEFE1E6CBBA3006CD74E /* app02-vertex-shader.vs */,
 				9DC3AEFF1E6CBBA3006CD74E /* app02-wooden-crate.jpg */,
+				9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */,
+				9DC3AEFE1E6CBBA3006CD74E /* app02-vertex-shader.vs */,
+				9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */,
 			);
 			name = app02;
 			sourceTree = "<group>";
@@ -361,19 +448,41 @@
 				9DC3AF011E6CBBA3006CD74E /* app02-crate.obj in Resources */,
 				9D6540901D71BD64005D1890 /* bunny.ply in Resources */,
 				9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */,
+				9D8BFB0C1E772C5D00DD2C0C /* arm_diffuse.png in Resources */,
+				9D8BFAF51E77283800DD2C0C /* app03-vertex-shader.vs in Resources */,
+				9D8BFB121E772C5D00DD2C0C /* glass_diffuse.png in Resources */,
 				9DD47C061D4EA288003110D9 /* Assets.xcassets in Resources */,
+				9D8BFB101E772C5D00DD2C0C /* body_showroom_normal.png in Resources */,
+				9D8BFB1E1E772C5D00DD2C0C /* nanosuit.obj in Resources */,
 				9D7BE8661E632FE7001D7AAA /* app01-vertex-shader.vs in Resources */,
+				9D8BFB0D1E772C5D00DD2C0C /* arm_showroom_normal.png in Resources */,
 				9D7BE8651E632FE7001D7AAA /* app01-geometry-shader.gs in Resources */,
 				9D9AF0CB1D6CCF5700CDA5CB /* app00_config.xml in Resources */,
+				9D8BFB151E772C5D00DD2C0C /* hand_showroom_normal.png in Resources */,
+				9D8BFB0F1E772C5D00DD2C0C /* body_diffuse.png in Resources */,
+				9D8BFB1D1E772C5D00DD2C0C /* nanosuit.mtl in Resources */,
 				9DD47C091D4EA29D003110D9 /* MainMenu.xib in Resources */,
+				9D8BFB0E1E772C5D00DD2C0C /* arm_showroom_specular.png in Resources */,
 				9D9AF0CE1D6CD48000CDA5CB /* app01_config.xml in Resources */,
+				9D8BFB1A1E772C5D00DD2C0C /* leg_diffuse.png in Resources */,
+				9D8BFB181E772C5D00DD2C0C /* helmet_showroom_normal.png in Resources */,
+				9D8BFB1C1E772C5D00DD2C0C /* leg_showroom_specular.png in Resources */,
 				9DC3AF031E6CBBA3006CD74E /* app02-vertex-shader.vs in Resources */,
+				9D8BFB1B1E772C5D00DD2C0C /* leg_showroom_normal.png in Resources */,
+				9D8BFB111E772C5D00DD2C0C /* body_showroom_specular.png in Resources */,
+				9D8BFB161E772C5D00DD2C0C /* hand_showroom_specular.png in Resources */,
 				9D9AF0C41D6CAB7D00CDA5CB /* app_info.plist in Resources */,
 				9D7BE8641E632FE7001D7AAA /* app01-fragment-shader.fs in Resources */,
+				9D8BFB131E772C5D00DD2C0C /* glass_normal.png in Resources */,
+				9D8BFAF31E77283800DD2C0C /* app03_config.xml in Resources */,
 				9DC3AF021E6CBBA3006CD74E /* app02-fragment-shader.fs in Resources */,
+				9D8BFB191E772C5D00DD2C0C /* helmet_showroom_specular.png in Resources */,
+				9D8BFAF41E77283800DD2C0C /* app03-fragment-shader.fs in Resources */,
 				9DC3AF041E6CBBA3006CD74E /* app02-wooden-crate.jpg in Resources */,
 				9D65408C1D71BC04005D1890 /* fragment-shader.fs in Resources */,
 				9DC3AF001E6CBBA3006CD74E /* app02_config.xml in Resources */,
+				9D8BFB171E772C5D00DD2C0C /* helmet_diffuse.png in Resources */,
+				9D8BFB141E772C5D00DD2C0C /* hand_diffuse.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +495,7 @@
 			files = (
 				9DD47C011D4EA212003110D9 /* AppDelegate.m in Sources */,
 				9D21D6FC1D63743A00C37B4A /* ogl_view.m in Sources */,
+				9D8BFAF71E77289C00DD2C0C /* app03.cpp in Sources */,
 				9D21D6F51D6368E900C37B4A /* callback_wrapper.mm in Sources */,
 				9D9AF0C81D6CC20E00CDA5CB /* apps_wrapper.mm in Sources */,
 				9D8C8C511E6CC2BA003FC0DD /* app02.cpp in Sources */,

@@ -1,19 +1,20 @@
 /**
- *  @file   app01.cpp
- *  @brief  Basic lighting
+ *  @file   app03.cpp
+ *  @brief  OpenGL Model loader
  *
  *  @author Christophe Ecabert
- *  @date   23/08/16
- *  Copyright © 2016 Christophe Ecabert. All rights reserved.
+ *  @date   13/03/17
+ *  Copyright © 2017 Christophe Ecabert. All rights reserved.
  */
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #endif
 
-#include "app01.hpp"
+#include "app03.hpp"
 
 #include "chlib/core/string_util.hpp"
+#include "chlib/ogl/texture_manager.hpp"
 
 
 /**
@@ -26,38 +27,41 @@ namespace CHLib {
 #pragma mark Initialization
 
 /*
- *  @name App01
- *  @fn App01(void)
+ *  @name App03
+ *  @fn App03(void)
  *  @brief  Constructor
  *  @param[in]  win_width   View's width
  *  @param[in]  win_height  View's height
  */
-App01::App01(const float win_width, const float win_height) {
-  // Mesh
-  this->mesh_ = new CHLib::OGLMesh<float>();
+App03::App03(const float win_width, const float win_height) {
+  // Model
+  this->model_ = new CHLib::OGLModel<float>();
   // Camera
   this->camera_ = new CHLib::OGLCamera();
   this->camera_->set_window_dimension(win_width, win_height);
+  this->camera_->set_move_speed(0.02f);
   // Technique
   this->shader_ = new CHLib::OGLShader();
-
+  // Update wrapping mode
+  auto mode = OGLTexture::WrappingMode::kRepeat;
+  OGLTextureManager::Instance().set_wraping_model(mode);
 }
 
 /*
- *  @name ~App01
- *  @fn ~App01(void)
+ *  @name ~App03
+ *  @fn ~App03(void)
  *  @brief  Destructor
  */
-App01::~App01(void) {
-  if (this->mesh_) {
-    delete mesh_;
-    mesh_ = nullptr;
+App03::~App03(void) {
+  if (model_) {
+    delete model_;
+    model_ = nullptr;
   }
-  if (this->camera_) {
+  if (camera_) {
     delete camera_;
     camera_ = nullptr;
   }
-  if (this->shader_) {
+  if (shader_) {
     delete shader_;
     shader_ = nullptr;
   }
@@ -70,29 +74,25 @@ App01::~App01(void) {
  *  @param[in]  config  Path to the scene configuration file
  *  @return -1 if error, 0 otherwise
  */
-int App01::Load(const std::string& config) {
+int App03::Load(const std::string& config) {
   int err = -1;
   std::string dir, file, ext;
   CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
-  err = this->mesh_->Load(dir + "bunny.ply");
-  this->mesh_->ComputeVertexNormal();
-  err |= this->mesh_->InitOpenGLContext();
+  err = this->model_->Load(dir + "nanosuit.obj");
   if (!err) {
     // Setup technique
-    std::vector<std::string> shaders_file = {dir + "app01-vertex-shader.vs",
-                                             dir + "app01-geometry-shader.gs",
-                                             dir + "app01-fragment-shader.fs"};
+    std::vector<std::string> shaders_file = {dir + "app03-vertex-shader.vs",
+                                             dir + "app03-fragment-shader.fs"};
     err = this->shader_->Init(shaders_file);
     err |= this->shader_->Finalize();
     // Setup camera
-    this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 0.4f),
-                    Vector3<float>(0.f, 0.0f, 0.f));
+    this->camera_->LookAt(Vector3<float>(0.f, 8.0f, 30.0f),
+                          Vector3<float>(0.f, 8.0f, 0.f));
     
     // update uniform
     this->shader_->Use();
     this->shader_->SetUniform("camera", this->camera_->get_transform());
-    this->shader_->SetUniform("time", 0.f);
     this->shader_->StopUsing();
   }
   return err;
@@ -109,7 +109,7 @@ int App01::Load(const std::string& config) {
  * @param[in] key     Key that trigger the callback
  * @param[in] state   Key state at that time
  */
-void App01::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
+void App03::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
   // Pass event to camera
   this->camera_->OnKeyboard(key, state, this->delta_time_);
 }
@@ -119,22 +119,13 @@ void App01::OGLKeyboardCb(const OGLKey& key, const OGLKeyState& state) {
  * @fn  void OGLRenderCb(void)
  * @brief Callback invoked when scene need to be rendered
  */
-void App01::OGLRenderCb(void) {
-  using namespace std::chrono;
-  
-  // Enable VAO
-  this->mesh_->Bind();
+void App03::OGLRenderCb(void) {
+  // Clear
   // Enable program
   this->shader_->Use();
   this->shader_->SetUniform("camera", camera_->get_transform());
-  // Set time
-  auto epoch = time_point_cast<milliseconds>(this->current_time_).time_since_epoch();
-  float time = epoch.count();
-  this->shader_->SetUniform("time", time);
   // Draw triangle
-  this->mesh_->Render(*this->shader_);
-  // Make sure the VAO is not changed from the outside
-  this->mesh_->Unbind();
+  this->model_->Render(*this->shader_);
   // Stop program
   this->shader_->StopUsing();
 }
@@ -146,7 +137,7 @@ void App01::OGLRenderCb(void) {
  * @param[in] x   Mouse's X coordinate
  * @param[in] y   Mouse's Y coordinate
  */
-void App01::OGLPassiveMouseCb(const float x, const float y) {
+void App03::OGLPassiveMouseCb(const float x, const float y) {
   this->camera_->OnMouseMove(static_cast<int>(x), static_cast<int>(y));
 }
 
@@ -162,7 +153,7 @@ void App01::OGLPassiveMouseCb(const float x, const float y) {
  * @param[in] x       Mouse's X coordinate
  * @param[in] y       Mouse's Y coordinate
  */
-void App01::OGLMouseCb(const OGLMouse& button,
+void App03::OGLMouseCb(const OGLMouse& button,
                        const OGLKeyState& state,
                        const float x,
                        const float y) {
@@ -179,7 +170,7 @@ void App01::OGLMouseCb(const OGLMouse& button,
  *  @param[in]  width   View's width
  *  @param[in]  height  View's height
  */
-void App01::OGLResizeCb(const float width, const float height) {
+void App03::OGLResizeCb(const float width, const float height) {
   // Update camera
   this->camera_->set_window_dimension(width, height);
   this->camera_->UpdateProjectionTransform();

@@ -1,5 +1,5 @@
 /**
- *  @file   technique.hpp
+ *  @file   shader.hpp
  *  @brief  Basic OpenGL program used to render
  *  @see    http://ogldev.atspace.co.uk
  *
@@ -28,64 +28,64 @@
 namespace CHLib {
   
 /**
- *  @class  OGLTechnique
+ *  @class  OGLShader
  *  @brief  Basic OpenGL program used to render
  *  @author Christophe Ecabert
  *  @date   26/08/16
  */
-class CHLIB_EXPORTS OGLTechnique {
+class CHLIB_EXPORTS OGLShader {
  public:
   
 #pragma mark -
 #pragma mark Type definition
   
   /**
-   *  @enum ShaderType
+   *  @enum Type
    *  @brief  List of supported shader type
    */
-  enum ShaderType {
+  enum Type {
     /** Unknown */
-    kUnknownShader = -1,
+    kUnknown = -1,
     /** Vertex shader */
-    kVertexShader = GL_VERTEX_SHADER,
+    kVertex = GL_VERTEX_SHADER,
     /** Geometry shader */
-    kGeometryShader = GL_GEOMETRY_SHADER,
+    kGeometry = GL_GEOMETRY_SHADER,
     /** FRagment shader */
-    kFragmentShader = GL_FRAGMENT_SHADER
+    kFragment = GL_FRAGMENT_SHADER
   };
   
 #pragma mark -
 #pragma mark Initialization
   
   /**
-   *  @name OGLTechnique
-   *  @fn OGLTechnique(void)
+   *  @name OGLShader
+   *  @fn OGLShader(void)
    *  @brief  Consructor
    */
-  OGLTechnique(void);
+  OGLShader(void);
   
   /**
-   *  @name OGLTechnique
-   *  @fn OGLTechnique(const OGLTechnique& other) = delete
+   *  @name OGLShader
+   *  @fn OGLShader(const OGLShader& other) = delete
    *  @brief  Copy Consructor
    */
-  OGLTechnique(const OGLTechnique& other) = delete;
+  OGLShader(const OGLShader& other) = delete;
   
   /**
    *  @name operator=
-   *  @fn OGLTechnique& operator=(const OGLTechnique& rhs) = delete
+   *  @fn OGLShader& operator=(const OGLShader& rhs) = delete
    *  @brief  Assignment operator
    *  @param[in]  rhs Object to assign from
    *  @return Newly assigned object
    */
-  OGLTechnique& operator=(const OGLTechnique& rhs) = delete;
+  OGLShader& operator=(const OGLShader& rhs) = delete;
   
   /**
-   *  @name ~OGLTechnique
-   *  @fn virtual ~OGLTechnique(void)
+   *  @name ~OGLShader
+   *  @fn virtual ~OGLShader(void)
    *  @brief  Destructor
    */
-  virtual ~OGLTechnique(void);
+  virtual ~OGLShader(void);
   
   /**
    *  @name Init
@@ -100,23 +100,23 @@ class CHLIB_EXPORTS OGLTechnique {
 #pragma mark Usage
   
   /**
-   *  @nme  AddShader
-   *  @fn int AddShader(const std::string& filename)
+   *  @nme  Add
+   *  @fn int Add(const std::string& filename)
    *  @brief  Add a shader to this technique
    *  @param[in]  filename  Path to the file holding shader
    *  @return -1 if error, 0 otherwise
    */
-  int AddShader(const std::string& filename);
+  int Add(const std::string& filename);
   
   /**
-   *  @nme  AddShader
-   *  @fn int AddShader(const std::string& code, const ShaderType& type)
+   *  @nme  Add
+   *  @fn int Add(const std::string& code, const Type& type)
    *  @brief  Add a shader to this technique
    *  @param[in]  code  Code of the shader to add
    *  @param[in]  type  Type of shader it is
    *  @return -1 if error, 0 otherwise
    */
-  int AddShader(const std::string& code, const ShaderType& type);
+  int Add(const std::string& code, const Type& type);
   
   /**
    *  @name Finalize
@@ -172,25 +172,25 @@ class CHLIB_EXPORTS OGLTechnique {
   GLint Uniform(const GLchar* uniform_name) const;
   
 #define OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(OGL_TYPE) \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0); \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1); \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2); \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3); \
+void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0) const; \
+void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1) const; \
+void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const; \
+void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const; \
 \
-void SetAttrib1v(const GLchar* attrib_name, const OGL_TYPE* v); \
-void SetAttrib2v(const GLchar* attrib_name, const OGL_TYPE* v); \
-void SetAttrib3v(const GLchar* attrib_name, const OGL_TYPE* v); \
-void SetAttrib4v(const GLchar* attrib_name, const OGL_TYPE* v); \
+void SetAttrib1v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib2v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib3v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib4v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
 \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0);  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1);  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2);  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2, const OGL_TYPE v3);\
+void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0) const;  \
+void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1) const;  \
+void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2) const;  \
+void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2, const OGL_TYPE v3) const;\
 \
-void SetUniform1v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1);  \
-void SetUniform2v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1);  \
-void SetUniform3v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1);  \
-void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1);  \
+void SetUniform1v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
+void SetUniform2v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
+void SetUniform3v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
+void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
 
   /** Float attribute and uniform setters */
   OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLfloat);
@@ -210,7 +210,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
   void SetUniformMat3(const GLchar* uniform_name,
                       const GLfloat* v,
                       GLsizei count=1,
-                      GLboolean transpose = GL_FALSE);
+                      GLboolean transpose = GL_FALSE) const;
   /**
    * @name  SetUniformMat4
    * @brief Setup uniform value of type Mat4 (generic)
@@ -222,7 +222,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
   void SetUniformMat4(const GLchar* uniform_name,
                       const GLfloat* v,
                       GLsizei count = 1,
-                      GLboolean transpose=GL_FALSE);
+                      GLboolean transpose=GL_FALSE) const;
 
   /**
    * @name  SetUniform
@@ -233,7 +233,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    */
   void SetUniform(const GLchar* uniform_name,
                   const Matrix3<float>& m,
-                  GLboolean transpose=GL_FALSE);
+                  GLboolean transpose=GL_FALSE) const;
   
   /**
    * @name  SetUniform
@@ -244,7 +244,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    */
   void SetUniform(const GLchar* uniform_name,
                   const Matrix4<float>& m,
-                  GLboolean transpose=GL_FALSE);
+                  GLboolean transpose=GL_FALSE) const;
   
   /**
    * @name  SetUniform
@@ -253,7 +253,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] v             Vector data
    */
   void SetUniform(const GLchar* uniform_name,
-                  const Vector3<float>& v);
+                  const Vector3<float>& v) const;
   /**
    * @name  SetUniform
    * @brief Setup uniform value of type vec4
@@ -261,7 +261,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] v             Vector data
    */
   void SetUniform(const GLchar* uniform_name,
-                  const Vector4<float>& v);
+                  const Vector4<float>& v) const;
   
   
 #pragma mark -
@@ -269,13 +269,13 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
  private:
   
   /**
-   *  @name ExtractShaderType
-   *  @fn ShaderType ExtractShaderType(const std::string& filename)
+   *  @name ExtractType
+   *  @fn Type ExtractType(const std::string& filename)
    *  @brief  Extract shader type based on file extension
    *  @param[in]  filename  Shader file
    *  @return Type of shader
    */
-  ShaderType ExtractShaderType(const std::string& filename) const;
+  Type ExtractType(const std::string& filename) const;
   
   /** Shader object list */
   std::vector<GLuint> shaders_;
@@ -286,4 +286,4 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
 }  // namespace CHLib
 
 
-#endif /* __CHLIB_OGLTechnique__ */
+#endif /* __CHLIB_OGLShader__ */

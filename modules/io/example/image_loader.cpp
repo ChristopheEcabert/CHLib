@@ -11,9 +11,7 @@
 
 #include "chlib/core/cmd_parser.hpp"
 #include "chlib/core/string_util.hpp"
-#include "chlib/io/jpeg_image.hpp"
-#include "chlib/io/png_image.hpp"
-#include "chlib/io/tga_image.hpp"
+#include "chlib/io/image_loader.hpp"
 
 int main(const int argc, const char** argv) {
   // Define argument needed
@@ -29,29 +27,15 @@ int main(const int argc, const char** argv) {
 
     // Load image based on type
     CHLib::Image* image;
-    std::string dir, file, ext;
-    CHLib::StringUtil::ExtractDirectory(imagepath, &dir, &file, &ext);
-    // Init based on extension type
-    if (ext == "jpg") {
-      image = new CHLib::JPEGImage();
-    } else if (ext == "tga") {
-      image = new CHLib::TGAImage();
-    } else if (ext == "png") {
-      image = new CHLib::PNGImage();
-    } else {
-      std::cout << "Unknown image type" << std::endl;
-      err = -1;
-    }
-    
-    // Load + Save input
+    err = CHLib::ImageLoader::Load(imagepath, &image);
+    // Save input
     if (!err) {
-      err = image->Load(imagepath);
-      if (!err) {
-        std::string f = (dir.empty() ?
-                         file + "_save" :
-                         dir + "/" + file + "_save");
-        image->Save(f);
-      }
+      std::string dir, file, ext;
+      CHLib::StringUtil::ExtractDirectory(imagepath, &dir, &file, &ext);
+      std::string f = (dir.empty() ?
+                       file + "_save" :
+                       dir + "/" + file + "_save");
+      image->Save(f);
     }
     std::cout << "Done : " << (!err ? "Success" : "Fail") << std::endl;
     if (image) {

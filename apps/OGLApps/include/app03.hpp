@@ -1,19 +1,20 @@
 /**
- *  @file   app00.hpp
- *  @brief  Test application
+ *  @file   app03.hpp
+ *  @brief  OpenGL Model loader
  *
  *  @author Christophe Ecabert
- *  @date   23/08/16
- *  Copyright © 2016 Christophe Ecabert. All rights reserved.
+ *  @date   13/03/17
+ *  Copyright © 2017 Christophe Ecabert. All rights reserved.
  */
 
-#ifndef __CHLIB_APP00__
-#define __CHLIB_APP00__
+#ifndef __CHLIB_APP03__
+#define __CHLIB_APP03__
 
 #include "base_app.hpp"
-#include "chlib/ogl/ogl_mesh.hpp"
-#include "chlib/ogl/camera.hpp"
+
+#include "chlib/ogl/model.hpp"
 #include "chlib/ogl/shader.hpp"
+#include "chlib/ogl/camera.hpp"
 
 /**
  *  @namespace  CHLib
@@ -22,49 +23,49 @@
 namespace CHLib {
   
 /**
- *  @class  App00
- *  @brief  Debug class
+ *  @class  App03
+ *  @brief  OpenGL Model loader
  *  @author Christophe Ecabert
- *  @date   23/08/16
+ *  @date   05/03/17
  */
-class App00 : public BaseApp {
+class App03 : public BaseApp {
  public:
  
 #pragma mark -
 #pragma mark Initialization
   
   /**
-   *  @name App00
-   *  @fn App01(void)
+   *  @name App03
+   *  @fn App03(void)
    *  @brief  Constructor
    *  @param[in]  win_width   View's width
    *  @param[in]  win_height  View's height
    */
-  App00(const float win_width, const float win_height);
+  App03(const float win_width, const float win_height);
   
   /**
-   *  @name App00
-   *  @fn App00(const App00& other) = delete
+   *  @name App03
+   *  @fn App03(const App03& other) = delete
    *  @brief  Copy Constructor
    *  @param[in]  other Object to copy from
    */
-  App00(const App00& other) = delete;
+  App03(const App03& other) = delete;
   
   /**
    *  @name operator=
-   *  @fn App00& operator=(const App00& rhs) = delete;
+   *  @fn App03& operator=(const App03& rhs) = delete;
    *  @brief  Assignment operator
    *  @param[in]  rhs Object to assign from
    *  @return Newly assigned object
    */
-  App00& operator=(const App00& rhs) = delete;
+  App03& operator=(const App03& rhs) = delete;
   
   /**
-   *  @name ~App00
-   *  @fn ~App00(void)
+   *  @name ~App03
+   *  @fn ~App03(void)
    *  @brief  Destructor
    */
-  ~App00(void);
+  ~App03(void);
   
   /**
    *  @name Load
@@ -107,9 +108,9 @@ class App00 : public BaseApp {
   /**
    * @name  OGLMouseCb
    * @fn  void OGLMouseCb(const OGLMouse& button,
-                           const OGLKeyState& state,
-                           const float x,
-                           const float y)
+   const OGLKeyState& state,
+   const float x,
+   const float y)
    * @brief Callback invoked when mouse is clicked
    * @param[in] button  Button that trigger the callback
    * @param[in] state   Button's state at that time
@@ -134,12 +135,11 @@ class App00 : public BaseApp {
 #pragma mark Private
  private:
   /** Mesh */
-  OGLMesh<float>* mesh_;
+  OGLModel<float>* model_;
   /** Camera */
   OGLCamera* camera_;
   /** Technique */
   OGLShader* shader_;
-  
 };
 }  // namespace CHLib
-#endif /* __CHLIB_APP00__ */
+#endif /* __CHLIB_APP03__ */

@@ -16,6 +16,8 @@
 
 #include "chlib/core/library_export.hpp"
 #include "chlib/geometry/mesh.hpp"
+#include "chlib/ogl/texture.hpp"
+#include "chlib/ogl/shader.hpp"
 
 /**
  *  @namespace  CHLib
@@ -98,10 +100,11 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
   
   /**
    *  @name Render
-   *  @fn void Render(void) const
+   *  @fn void Render(const OGLShader& shader) const
    *  @brief  Render the object
+   *  @param[in] shader Shader to use while rendering
    */
-  void Render(void) const;
+  void Render(const OGLShader& shader) const;
   
   /**
    *  @name Unbind
@@ -112,6 +115,36 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
   
 #pragma mark -
 #pragma mark Accessors
+  
+  /**
+   *  @name set_texture
+   *  @fn void set_texture(const std::vector<OGLTexture*>& texture)
+   *  @brief  Add texture
+   *  @param[in]  texture List of texture
+   */
+  void set_texture(const std::vector<OGLTexture*>& texture) {
+    textures_ = texture;
+  }
+  
+  /**
+   *  @name get_texture
+   *  @fn std::vector<OGLTexture*>& get_texture(void)
+   *  @brief  Get texture
+   *  @return List of texture
+   */
+  std::vector<OGLTexture*>& get_texture(void) {
+    return textures_;
+  }
+  
+  /**
+   *  @name get_texture
+   *  @fn const std::vector<OGLTexture*>& get_texture(void) const
+   *  @brief  Get texture
+   *  @return List of texture
+   */
+  const std::vector<OGLTexture*>& get_texture(void) const {
+    return textures_;
+  }
   
 #pragma mark -
 #pragma mark Private
@@ -140,14 +173,8 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
   GLuint vao_;
   /** Buffer object */
   GLuint vbo_[6];
-
-  
+  /** Textures */
+  std::vector<OGLTexture*> textures_;
 };
 }  // namespace CHLib
-
-
-
-
-
-
 #endif /* __CHLIB_OGL_MESH__ */

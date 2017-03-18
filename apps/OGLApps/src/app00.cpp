@@ -40,7 +40,7 @@ App00::App00(const float win_width, const float win_height) {
   this->camera_ = new CHLib::OGLCamera();
   this->camera_->set_window_dimension(win_width, win_height);
   // Technique
-  this->technique_ = new CHLib::OGLTechnique();
+  this->shader_ = new CHLib::OGLShader();
 }
 
 /*
@@ -49,7 +49,18 @@ App00::App00(const float win_width, const float win_height) {
  *  @brief  Destructor
  */
 App00::~App00(void) {
-  BaseApp::~BaseApp();
+  if (this->mesh_) {
+    delete mesh_;
+    mesh_ = nullptr;
+  }
+  if (this->camera_) {
+    delete camera_;
+    camera_ = nullptr;
+  }
+  if (this->shader_) {
+    delete shader_;
+    shader_ = nullptr;
+  }
 }
 
 /*
@@ -71,16 +82,16 @@ int App00::Load(const std::string& config) {
     // Setup technique
     std::vector<std::string> shaders_file = {dir + "vertex-shader.vs",
       dir + "fragment-shader.fs"};
-    err = this->technique_->Init(shaders_file);
-    err |= this->technique_->Finalize();
+    err = this->shader_->Init(shaders_file);
+    err |= this->shader_->Finalize();
     // Setup camera
     this->camera_->LookAt(Vector3<float>(0.f, 0.0f, 0.4f),
                           Vector3<float>(0.f, 0.0f, 0.f));
 
     // update uniform
-    this->technique_->Use();
-    this->technique_->SetUniform("camera", camera_->get_transform());
-    this->technique_->StopUsing();
+    this->shader_->Use();
+    this->shader_->SetUniform("camera", camera_->get_transform());
+    this->shader_->StopUsing();
   }
   return err;
 }
@@ -113,14 +124,14 @@ void App00::OGLRenderCb(void) {
   // Enable VAO
   this->mesh_->Bind();
   // Enable program
-  this->technique_->Use();
-  this->technique_->SetUniform("camera", this->camera_->get_transform());
+  this->shader_->Use();
+  this->shader_->SetUniform("camera", this->camera_->get_transform());
   // Draw triangle
-  this->mesh_->Render();
+  this->mesh_->Render(*this->shader_);
   // Make sure the VAO is not changed from the outside
   this->mesh_->Unbind();
   // Stop program
-  this->technique_->StopUsing();
+  this->shader_->StopUsing();
 }
   
 /*

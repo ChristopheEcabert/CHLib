@@ -177,7 +177,7 @@ class CHLIB_EXPORTS OGLCamera {
    *  @fn const Vec3 get_position(void) const
    *  @brief  Get camera position
    */
-  const Vec3 get_position(void) const {
+  const Vec3& get_position(void) const {
     return position_;
   }
   
@@ -186,7 +186,7 @@ class CHLIB_EXPORTS OGLCamera {
    *  @fn const Mat4 get_view(void) const
    *  @brief  Get view transformation
    */
-  const Mat4 get_view(void) const {
+  const Mat4& get_view(void) const {
     return view_;
   }
   
@@ -195,7 +195,7 @@ class CHLIB_EXPORTS OGLCamera {
    *  @fn const Mat4 get_projection(void) const
    *  @brief  Get projection transformation
    */
-  const Mat4 get_projection(void) const {
+  const Mat4& get_projection(void) const {
     return projection_;
   }
   
@@ -206,6 +206,16 @@ class CHLIB_EXPORTS OGLCamera {
    */
   const Mat4 get_transform(void) const {
     return projection_ * view_;
+  }
+  
+  /**
+   *  @name set_move_speed
+   *  @fn void set_move_speed(const float speed)
+   *  @brief  Update camera move speed
+   *  @param[in]  speed New move speed
+   */
+  void set_move_speed(const float speed) {
+    move_speed_ = speed;
   }
 
 #pragma mark -

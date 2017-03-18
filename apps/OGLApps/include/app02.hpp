@@ -13,9 +13,8 @@
 #include "base_app.hpp"
 
 #include "chlib/ogl/ogl_mesh.hpp"
-#include "chlib/ogl/technique.hpp"
+#include "chlib/ogl/shader.hpp"
 #include "chlib/ogl/camera.hpp"
-#include "chlib/ogl/texture.hpp"
 
 /**
  *  @namespace  CHLib
@@ -135,8 +134,12 @@ class App02 : public BaseApp {
 #pragma mark -
 #pragma mark Private
  private:
-  /** Texture */
-  OGLTexture* texture_;
+  /** Mesh */
+  OGLMesh<float>* mesh_;
+  /** Camera */
+  OGLCamera* camera_;
+  /** Technique */
+  OGLShader* shader_;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_APP02__ */

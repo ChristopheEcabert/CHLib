@@ -36,6 +36,19 @@ class CHLIB_EXPORTS OGLTexture {
 #pragma mark -
 #pragma mark Type Defintion
   
+  /**
+   *  @enum Type
+   *  @brief  Type of texture, specular, normal, diffuse
+   */
+  enum Type {
+    /** Normal */
+    kNormal,
+    /** Diffuse */
+    kDiffuse,
+    /** Specular */
+    kSpecular
+  };
+  
   /** 
    *  @enum WrappingMode
    *  @brief  Type of wrapping
@@ -99,12 +112,14 @@ class CHLIB_EXPORTS OGLTexture {
    *  @fn int Upload(const Image& image, const WrappingMode wrap_mode,
                      const InterpolationMode interp_mode)
    *  @brief  Upload a given image into OpenGL Texture buffer
-   *  @param[in]  image       Image to upload to texture
-   *  @param[in]  wrap_mode   Type of wrapping to use
-   *  @param[in]  interp_mode Type of interpolation to use
+   *  @param[in]  image         Image to upload to texture
+   *  @param[in]  texture_type  Type of texture
+   *  @param[in]  wrap_mode     Type of wrapping to use
+   *  @param[in]  interp_mode   Type of interpolation to use
    *  @return -1 if error, 0 otherwise
    */
   int Upload(const Image& image,
+             const Type texture_type,
              const WrappingMode wrap_mode,
              const InterpolationMode interp_mode);
   
@@ -127,6 +142,29 @@ class CHLIB_EXPORTS OGLTexture {
   void Unbind(void) const;
   
 #pragma mark -
+#pragma mark Accessors
+  
+  /**
+   *  @name get_type
+   *  @fn OGLTexture::Type get_type(void) const
+   *  @brief  Type of texture
+   *  @return Type of texture
+   */
+  OGLTexture::Type get_type(void) const {
+    return this->type_;
+  }
+  
+  /**
+   *  @name get_type_str
+   *  @fn const std::string& get_type_str(void) const
+   *  @brief  String holding type of texture
+   *  @return string
+   */
+  const std::string& get_type_str(void) const {
+    return this->type_str_;
+  }
+  
+#pragma mark -
 #pragma mark Private
   
  private:
@@ -138,6 +176,10 @@ class CHLIB_EXPORTS OGLTexture {
   size_t height_;
   /** Format */
   GLenum format_;
+  /** Type */
+  Type type_;
+  /** Type string formatted */
+  std::string type_str_;
 };
   
 }  // namespace CHLib

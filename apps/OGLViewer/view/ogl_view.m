@@ -145,23 +145,22 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
 }
 
 -(void) drawView {
-  [[self openGLContext] makeCurrentContext];
-  // We draw on a secondary thread through the display link
-  // When resizing the view, -reshape is called automatically on the main
-  // thread. Add a mutex around to avoid the threads accessing the context
-  // simultaneously when resizing
-  CGLLockContext([[self openGLContext] CGLContextObj]);
+  // Rneder only if callbacks are configured
   if (callback_) {
+    [[self openGLContext] makeCurrentContext];
+    // We draw on a secondary thread through the display link
+    // When resizing the view, -reshape is called automatically on the main
+    // thread. Add a mutex around to avoid the threads accessing the context
+    // simultaneously when resizing
+    CGLLockContext([[self openGLContext] CGLContextObj]);
+    // Render
     [callback_ start];
     [callback_ onRender];
     [callback_ stop];
-  } else {
-    glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
+    // Swap buffer
+    CGLFlushDrawable([[self openGLContext] CGLContextObj]);
+    CGLUnlockContext([[self openGLContext] CGLContextObj]);
   }
-  // Swap buffer
-  CGLFlushDrawable([[self openGLContext] CGLContextObj]);
-  CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
 - (void) windowWillClose:(NSNotification*)notification {

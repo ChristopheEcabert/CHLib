@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9D04F1721D51162800E6E828 /* error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D04F1711D51162800E6E828 /* error.cpp */; };
 		9D04F1781D51185F00E6E828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D04F1771D51185F00E6E828 /* mesh.cpp */; };
+		9D1093831E745BBB00A57F8F /* model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D1093821E745BBB00A57F8F /* model.cpp */; };
+		9D1093871E749D5700A57F8F /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1093861E749D5700A57F8F /* libassimp.a */; };
 		9D21C0951E6D94B2006C0E8E /* png_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21C0941E6D94B2006C0E8E /* png_image.cpp */; };
 		9D21C0971E6D9D56006C0E8E /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21C0961E6D9D56006C0E8E /* libpng16.a */; };
 		9D21C09B1E6D9F09006C0E8E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21C09A1E6D9F09006C0E8E /* libz.tbd */; };
@@ -19,7 +21,7 @@
 		9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D3362021D4D0B3F009C36CF /* camera.cpp */; };
 		9D62BD7A1D70C92B000DD363 /* ply.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D62BD781D70C92B000DD363 /* ply.h */; };
 		9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD791D70C92B000DD363 /* plyfile.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		9D62BD7F1D70D074000DD363 /* technique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD7E1D70D074000DD363 /* technique.cpp */; };
+		9D62BD7F1D70D074000DD363 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD7E1D70D074000DD363 /* shader.cpp */; };
 		9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD811D70E51C000DD363 /* string_util.cpp */; };
 		9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6A33D91D4EAB650060261F /* OpenGL.framework */; };
 		9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */; };
@@ -60,6 +62,9 @@
 		9D04F1761D51179500E6E828 /* mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = mesh.hpp; path = modules/geometry/include/chlib/geometry/mesh.hpp; sourceTree = SOURCE_ROOT; };
 		9D04F1771D51185F00E6E828 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mesh.cpp; path = modules/geometry/src/mesh.cpp; sourceTree = SOURCE_ROOT; };
 		9D04F1791D511D0800E6E828 /* aabb.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = aabb.hpp; path = modules/geometry/include/chlib/geometry/aabb.hpp; sourceTree = SOURCE_ROOT; };
+		9D1093821E745BBB00A57F8F /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = model.cpp; path = modules/ogl/src/model.cpp; sourceTree = SOURCE_ROOT; };
+		9D1093841E745BE000A57F8F /* model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = model.hpp; path = modules/ogl/include/chlib/ogl/model.hpp; sourceTree = SOURCE_ROOT; };
+		9D1093861E749D5700A57F8F /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = 3rd_party/install/lib/libassimp.a; sourceTree = "<group>"; };
 		9D21C0931E6D9430006C0E8E /* png_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = png_image.hpp; path = modules/io/include/chlib/io/png_image.hpp; sourceTree = SOURCE_ROOT; };
 		9D21C0941E6D94B2006C0E8E /* png_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = png_image.cpp; path = modules/io/src/png_image.cpp; sourceTree = SOURCE_ROOT; };
 		9D21C0961E6D9D56006C0E8E /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = 3rd_party/install/lib/libpng16.a; sourceTree = "<group>"; };
@@ -82,8 +87,8 @@
 		9D4241881D4E1C8E00E2F9EF /* matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = matrix.hpp; path = modules/core/include/chlib/core/math/matrix.hpp; sourceTree = SOURCE_ROOT; };
 		9D62BD781D70C92B000DD363 /* ply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ply.h; path = 3rd_party/ply/ply.h; sourceTree = "<group>"; };
 		9D62BD791D70C92B000DD363 /* plyfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = plyfile.c; path = 3rd_party/ply/plyfile.c; sourceTree = "<group>"; };
-		9D62BD7D1D70D02A000DD363 /* technique.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = technique.hpp; path = modules/ogl/include/chlib/ogl/technique.hpp; sourceTree = SOURCE_ROOT; };
-		9D62BD7E1D70D074000DD363 /* technique.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = technique.cpp; path = modules/ogl/src/technique.cpp; sourceTree = SOURCE_ROOT; };
+		9D62BD7D1D70D02A000DD363 /* shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = shader.hpp; path = modules/ogl/include/chlib/ogl/shader.hpp; sourceTree = SOURCE_ROOT; };
+		9D62BD7E1D70D074000DD363 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shader.cpp; path = modules/ogl/src/shader.cpp; sourceTree = SOURCE_ROOT; };
 		9D62BD801D70E2D7000DD363 /* string_util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = string_util.hpp; path = modules/core/include/chlib/core/string_util.hpp; sourceTree = SOURCE_ROOT; };
 		9D62BD811D70E51C000DD363 /* string_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = string_util.cpp; path = modules/core/src/string_util.cpp; sourceTree = SOURCE_ROOT; };
 		9D6A33D91D4EAB650060261F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -115,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D1093871E749D5700A57F8F /* libassimp.a in Frameworks */,
 				9D21C09B1E6D9F09006C0E8E /* libz.tbd in Frameworks */,
 				9D21C0971E6D9D56006C0E8E /* libpng16.a in Frameworks */,
 				9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */,
@@ -150,6 +156,14 @@
 				9D04F1791D511D0800E6E828 /* aabb.hpp */,
 			);
 			name = include;
+			sourceTree = "<group>";
+		};
+		9D1093851E749D4500A57F8F /* assimp */ = {
+			isa = PBXGroup;
+			children = (
+				9D1093861E749D5700A57F8F /* libassimp.a */,
+			);
+			name = assimp;
 			sourceTree = "<group>";
 		};
 		9D21C0981E6D9D5A006C0E8E /* png */ = {
@@ -263,10 +277,11 @@
 			isa = PBXGroup;
 			children = (
 				9D3362021D4D0B3F009C36CF /* camera.cpp */,
+				9D1093821E745BBB00A57F8F /* model.cpp */,
 				9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */,
-				9D62BD7E1D70D074000DD363 /* technique.cpp */,
-				9DC3AEF71E6CADF0006CD74E /* texture.cpp */,
+				9D62BD7E1D70D074000DD363 /* shader.cpp */,
 				9D229CFA1E742F08005C40C1 /* texture_manager.cpp */,
+				9DC3AEF71E6CADF0006CD74E /* texture.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -274,14 +289,15 @@
 		9DBFE8711D4D07B000182698 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				9D21D6EE1D63638000C37B4A /* callbacks.hpp */,
 				9D3362041D4D171E009C36CF /* camera.hpp */,
 				9D21D6ED1D6362D000C37B4A /* key_types.hpp */,
+				9D1093841E745BE000A57F8F /* model.hpp */,
 				9D21D6DC1D634B0600C37B4A /* ogl_mesh.hpp */,
+				9D62BD7D1D70D02A000DD363 /* shader.hpp */,
 				9D3362051D4D196B009C36CF /* tarball.hpp */,
-				9D21D6EE1D63638000C37B4A /* callbacks.hpp */,
-				9D62BD7D1D70D02A000DD363 /* technique.hpp */,
-				9DC3AEF91E6CAE27006CD74E /* texture.hpp */,
 				9D229CF91E742EB8005C40C1 /* texture_manager.hpp */,
+				9DC3AEF91E6CAE27006CD74E /* texture.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -345,6 +361,7 @@
 		9DD47BE91D4E9F25003110D9 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				9D1093851E749D4500A57F8F /* assimp */,
 				9D21C0981E6D9D5A006C0E8E /* png */,
 				9DC3AEEC1E6C61EE006CD74E /* jpeg */,
 				9D62BD7C1D70C92F000DD363 /* ply */,
@@ -455,8 +472,9 @@
 				9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */,
 				9D04F1781D51185F00E6E828 /* mesh.cpp in Sources */,
 				9D229CFE1E743736005C40C1 /* image_loader.cpp in Sources */,
-				9D62BD7F1D70D074000DD363 /* technique.cpp in Sources */,
+				9D62BD7F1D70D074000DD363 /* shader.cpp in Sources */,
 				9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */,
+				9D1093831E745BBB00A57F8F /* model.cpp in Sources */,
 				9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */,
 				9D04F1721D51162800E6E828 /* error.cpp in Sources */,
 				9DC3AEF41E6C8CC8006CD74E /* tga_image.cpp in Sources */,
@@ -503,7 +521,7 @@
 		9DBFE86A1D4D073400182698 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -549,7 +567,7 @@
 		9DBFE86B1D4D073400182698 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
