@@ -16,11 +16,76 @@
 #include "chlib/core/string_util.hpp"
 #include "chlib/ogl/shader.hpp"
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#endif
+
 /**
  *  @namespace  CHLib
  *  @brief      Chris dev space
  */
 namespace CHLib {
+  
+#pragma mark -
+#pragma mark Type definition
+  
+/**
+ *  @struct OGLShaderContext
+ *  @brief  OpenGL Program variables
+ */
+struct OGLShaderContext {
+  /** Shader object */
+  std::vector<GLuint> shaders;
+  /** Program object */
+  GLuint program;
+  
+  /** 
+   *  @name OGLShaderContext
+   *  @fn OGLShaderContext(void)
+   *  @brief  Constructor
+   */
+  OGLShaderContext(void) : shaders(0, 0), program(0) {
+    program = glCreateProgram();
+  }
+  
+  /**
+   *  @name ~OGLShaderContext
+   *  @fn ~OGLShaderContext(void)
+   *  @brief  Destructor
+   */
+  ~OGLShaderContext(void) {
+    // Delete the intermediate shader objects that have been added to the
+    // program. The list will only contain something if shaders were compiled
+    // but the object itself was destroyed prior to linking.
+    for (auto& shader : shaders) {
+      glDeleteShader(shader);
+    }
+    // Release program
+    if (program) {
+      glDeleteProgram(program);
+      program = 0;
+    }
+  }
+  
+  /**
+   *  @name TypeConverter
+   *  @fn static GLenum TypeConverter(const OGLShader::Type& type)
+   *  @brief  Convert shader type to opengl format
+   *  @param[in]  type  Type of shader
+   *  @return Corresponding opengl GLenum
+   */
+  static GLenum TypeConverter(const OGLShader::Type& type) {
+    if (type == OGLShader::Type::kVertex) {
+      return GL_VERTEX_SHADER;
+    } else if (type == OGLShader::Type::kGeometry) {
+      return GL_GEOMETRY_SHADER;
+    } else if (type == OGLShader::Type::kFragment) {
+      return GL_FRAGMENT_SHADER;
+    } else {
+      return GL_INVALID_ENUM;
+    }
+  }
+};
   
 #pragma mark -
 #pragma mark Initialization
@@ -30,7 +95,9 @@ namespace CHLib {
  *  @fn OGLShader(void)
  *  @brief  Consructor
  */
-OGLShader::OGLShader(void) : shaders_(0), program_(0) {
+OGLShader::OGLShader(void) {
+  // Create context
+  ctx_ = new OGLShaderContext();
 }
 
 /*
@@ -39,16 +106,10 @@ OGLShader::OGLShader(void) : shaders_(0), program_(0) {
  *  @brief  Destructor
  */
 OGLShader::~OGLShader(void) {
-  // Delete the intermediate shader objects that have been added to the
-  // program. The list will only contain something if shaders were compiled
-  // but the object itself was destroyed prior to linking.
-  for (auto& shader : shaders_) {
-    glDeleteShader(shader);
-  }
-  // Release program
-  if (!program_) {
-    glDeleteProgram(program_);
-    program_ = 0;
+  // Release context
+  if (ctx_) {
+    delete ctx_;
+    ctx_ = nullptr;
   }
 }
 
@@ -60,11 +121,6 @@ OGLShader::~OGLShader(void) {
  *  @return -1 if error, 0 otherwise
  */
 int OGLShader::Init(const std::vector<std::string>& paths) {
-  program_ = glCreateProgram();
-  if (!program_) {
-    std::cout << "Error while creating shader program" << std::endl;
-    return -1;
-  }
   int err = 0;
   for (auto& path : paths) {
     err |= this->Add(path);
@@ -113,10 +169,11 @@ int OGLShader::Add(const std::string& filename) {
  */
 int OGLShader::Add(const std::string& code, const Type& type) {
   int err = -1;
-  GLuint shader = glCreateShader((GLenum)type);
+  GLenum gl_type = OGLShaderContext::TypeConverter(type);
+  GLuint shader = glCreateShader(gl_type);
   if (shader) {
     // Add to shader list
-    shaders_.push_back(shader);
+    ctx_->shaders.push_back(shader);
     // Set shader source + compile
     const GLchar* data[] = {code.c_str()};
     GLint length[] = {(GLint)code.length()};
@@ -137,7 +194,7 @@ int OGLShader::Add(const std::string& code, const Type& type) {
       // Throw error
       throw CHLib::CHError(CHError::kGeneric, msg, FUNC_NAME);
     } else {
-      glAttachShader(program_, shader);
+      glAttachShader(ctx_->program, shader);
       err = 0;
     }
   } else {
@@ -156,24 +213,24 @@ int OGLShader::Finalize(void) {
   int err = -1;
   GLint status;
   // Link OpenGL program
-  glLinkProgram(program_);
-  glGetProgramiv(program_, GL_LINK_STATUS, &status);
+  glLinkProgram(ctx_->program);
+  glGetProgramiv(ctx_->program, GL_LINK_STATUS, &status);
   if (!status) {
     std::string msg("Program linking failure :\n");
     GLint infoLogLength;
-    glGetProgramiv(program_, GL_INFO_LOG_LENGTH, &infoLogLength);
+    glGetProgramiv(ctx_->program, GL_INFO_LOG_LENGTH, &infoLogLength);
     char* strInfoLog = new char[infoLogLength + 1];
-    glGetProgramInfoLog(program_, infoLogLength, NULL, strInfoLog);
+    glGetProgramInfoLog(ctx_->program, infoLogLength, NULL, strInfoLog);
     msg += strInfoLog;
     delete[] strInfoLog;
     // Show error
     throw CHLib::CHError(CHError::kGeneric, msg, FUNC_NAME);
   } else {
     // Everything went smooth, release shader object
-    for (auto& shader : shaders_) {
+    for (auto& shader : ctx_->shaders) {
       glDeleteShader(shader);
     }
-    shaders_.clear();
+    ctx_->shaders.clear();
     err = glGetError() == GL_NO_ERROR ? 0 : -1;
   }
   return err;
@@ -185,8 +242,8 @@ int OGLShader::Finalize(void) {
  *  @brief  Activate technique
  */
 void OGLShader::Use(void) const {
-  if (program_) {
-    glUseProgram(program_);
+  if (ctx_->program) {
+    glUseProgram(ctx_->program);
   }
 }
 
@@ -211,7 +268,7 @@ void OGLShader::StopUsing(void) const {
 bool OGLShader::IsUsing(void) const {
   GLint curr_prog;
   glGetIntegerv(GL_CURRENT_PROGRAM, &curr_prog);
-  return (curr_prog == static_cast<GLint>(program_));
+  return (curr_prog == static_cast<GLint>(ctx_->program));
 }
   
 /*
@@ -222,12 +279,8 @@ bool OGLShader::IsUsing(void) const {
  *  @return The uniform index for the given name, as returned
  *          from glGetUniformLocation.
  */
-GLint OGLShader::Attrib(const GLchar* attrib_name) const {
-  GLint attrib = -1;
-  if (attrib_name != nullptr) {
-    attrib = glGetAttribLocation(program_, attrib_name);
-  }
-  return attrib;
+int32_t OGLShader::Attrib(const std::string& attrib_name) const {
+  return glGetAttribLocation(ctx_->program, attrib_name.c_str());
 }
   
 /*
@@ -238,56 +291,52 @@ GLint OGLShader::Attrib(const GLchar* attrib_name) const {
  *  @return The uniform index for the given name, as returned
  *          from glGetUniformLocation.
  */
-GLint OGLShader::Uniform(const GLchar* uniform_name) const {
-  GLint uniform = -1;
-  if (uniform_name != nullptr) {
-    uniform = glGetUniformLocation(program_, uniform_name);
-  }
-  return uniform;
+int32_t OGLShader::Uniform(const std::string& uniform_name) const {
+  return glGetUniformLocation(ctx_->program, uniform_name.c_str());
 }
   
 #define ATTRIB_N_UNIFORM_SETTERS(OGL_TYPE, TYPE_PREFIX, TYPE_SUFFIX) \
 \
-void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0) const \
+void OGLShader::SetAttrib(const std::string& name, OGL_TYPE v0) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 1 ## TYPE_SUFFIX (Attrib(name), v0); } \
-void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) const \
+void OGLShader::SetAttrib(const std::string& name, OGL_TYPE v0, OGL_TYPE v1) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 2 ## TYPE_SUFFIX (Attrib(name), v0, v1); } \
-void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
+void OGLShader::SetAttrib(const std::string& name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 3 ## TYPE_SUFFIX (Attrib(name), v0, v1, v2); } \
-void OGLShader::SetAttrib(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
+void OGLShader::SetAttrib(const std::string& name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 4 ## TYPE_SUFFIX (Attrib(name), v0, v1, v2, v3); } \
 \
-void OGLShader::SetAttrib1v(const GLchar* name, const OGL_TYPE* v) const \
+void OGLShader::SetAttrib1v(const std::string& name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 1 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLShader::SetAttrib2v(const GLchar* name, const OGL_TYPE* v) const \
+void OGLShader::SetAttrib2v(const std::string& name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 2 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLShader::SetAttrib3v(const GLchar* name, const OGL_TYPE* v) const \
+void OGLShader::SetAttrib3v(const std::string& name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 3 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
-void OGLShader::SetAttrib4v(const GLchar* name, const OGL_TYPE* v) const \
+void OGLShader::SetAttrib4v(const std::string& name, const OGL_TYPE* v) const \
 { assert(IsUsing()); glVertexAttrib ## TYPE_PREFIX ## 4 ## TYPE_SUFFIX ## v (Attrib(name), v); } \
 \
-void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0) const \
+void OGLShader::SetUniform(const std::string& name, OGL_TYPE v0) const \
 { assert(IsUsing()); glUniform1 ## TYPE_SUFFIX (Uniform(name), v0); } \
-void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1) const \
+void OGLShader::SetUniform(const std::string& name, OGL_TYPE v0, OGL_TYPE v1) const \
 { assert(IsUsing()); glUniform2 ## TYPE_SUFFIX (Uniform(name), v0, v1); } \
-void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
+void OGLShader::SetUniform(const std::string& name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const \
 { assert(IsUsing()); glUniform3 ## TYPE_SUFFIX (Uniform(name), v0, v1, v2); } \
-void OGLShader::SetUniform(const GLchar* name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
+void OGLShader::SetUniform(const std::string& name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const \
 { assert(IsUsing()); glUniform4 ## TYPE_SUFFIX (Uniform(name), v0, v1, v2, v3); } \
 \
-void OGLShader::SetUniform1v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
+void OGLShader::SetUniform1v(const std::string& name, const OGL_TYPE* v, int32_t count) const \
 { assert(IsUsing()); glUniform1 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLShader::SetUniform2v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
+void OGLShader::SetUniform2v(const std::string& name, const OGL_TYPE* v, int32_t count) const \
 { assert(IsUsing()); glUniform2 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLShader::SetUniform3v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
+void OGLShader::SetUniform3v(const std::string& name, const OGL_TYPE* v, int32_t count) const \
 { assert(IsUsing()); glUniform3 ## TYPE_SUFFIX ## v (Uniform(name), count, v); } \
-void OGLShader::SetUniform4v(const GLchar* name, const OGL_TYPE* v, GLsizei count) const \
+void OGLShader::SetUniform4v(const std::string& name, const OGL_TYPE* v, int32_t count) const \
 { assert(IsUsing()); glUniform4 ## TYPE_SUFFIX ## v (Uniform(name), count, v); }
   
 /** Float attribute and uniform setters implementation */
-ATTRIB_N_UNIFORM_SETTERS(GLfloat, , f);
-ATTRIB_N_UNIFORM_SETTERS(GLint, I, i);
-ATTRIB_N_UNIFORM_SETTERS(GLuint, I, ui);
+ATTRIB_N_UNIFORM_SETTERS(float, , f);
+ATTRIB_N_UNIFORM_SETTERS(int32_t, I, i);
+ATTRIB_N_UNIFORM_SETTERS(uint32_t, I, ui);
   
 /*
  * @name  SetUniformMat3
@@ -297,10 +346,10 @@ ATTRIB_N_UNIFORM_SETTERS(GLuint, I, ui);
  * @param[in] count         count (default=1)
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLShader::SetUniformMat3(const GLchar* name,
-                                  const GLfloat* v,
-                                  GLsizei count,
-                                  GLboolean transpose) const {
+void OGLShader::SetUniformMat3(const std::string& name,
+                                  const float* v,
+                                  int32_t count,
+                                  uint8_t transpose) const {
   assert(IsUsing());
   glUniformMatrix3fv(Uniform(name), count, transpose, v);
 }
@@ -313,10 +362,10 @@ void OGLShader::SetUniformMat3(const GLchar* name,
  * @param[in] count         count (default=1)
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLShader::SetUniformMat4(const GLchar* name,
-                                  const GLfloat* v,
-                                  GLsizei count,
-                                  GLboolean transpose) const {
+void OGLShader::SetUniformMat4(const std::string& name,
+                                  const float* v,
+                                  int32_t count,
+                                  uint8_t transpose) const {
   assert(IsUsing());
   glUniformMatrix4fv(Uniform(name), count, transpose, v);
 }
@@ -328,9 +377,9 @@ void OGLShader::SetUniformMat4(const GLchar* name,
  * @param[in] m             Matrix data
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLShader::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const std::string& uniform_name,
                               const Matrix3<float>& m,
-                              GLboolean transpose) const {
+                              uint8_t transpose) const {
   assert(IsUsing());
   glUniformMatrix3fv(Uniform(uniform_name), 1, transpose, m.data());
 }
@@ -342,9 +391,9 @@ void OGLShader::SetUniform(const GLchar* uniform_name,
  * @param[in] m             Matrix data
  * @param[in] transpose     transpose flag (default=false)
  */
-void OGLShader::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const std::string& uniform_name,
                               const Matrix4<float>& m,
-                              GLboolean transpose) const {
+                              uint8_t transpose) const {
   assert(IsUsing());
   glUniformMatrix4fv(Uniform(uniform_name), 1, transpose, m.data());
 }
@@ -355,7 +404,7 @@ void OGLShader::SetUniform(const GLchar* uniform_name,
  * @param[in] uniform_name  Uniform name variable to set
  * @param[in] v             Vector data
  */
-void OGLShader::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const std::string& uniform_name,
                               const Vector3<float>& v) const {
   SetUniform3v(uniform_name, &v.x_);
 }
@@ -365,7 +414,7 @@ void OGLShader::SetUniform(const GLchar* uniform_name,
  * @param[in] uniform_name  Uniform name variable to set
  * @param[in] v             Vector data
  */
-void OGLShader::SetUniform(const GLchar* uniform_name,
+void OGLShader::SetUniform(const std::string& uniform_name,
                               const Vector4<float>& v) const {
   SetUniform4v(uniform_name, &v.x_);
 }

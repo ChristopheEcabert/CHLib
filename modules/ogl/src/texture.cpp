@@ -11,12 +11,58 @@
 
 #include "chlib/ogl/texture.hpp"
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#endif
+
 /**
  *  @namespace  CHLib
  *  @brief      Chris dev space
  */
 namespace CHLib {
   
+#pragma mark -
+#pragma mark Type definition + helper function
+  
+/**
+ *  @struct OGLTextureContext
+ *  @brief  Structure encapsulating OpenGL related information
+ */
+struct OGLTextureContext {
+  /** Texture object */
+  GLuint tex;
+  /** Texture format */
+  GLenum format;
+  
+  /** 
+   *  @name OGLTextureContext
+   *  @fn OGLTextureContext(void)
+   *  @brief  Constructor
+   */
+  OGLTextureContext(void) : tex(0) {
+    // Create texture object
+    glGenTextures(1, &tex);
+  }
+  
+  /**
+   *  @name ~OGLTextureContext
+   *  @fn ~ OGLTextureContext(void)
+   *  @brief  Destructor
+   */
+  ~OGLTextureContext(void) {
+    // Create texture object
+    glDeleteTextures(1, &tex);
+    tex = 0;
+  }
+};
+  
+/**
+ *  @name
+ *  @fn
+ *  @brief  Convert a given texture Type into a readable string format
+ *  @param[in]  type  Texture type
+ *  @param[out] str   Readable string type
+ */
 void SetFormattedString(const OGLTexture::Type& type, std::string* str) {
   switch (type) {
     case OGLTexture::kDiffuse: {
@@ -84,9 +130,9 @@ GLint InterpolationConverter(const OGLTexture::InterpolationMode& mode) {
  *  @fn OGLTexture(void)
  *  @brief  Constructor
  */
-OGLTexture::OGLTexture(void) : tex_(0) {
+OGLTexture::OGLTexture(void) {
   // Create texture object
-  glGenTextures(1, &tex_);
+  ctx_ = new OGLTextureContext();
 }
 
 /*
@@ -96,7 +142,10 @@ OGLTexture::OGLTexture(void) : tex_(0) {
  */
 OGLTexture::~OGLTexture(void) {
   // Release texture
-  glDeleteTextures(1, &tex_);
+  if (ctx_) {
+    delete ctx_;
+    ctx_ = nullptr;
+  }
 }
 
 /*
@@ -110,16 +159,16 @@ int OGLTexture::Upload(const Image& image,
                        const WrappingMode wrap_mode,
                        const InterpolationMode interp_mode) {
   int err = -1;
-  if (tex_) {
+  if (ctx_->tex) {
     // Define texture prop
     this->widht_ = image.width();
     this->height_ = image.height();
-    this->format_ = ImageFormatConverter(image.format());
+    ctx_->format = ImageFormatConverter(image.format());
     this->type_ = texture_type;
     SetFormattedString(this->type_, &this->type_str_);
     // Continu
-    if (this->format_ != -1) {
-      glBindTexture(GL_TEXTURE_2D, tex_);
+    if (ctx_->format != -1) {
+      glBindTexture(GL_TEXTURE_2D, ctx_->tex);
       // Interpolation + border behaviour
       GLint wrap = WrappingConverter(wrap_mode);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
@@ -130,11 +179,11 @@ int OGLTexture::Upload(const Image& image,
       // Texutre
       glTexImage2D(GL_TEXTURE_2D,
                    0,
-                   static_cast<GLint>(this->format_),
+                   static_cast<GLint>(ctx_->format),
                    static_cast<GLsizei>(this->widht_),
                    static_cast<GLsizei>(this->height_),
                    0,
-                   this->format_,
+                   ctx_->format,
                    GL_UNSIGNED_BYTE,
                    static_cast<const GLvoid*>(image.data()));
       // Unbind
@@ -158,7 +207,7 @@ void OGLTexture::Bind(const int texture_unit) const {
   // Active the given texutre unit
   glActiveTexture(GL_TEXTURE0 + texture_unit);
   // Bind texture
-  glBindTexture(GL_TEXTURE_2D, tex_);
+  glBindTexture(GL_TEXTURE_2D, ctx_->tex);
 }
 
 /*

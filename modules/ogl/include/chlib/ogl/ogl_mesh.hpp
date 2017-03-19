@@ -10,10 +10,6 @@
 #ifndef __CHLIB_OGL_MESH__
 #define __CHLIB_OGL_MESH__
 
-#ifdef __APPLE__
-  #include <OpenGL/gl3.h>
-#endif
-
 #include "chlib/core/library_export.hpp"
 #include "chlib/geometry/mesh.hpp"
 #include "chlib/ogl/texture.hpp"
@@ -24,6 +20,16 @@
  *  @brief      Chris dev space
  */
 namespace CHLib {
+
+/** Context forwarding */
+struct OGLMeshContext;
+  
+/**
+ *  @class  OGLMesh
+ *  @brief  3D Mesh container with drawing capability
+ *  @author Christophe Ecabert
+ *  @date   02/08/16
+ */
 template<typename T>
 class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
   
@@ -150,29 +156,8 @@ class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {
 #pragma mark Private
  private:
   
-  /** 
-   *  @enum   BufferType
-   *  @brief  List of OpenGL buffer in the VAO
-   */
-  enum BufferType {
-    /** Vertex buffer */
-    kVertex = 0,
-    /** Normal buffer */
-    kNormal = 1,
-    /** Texture coordinate */
-    kTCoord = 2,
-    /** Vertex color */
-    kColor = 3,
-    /** Tangent space */
-    kTangent = 4,
-    /** Triangle buffer */
-    kTriangle = 5
-  };
-  
-  /** Vertex array object */
-  GLuint vao_;
-  /** Buffer object */
-  GLuint vbo_[6];
+  /** OpenGL Context */
+  OGLMeshContext* ctx_;
   /** Textures */
   std::vector<OGLTexture*> textures_;
 };

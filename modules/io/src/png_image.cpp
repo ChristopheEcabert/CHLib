@@ -78,7 +78,7 @@ void FlushData(png_structp png_ptr) {
 Image::Format PNGFormatConverter(int type) {
   if (type == PNG_COLOR_TYPE_GRAY) {
     return Image::Format::kGrayscale;
-  } else if (type == PNG_COLOR_TYPE_RGB || type == PNG_COLOR_TYPE_PALETTE) {
+  } else if (type == PNG_COLOR_TYPE_RGB || type == PNG_COLOR_TYPE_PALETTE) {
     return Image::Format::kRGB;
   } else if (type == PNG_COLOR_TYPE_RGBA) {
     return Image::Format::kRGBA;

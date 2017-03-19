@@ -9,11 +9,87 @@
 
 #include "chlib/ogl/ogl_mesh.hpp"
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#endif
+
 /**
  *  @namespace  CHLib
  *  @brief      Chris dev space
  */
 namespace CHLib {
+  
+#pragma mark -
+#pragma mark Type definition
+  
+/**
+ *  @struct OGLMeshContext
+ *  @brief  OpenGL context for mesh object
+ */
+struct OGLMeshContext {
+  
+  /**
+   *  @enum   BufferType
+   *  @brief  List of OpenGL buffer in the VAO
+   */
+  enum BufferType {
+    /** Vertex buffer */
+    kVertex = 0,
+    /** Normal buffer */
+    kNormal = 1,
+    /** Texture coordinate */
+    kTCoord = 2,
+    /** Vertex color */
+    kColor = 3,
+    /** Tangent space */
+    kTangent = 4,
+    /** Triangle buffer */
+    kTriangle = 5
+  };
+  
+  /** Vertex Array Object */
+  GLuint vao;
+  /** Buffer object */
+  GLuint vbo[6];
+  
+  /** 
+   *  @name OGLMeshContext
+   *  @fn OGLMeshContext(void)
+   *  @brief  Constructor
+   */
+  OGLMeshContext(void) : vao(0), vbo{0} {
+    // Lazy init
+    glGenVertexArrays(1, &vao);
+    // Init buffers
+    glBindVertexArray(vao);
+    glGenBuffers(sizeof(vbo)/sizeof(vbo[0]), &vbo[0]);
+    // Unbind
+    glBindVertexArray(0);
+  }
+  
+  /**
+   *  @name OGLMeshContext
+   *  @fn ~OGLMeshContext(void)
+   *  @brief  Constructor
+   */
+  ~OGLMeshContext(void) {
+    // Clear buffer
+    if (vbo[0] != 0) {
+      // Ensure VBO is unbind
+      glBindVertexArray(vao);
+      glDeleteBuffers(6, &vbo[0]);
+      memset(reinterpret_cast<void*>(&vbo[0]),
+             0,
+             sizeof(vbo) / sizeof(vbo[0]));
+      glBindVertexArray(0);
+    }
+    // Clear vao
+    if (vao) {
+      glDeleteVertexArrays(1, &vao);
+      vao = 0;
+    }
+  }
+};
   
 #pragma mark -
 #pragma mark Initialization
@@ -24,7 +100,9 @@ namespace CHLib {
  *  @brief  Constructor
  */
 template<typename T>
-OGLMesh<T>::OGLMesh(void) : Mesh<T>(), vao_(0), vbo_{0} {
+OGLMesh<T>::OGLMesh(void) : Mesh<T>() {
+  // Init context
+  ctx_ = new OGLMeshContext();
 }
 
 /*
@@ -34,20 +112,9 @@ OGLMesh<T>::OGLMesh(void) : Mesh<T>(), vao_(0), vbo_{0} {
  */
 template<typename T>
 OGLMesh<T>::~OGLMesh(void) {
-  // Clear buffer
-  if (vbo_[0] != 0) {
-    // Ensure VBO is unbind
-    glBindVertexArray(vao_);
-    glDeleteBuffers(6, &vbo_[0]);
-    memset(reinterpret_cast<void*>(&vbo_[0]),
-           0,
-           sizeof(vbo_) / sizeof(vbo_[0]));
-    glBindVertexArray(0);
-  }
-  // Clear vao
-  if (vao_) {
-    glDeleteVertexArrays(1, &vao_);
-    vao_ = 0;
+  if (ctx_) {
+    delete ctx_;
+    ctx_ = nullptr;
   }
 }
   
@@ -58,71 +125,65 @@ OGLMesh<T>::~OGLMesh(void) {
  *  @return -1 if error, 0 otherwise
  */
 template<typename T>
-int OGLMesh<T>::InitOpenGLContext(void) {
+  int OGLMesh<T>::InitOpenGLContext(void) {
+    using BufferType = OGLMeshContext::BufferType;
+  
   int err = -1;
-  if (!vao_) {
-    // Lazy init
-    glGenVertexArrays(1, &vao_);
-    // Init buffers
-    glBindVertexArray(vao_);
-    glGenBuffers(sizeof(vbo_)/sizeof(vbo_[0]), &vbo_[0]);
-  } else {
-    glBindVertexArray(vao_);
-  }
+  glBindVertexArray(ctx_->vao);
   // Init buffers, VERTEX
   GLenum data_t = sizeof(T) == 4 ? GL_FLOAT : GL_DOUBLE;
   if (this->vertex_.size() > 0) {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[kVertex]);
+    glBindBuffer(GL_ARRAY_BUFFER, ctx_->vbo[BufferType::kVertex]);
     glBufferData(GL_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->vertex_.size() * sizeof(Vertex)),
                  reinterpret_cast<GLvoid*>(this->vertex_.data()),
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(kVertex);
-    glVertexAttribPointer(kVertex, 3, data_t, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(BufferType::kVertex);
+    glVertexAttribPointer(BufferType::kVertex, 3, data_t, GL_FALSE, 0, NULL);
   }
   // Normal
   if (this->normal_.size() > 0) {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[kNormal]);
+    glBindBuffer(GL_ARRAY_BUFFER, ctx_->vbo[BufferType::kNormal]);
     glBufferData(GL_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->normal_.size() * sizeof(Normal)),
                  reinterpret_cast<GLvoid*>(this->normal_.data()),
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(kNormal);
-    glVertexAttribPointer(kNormal, 3, data_t, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(BufferType::kNormal);
+    glVertexAttribPointer(BufferType::kNormal, 3, data_t, GL_FALSE, 0, NULL);
   }
   // Texture coordinate
   if (this->tex_coord_.size() > 0) {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[kTCoord]);
+    glBindBuffer(GL_ARRAY_BUFFER, ctx_->vbo[BufferType::kTCoord]);
     glBufferData(GL_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->tex_coord_.size() * sizeof(TCoord)),
                  reinterpret_cast<GLvoid*>(this->tex_coord_.data()),
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(kTCoord);
-    glVertexAttribPointer(kTCoord, 2, data_t, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(BufferType::kTCoord);
+    glVertexAttribPointer(BufferType::kTCoord, 2, data_t, GL_FALSE, 0, NULL);
   }
   // Tangent space
   if (this->tangent_.size() > 0) {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[kTangent]);
+    glBindBuffer(GL_ARRAY_BUFFER, ctx_->vbo[BufferType::kTangent]);
     glBufferData(GL_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->tangent_.size() * sizeof(Tangent)),
                  reinterpret_cast<GLvoid*>(this->tangent_.data()),
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(kTangent);
-    glVertexAttribPointer(kTangent, 3, data_t, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(BufferType::kTangent);
+    glVertexAttribPointer(BufferType::kTangent, 3, data_t, GL_FALSE, 0, NULL);
   }
   // Vertex color
   if (this->vertex_color_.size() > 0) {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[kColor]);
+    glBindBuffer(GL_ARRAY_BUFFER, ctx_->vbo[BufferType::kColor]);
     glBufferData(GL_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->vertex_color_.size() * sizeof(Color)),
                  reinterpret_cast<GLvoid*>(this->vertex_color_.data()),
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(kColor);
-    glVertexAttribPointer(kColor, 3, data_t, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(BufferType::kColor);
+    glVertexAttribPointer(BufferType::kColor, 3, data_t, GL_FALSE, 0, NULL);
   }
   // Triangle
   if (this->tri_.size() > 0) {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_[kTriangle]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ctx_->vbo[BufferType::kTriangle]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  static_cast<GLsizeiptr>(this->tri_.size() * sizeof(Triangle)),
                  reinterpret_cast<GLvoid*>(this->tri_.data()),
@@ -145,7 +206,7 @@ int OGLMesh<T>::InitOpenGLContext(void) {
  */
 template<typename T>
 void OGLMesh<T>::Bind(void) const {
-  glBindVertexArray(vao_);
+  glBindVertexArray(ctx_->vao);
 }
   
 /*

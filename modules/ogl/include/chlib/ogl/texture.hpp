@@ -11,9 +11,6 @@
 #define __CHLIB_TEXTURE__
 
 #include <cstddef>
-#ifdef __APPLE__
-#include <OpenGL/gl3.h>
-#endif
 
 #include "chlib/core/library_export.hpp"
 #include "chlib/io/image.hpp"
@@ -23,6 +20,12 @@
  *  @brief      Chris dev space
  */
 namespace CHLib {
+  
+#pragma mark -
+#pragma Type forwarding 
+  
+/** OpenGL context for texture object */
+struct OGLTextureContext;
   
 /**
  *  @class  OGLTexture
@@ -168,14 +171,12 @@ class CHLIB_EXPORTS OGLTexture {
 #pragma mark Private
   
  private:
-  /** Texture object */
-  GLuint tex_;
+  /** Texture object context */
+  OGLTextureContext* ctx_;
   /** Width */
   size_t widht_;
   /** Height */
   size_t height_;
-  /** Format */
-  GLenum format_;
   /** Type */
   Type type_;
   /** Type string formatted */

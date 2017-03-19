@@ -13,9 +13,6 @@
 
 #include <string>
 #include <vector>
-#ifdef __APPLE__
-#include <OpenGL/gl3.h>
-#endif
 
 #include "chlib/core/library_export.hpp"
 #include "chlib/core/math/vector.hpp"
@@ -26,6 +23,9 @@
  *  @brief      Chris dev space
  */
 namespace CHLib {
+  
+/** Forwad shader context */
+struct OGLShaderContext;
   
 /**
  *  @class  OGLShader
@@ -47,11 +47,11 @@ class CHLIB_EXPORTS OGLShader {
     /** Unknown */
     kUnknown = -1,
     /** Vertex shader */
-    kVertex = GL_VERTEX_SHADER,
+    kVertex,
     /** Geometry shader */
-    kGeometry = GL_GEOMETRY_SHADER,
+    kGeometry,
     /** FRagment shader */
-    kFragment = GL_FRAGMENT_SHADER
+    kFragment
   };
   
 #pragma mark -
@@ -153,51 +153,60 @@ class CHLIB_EXPORTS OGLShader {
   
   /**
    *  @name Attrib
-   *  @fn GLint Attrib(const GLchar* attrib_name)
+   *  @fn int32_t Attrib(const std::string& attrib_name)
    *  @brief  Provide the attribute index for a given name
    *  @param[in]  attrib_name Name of the attribute to look for
    *  @return The uniform index for the given name, as returned
    *          from glGetUniformLocation.
    */
-  GLint Attrib(const GLchar* attrib_name) const;
+  int32_t Attrib(const std::string& attrib_name) const;
   
   /**
    *  @name Uniform
-   *  @fn GLint Uniform(const GLchar* uniform_name)
+   *  @fn int32_t Uniform(const std::string& uniform_name)
    *  @brief  Provide uniform reference for a given name
    *  @param[in]  uniform_name  Name of the uniform to look for
    *  @return The uniform index for the given name, as returned
    *          from glGetUniformLocation.
    */
-  GLint Uniform(const GLchar* uniform_name) const;
+  int32_t Uniform(const std::string& uniform_name) const;
   
 #define OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(OGL_TYPE) \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0) const; \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1) const; \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2) const; \
-void SetAttrib(const GLchar* attrib_name, OGL_TYPE v0, OGL_TYPE v1, OGL_TYPE v2, OGL_TYPE v3) const; \
+void SetAttrib(const std::string& attrib_name, OGL_TYPE v0) const; \
+void SetAttrib(const std::string& attrib_name, OGL_TYPE v0, OGL_TYPE v1) const;\
+void SetAttrib(const std::string& attrib_name, OGL_TYPE v0, OGL_TYPE v1, \
+               OGL_TYPE v2) const; \
+void SetAttrib(const std::string& attrib_name, OGL_TYPE v0, OGL_TYPE v1, \
+               OGL_TYPE v2, OGL_TYPE v3) const; \
 \
-void SetAttrib1v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
-void SetAttrib2v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
-void SetAttrib3v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
-void SetAttrib4v(const GLchar* attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib1v(const std::string& attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib2v(const std::string& attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib3v(const std::string& attrib_name, const OGL_TYPE* v) const; \
+void SetAttrib4v(const std::string& attrib_name, const OGL_TYPE* v) const; \
 \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0) const;  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1) const;  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2) const;  \
-void SetUniform(const GLchar* uniform_name, const OGL_TYPE v0, const OGL_TYPE v1, const OGL_TYPE v2, const OGL_TYPE v3) const;\
+void SetUniform(const std::string& uniform_name, const OGL_TYPE v0) const;  \
+void SetUniform(const std::string& uniform_name, const OGL_TYPE v0, \
+                const OGL_TYPE v1) const;  \
+void SetUniform(const std::string& uniform_name, const OGL_TYPE v0, \
+                const OGL_TYPE v1, const OGL_TYPE v2) const;  \
+void SetUniform(const std::string& uniform_name, const OGL_TYPE v0, \
+                const OGL_TYPE v1, const OGL_TYPE v2, const OGL_TYPE v3) const;\
 \
-void SetUniform1v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
-void SetUniform2v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
-void SetUniform3v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
-void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1) const;  \
+void SetUniform1v(const std::string& uniform_name, const OGL_TYPE* v, \
+                  int32_t count=1) const;  \
+void SetUniform2v(const std::string& uniform_name, const OGL_TYPE* v, \
+                  int32_t count=1) const;  \
+void SetUniform3v(const std::string& uniform_name, const OGL_TYPE* v, \
+                  int32_t count=1) const;  \
+void SetUniform4v(const std::string& uniform_name, const OGL_TYPE* v, \
+                  int32_t count=1) const;  \
 
   /** Float attribute and uniform setters */
-  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLfloat);
+  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(float);
   /** Int attribute and uniform setters */
-  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLint);
+  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(int32_t);
   /** Unsigned Int attribute and uniform setters */
-  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(GLuint);
+  OGL_PROGRAM_ATTRIB_N_UNIFORM_SETTERS(uint32_t);
   
   /**
    * @name  SetUniformMat3
@@ -207,10 +216,10 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] count         count (default=1)
    * @param[in] transpose     transpose flag (default=false)
    */
-  void SetUniformMat3(const GLchar* uniform_name,
-                      const GLfloat* v,
-                      GLsizei count=1,
-                      GLboolean transpose = GL_FALSE) const;
+  void SetUniformMat3(const std::string& uniform_name,
+                      const float* v,
+                      int32_t count=1,
+                      uint8_t transpose = 0) const;
   /**
    * @name  SetUniformMat4
    * @brief Setup uniform value of type Mat4 (generic)
@@ -219,10 +228,10 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] count         count (default=1)
    * @param[in] transpose     transpose flag (default=false)
    */
-  void SetUniformMat4(const GLchar* uniform_name,
-                      const GLfloat* v,
-                      GLsizei count = 1,
-                      GLboolean transpose=GL_FALSE) const;
+  void SetUniformMat4(const std::string& uniform_name,
+                      const float* v,
+                      int32_t count = 1,
+                      uint8_t transpose = 0) const;
 
   /**
    * @name  SetUniform
@@ -231,9 +240,9 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] m             Matrix data
    * @param[in] transpose     transpose flag (default=false)
    */
-  void SetUniform(const GLchar* uniform_name,
+  void SetUniform(const std::string& uniform_name,
                   const Matrix3<float>& m,
-                  GLboolean transpose=GL_FALSE) const;
+                  uint8_t transpose = 0) const;
   
   /**
    * @name  SetUniform
@@ -242,9 +251,9 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] m             Matrix data
    * @param[in] transpose     transpose flag (default=false)
    */
-  void SetUniform(const GLchar* uniform_name,
+  void SetUniform(const std::string& uniform_name,
                   const Matrix4<float>& m,
-                  GLboolean transpose=GL_FALSE) const;
+                  uint8_t transpose = 0) const;
   
   /**
    * @name  SetUniform
@@ -252,7 +261,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] uniform_name  Uniform name variable to set
    * @param[in] v             Vector data
    */
-  void SetUniform(const GLchar* uniform_name,
+  void SetUniform(const std::string& uniform_name,
                   const Vector3<float>& v) const;
   /**
    * @name  SetUniform
@@ -260,7 +269,7 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    * @param[in] uniform_name  Uniform name variable to set
    * @param[in] v             Vector data
    */
-  void SetUniform(const GLchar* uniform_name,
+  void SetUniform(const std::string& uniform_name,
                   const Vector4<float>& v) const;
   
   
@@ -276,11 +285,9 @@ void SetUniform4v(const GLchar* uniform_name, const OGL_TYPE* v, GLsizei count=1
    *  @return Type of shader
    */
   Type ExtractType(const std::string& filename) const;
-  
-  /** Shader object list */
-  std::vector<GLuint> shaders_;
-  /** Program */
-  GLuint program_;
+    
+  /** Shader context */
+  OGLShaderContext* ctx_;
 };
   
 }  // namespace CHLib
