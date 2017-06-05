@@ -3,8 +3,8 @@
  *  @brief  Utility class to parse command line argument
  *
  *  @author Christophe Ecabert
- *  @date   12/11/15
- *  Copyright (c) 2015 Christophe Ecabert. All rights reserved.
+ *  @date   28/08/16
+ *  Copyright (c) 2016 Christophe Ecabert. All rights reserved.
  */
 
 #include <iostream>

@@ -1,6 +1,7 @@
 /**
  *  @file   ogl_mesh.hpp
  *  @brief  OpenGL Mesh interface
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   16/08/16
@@ -29,6 +30,7 @@ struct OGLMeshContext;
  *  @brief  3D Mesh container with drawing capability
  *  @author Christophe Ecabert
  *  @date   02/08/16
+ *  @ingroup ogl
  */
 template<typename T>
 class CHLIB_EXPORTS OGLMesh : public CHLib::Mesh<T> {

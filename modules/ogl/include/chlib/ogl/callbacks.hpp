@@ -2,6 +2,7 @@
  *  @file   callbacks.hpp
  *  @brief  OpenGL callbacks interface definition
  *          Based on : http://ogldev.atspace.co.uk/
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   16/08/16
@@ -22,11 +23,12 @@
 namespace CHLib {
   
 /**
- * @class   OGLCallback
- * @brief   Unified for OpenGL backend.
+ *  @class   OGLCallbacks
+ *  @brief   Unified for OpenGL backend.
  *          Based on : http://ogldev.atspace.co.uk/
- * @author  Christophe Ecabert
- * @date    10/02/16
+ *  @author  Christophe Ecabert
+ *  @date    10/02/16
+ *  @ingroup ogl
  */
 class OGLCallbacks {
   
@@ -41,8 +43,8 @@ class OGLCallbacks {
 #pragma mark Initialization
   
   /**
-   * @name  OGLCallback
-   * @fn    OGLCallback()
+   * @name  OGLCallbacks
+   * @fn    OGLCallbacks()
    * @brief Constructor
    */
   OGLCallbacks(void) : delta_time_(0.f) {
@@ -51,8 +53,8 @@ class OGLCallbacks {
   }
   
   /**
-   * @name  ~OGLCallback
-   * @fn    virtual ~OGLCallback()
+   * @name  ~OGLCallbacks
+   * @fn    virtual ~OGLCallbacks()
    * @brief Destructor
    */
   virtual ~OGLCallbacks() {}
@@ -112,11 +114,21 @@ class OGLCallbacks {
    */
   virtual void OGLResizeCb(const float width, const float height) {}
   
+  /**
+   *  @name OGLStart
+   *  @fn void OGLStart(void)
+   *  @brief  Start rendering loop
+   */
   void OGLStart(void) {
     current_time_ = std::chrono::high_resolution_clock::now();
     delta_time_ = std::chrono::duration_cast<std::chrono::milliseconds>(current_time_ - last_time_).count();
   }
   
+  /**
+   *  @name OGLStop
+   *  @fn void OGLStop(void)
+   *  @brief  Stop rendering loop
+   */
   void OGLStop(void) {
     last_time_ = current_time_;
   }

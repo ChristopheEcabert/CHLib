@@ -1,6 +1,7 @@
 /**
  *  @file   model.hpp
  *  @brief  3D Model, composition of OGLMesh + OGLTexture
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   11.03.17
@@ -31,6 +32,7 @@ namespace CHLib {
  *  @brief  3D Model
  *  @author Christophe Ecabert
  *  @date   11.03.17
+ *  @ingroup ogl
  */
 template<typename T>
 class CHLIB_EXPORTS OGLModel {

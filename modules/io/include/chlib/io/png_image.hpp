@@ -1,6 +1,7 @@
 /**
  *  @file   png_image.hpp
  *  @brief  PNG Image object
+ *  @ingroup io
  *
  *  @author Christophe Ecabert
  *  @date   06.03.17
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  PNG Image object
  *  @author Christophe Ecabert
  *  @date   06.03.17
+ *  @ingroup io
  */
 class PNGImage : public Image {
  public:
@@ -87,7 +89,7 @@ class PNGImage : public Image {
   
   /**
    *  @name Save
-   *  @fn int Save(const std::string& filename)
+   *  @fn int Save(const std::string& filename) const
    *  @brief  Save image to dist
    *  @param[in]  filename  Path to ressource on the disk
    *  @return -1 if error, 0 otherwise
@@ -96,7 +98,7 @@ class PNGImage : public Image {
   
   /**
    *  @name Save
-   *  @fn int Save(std::ostream& stream)
+   *  @fn int Save(std::ostream& stream) const
    *  @brief  Load image to dist
    *  @param[in]  stream  Binary stream to where to save the ressource
    *  @return -1 if error, 0 otherwise

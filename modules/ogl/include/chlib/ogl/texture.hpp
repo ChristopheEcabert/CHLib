@@ -1,6 +1,7 @@
 /**
  *  @file   texture.hpp
  *  @brief  OpenGL texture object
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   05.03.17
@@ -32,6 +33,7 @@ struct OGLTextureContext;
  *  @brief  OpenGL texture object
  *  @author Christophe Ecabert
  *  @date   05.03.17
+ *  @ingroup ogl
  */
 class CHLIB_EXPORTS OGLTexture {
  public:

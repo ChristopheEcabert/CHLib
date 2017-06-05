@@ -2,6 +2,7 @@
  *  @file   camera.hpp
  *  @brief  OpenGL Camera abstraction
  *          Based on : http://learnopengl.com/#!Getting-started/Camera
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   30/07/16
@@ -29,6 +30,7 @@ namespace CHLib {
  *  @brief  OpenGL Camera abstraction
  *  @author Christophe Ecabert
  *  @date   30/07/16
+ *  @ingroup ogl
  */
 class CHLIB_EXPORTS OGLCamera {
 
@@ -56,7 +58,7 @@ class CHLIB_EXPORTS OGLCamera {
   
   /**
    *  @name OGLCamera
-   *  @fn OGLCamera(void)
+   *  @fn OGLCamera(const Vec3& position, const Vec3& target)
    *  @brief  Constructor
    *  @param[in]  position  Where to place the camera
    *  @param[in]  target    Where to point at
@@ -108,7 +110,7 @@ class CHLIB_EXPORTS OGLCamera {
    *  @brief  Update projection transform
    *  @param[in]  fov     Field of view in Y axis
    *  @param[in]  z_near  New near plane
-   *  @param[in]  z_fat   New far plane
+   *  @param[in]  z_far   New far plane
    *  @param[in]  aspect  Window aspect ratio
    */
   void UpdateProjectionTransform(const float fovy,
@@ -134,8 +136,11 @@ class CHLIB_EXPORTS OGLCamera {
   void OnKeyboard(const OGLKey& key, const OGLKeyState& state, const float dt);
   
   /**
-   *  @name
-   *  @fn
+   *  @name OnMouseClick
+   *  @fn void OnMouseClick(const OGLMouse& button,
+                             const OGLKeyState& state,
+                             const int x,
+                             const int y)
    *  @brief  Handle click event for camera object
    *  @param[in]  button  Which button has triggered the event
    *  @param[in]  state   Button's state

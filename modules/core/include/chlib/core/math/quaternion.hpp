@@ -1,6 +1,7 @@
 /**
  *  @file   quaternion.hpp
  *  @brief  Quaternion abstraction
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   16.12.16
@@ -25,6 +26,7 @@ namespace CHLib {
  *  @brief  Quaternion abstraction
  *  @author Christophe Ecabert
  *  @date   16.12.16
+ *  @ingroup core
  */
 template <typename T>
 class CHLIB_EXPORTS Quaternion {

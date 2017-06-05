@@ -1,6 +1,7 @@
 /**
  *  @file   tga_image.hpp
  *  @brief  TGA Image object
+ *  @ingroup io
  *
  *  @author Christophe Ecabert
  *  @date   05.03.17
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  TGA Image object
  *  @author Christophe Ecabert
  *  @date   05.03.17
+ *  @ingroup io
  */
 class TGAImage : public Image {
  public:
@@ -121,8 +123,8 @@ class TGAImage : public Image {
      *  @fn friend std::istream& operator>>(std::istream& in,
                                             TGAImageSpec& spec)
      *  @brief  Input
-     *  @param[in]  in  Input binary stream
-     *  @param[in,out]  spec  Image spec to fill
+     *  @param[in]  in    Input binary stream
+     *  @param[out] spec  Image spec to fill
      */
     friend std::istream& operator>>(std::istream& in, TGAImageSpec& spec) {
       if (in.good()) {
@@ -144,7 +146,7 @@ class TGAImage : public Image {
                                             TGAImageSpec& spec)
      *  @brief  Write
      *  @param[in]  out  Input binary stream
-     *  @param[in,out]  image spec to fill
+     *  @param[in]  spec Image spec to write
      */
     friend std::ostream& operator<<(std::ostream& out,
                                     const TGAImageSpec& spec) {
@@ -188,7 +190,7 @@ class TGAImage : public Image {
                                             TGAHeader& header)
      *  @brief  Input
      *  @param[in]  in  Input binary stream
-     *  @param[in,out]  image spec to fill
+     *  @param[in,out]  header Image spec to fill
      */
     friend std::istream& operator>>(std::istream& in, TGAHeader& header) {
       if (in.good()) {
@@ -283,7 +285,7 @@ class TGAImage : public Image {
   
   /**
    *  @name Save
-   *  @fn int Save(const std::string& filename)
+   *  @fn int Save(const std::string& filename) const
    *  @brief  Save image to dist
    *  @param[in]  filename  Path to ressource on the disk
    *  @return -1 if error, 0 otherwise
@@ -292,7 +294,7 @@ class TGAImage : public Image {
   
   /**
    *  @name Save
-   *  @fn int Save(std::ostream& stream)
+   *  @fn int Save(std::ostream& stream) const
    *  @brief  Load image to dist
    *  @param[in]  stream  Binary stream to where to save the ressource
    *  @return -1 if error, 0 otherwise

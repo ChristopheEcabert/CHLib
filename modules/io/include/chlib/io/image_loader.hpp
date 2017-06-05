@@ -1,6 +1,7 @@
 /**
  *  @file   image_loader.hpp
  *  @brief  Helper class to load images into memory
+ *  @ingroup io
  *
  *  @author Christophe Ecabert
  *  @date   11.03.17
@@ -24,6 +25,7 @@ namespace CHLib {
  *  @brief  Helper class to load images into memory
  *  @author Christophe Ecabert
  *  @date   11.03.17
+ *  @ingroup io
  */
 class CHLIB_EXPORTS ImageLoader {
  public:

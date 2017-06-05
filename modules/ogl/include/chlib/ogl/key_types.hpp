@@ -2,6 +2,7 @@
  *  @file   key_types.hpp
  *  @brief  Generic key definition for abstract layer.
  *          Based on : http://ogldev.atspace.co.uk/
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   16/08/16
@@ -20,10 +21,11 @@
 namespace CHLib {
 
 /**
- * @enum OGLKey
- * @brief Define different keyboard's key
+ *  @enum OGLKey
+ *  @brief Define different keyboard's key
+ *  @ingroup ogl
  */
-enum CHLIB_EXPORTS OGLKey {
+enum OGLKey {
   /** Space */
   kSPACE =             32,
   /** Apostrophe */
@@ -229,10 +231,11 @@ enum CHLIB_EXPORTS OGLKey {
 };
 
 /**
- * @enum OGLMouse
- * @brief Define different mouse event type
+ *  @enum OGLMouse
+ *  @brief Define different mouse event type
+ *  @ingroup ogl
  */
-enum CHLIB_EXPORTS OGLMouse {
+enum OGLMouse {
   /** Mouse left button */
   kMouseLeft,
   /** Mouse right button */
@@ -244,10 +247,11 @@ enum CHLIB_EXPORTS OGLMouse {
 };
 
 /**
- * @enum OGLKeyState
- * @brief Define all possible key state
+ *  @enum OGLKeyState
+ *  @brief Define all possible key state
+ *  @ingroup ogl
  */
-enum CHLIB_EXPORTS OGLKeyState {
+enum OGLKeyState {
   /** Key was pressed */
   kPress,
   /** Key was released */

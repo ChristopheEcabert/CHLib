@@ -2,6 +2,7 @@
  *  @file   matrix.hpp
  *  @brief  Matrix class 
  *          Colmun-major data layout
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   31/07/16
@@ -23,10 +24,11 @@
 namespace CHLib {
 
 /**
- *  @name   Matrix3
+ *  @class  Matrix3
  *  @brief  3x3 matrix class
  *  @author Christophe Ecabert
  *  @date   31/07/16
+ *  @ingroup core
  */
 template<typename T>
 class CHLIB_EXPORTS Matrix3 {
@@ -335,7 +337,7 @@ class CHLIB_EXPORTS Matrix3 {
 
   /**
    *  @name operator<<
-   *  @fn friend std::ostream& operator<<(std::ostream& out, const Matrix3& rhs)
+   *  @fn friend std::ostream& operator<<(std::ostream& out, const Matrix3& m)
    *  @brief  Print matrix into a given steram
    *  @param[in]  out   Output stream
    *  @param[in]  m     Matrix to print
@@ -358,10 +360,11 @@ class CHLIB_EXPORTS Matrix3 {
 };
 
 /**
- *  @name   Matrix4
+ *  @class  Matrix4
  *  @brief  4x4 matrix class
  *  @author Christophe Ecabert
  *  @date   31/07/16
+ *  @ingroup core
  */
 template<typename T>
 class CHLIB_EXPORTS Matrix4 {
@@ -730,7 +733,7 @@ public:
   
   /**
    *  @name operator<<
-   *  @fn friend std::ostream& operator<<(std::ostream& out, const Matrix4& rhs)
+   *  @fn friend std::ostream& operator<<(std::ostream& out, const Matrix4& m)
    *  @brief  Print matrix into a given steram
    *  @param[in]  out   Output stream
    *  @param[in]  m     Matrix to print

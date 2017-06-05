@@ -1,6 +1,7 @@
 /**
  *  @file   texture_manager.hpp
  *  @brief  Manage OpenGL texture, avoid multiple instance of the same data
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   11.03.17
@@ -27,6 +28,7 @@ namespace CHLib {
  *  @brief  Manager for OpenGL texture object
  *  @author Christophe Ecabert
  *  @date   11.03.17
+ *  @ingroup ogl
  */
 class CHLIB_EXPORTS OGLTextureManager {
  public:
@@ -75,7 +77,7 @@ class CHLIB_EXPORTS OGLTextureManager {
    *  @fn OGLTexture* Add(const std::string& filename,const std::string& tex_id)
    *  @brief  Add a new texture into the manager
    *  @param[in]  filename  Path to the image file
-   *  @param[in]  id       id for this texture, if empty use filename
+   *  @param[in]  tex_id       id for this texture, if empty use filename
    *  @return nullptr if error, reference to the new texture otherwise.
    */
    
@@ -93,7 +95,7 @@ class CHLIB_EXPORTS OGLTextureManager {
   /**
    *  @name Remove
    *  @fn void Remove(const std::string& tex_id)
-   *  @biref  Release specific textures
+   *  @brief  Release specific textures
    *  @param[in]  tex_id  Texture ID to remove/release, if empty remove every
    *                      textures
    */
@@ -104,7 +106,7 @@ class CHLIB_EXPORTS OGLTextureManager {
   
   /**
    *  @name set_wraping_mode
-   *  @fn  void set_wraping_mode(const OGLTexture::WrappingMode& mode)
+   *  @fn  void set_wraping_model(const OGLTexture::WrappingMode& mode)
    *  @brief  Set the texture type of wrapping
    *  @param[in]  mode  Type of texture wrapping
    */

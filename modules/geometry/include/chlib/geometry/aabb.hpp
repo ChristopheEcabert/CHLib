@@ -1,6 +1,7 @@
 /**
  *  @file   aabb.hpp
  *  @brief  Axis Aligned Bounding Box
+ *  @ingroup geometry
  *
  *  @author Christophe Ecabert
  *  @date   02/08/16
@@ -15,10 +16,11 @@
 #include "chlib/core/library_export.hpp"
 
 /**
- * @struct   AABB
- * @brief   Axis Aligned Bouding Box
- * @author  Christophe Ecabert
- * @date    02/08/16
+ *  @struct   AABB
+ *  @brief   Axis Aligned Bouding Box
+ *  @author  Christophe Ecabert
+ *  @date    02/08/16
+ *  @ingroup geometry
  */
 template<typename T>
 struct CHLIB_EXPORTS AABB {

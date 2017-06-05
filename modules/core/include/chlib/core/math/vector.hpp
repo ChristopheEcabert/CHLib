@@ -1,6 +1,7 @@
 /**
  *  @file   vector.hpp
  *  @brief  Vector of size 2/3/4
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   30/07/16
@@ -31,6 +32,7 @@ namespace CHLib {
  *  @brief  Vector of dimension 2
  *  @author Chrisotphe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  */
 template<typename T>
 struct CHLIB_EXPORTS Vector2 {
@@ -69,7 +71,7 @@ struct CHLIB_EXPORTS Vector2 {
    *  @fn Vector2& operator=(const Vector2& rhs)
    *  @brief  Assignment operator
    *  @param[in]  rhs Object to assign from
-   *  @reutnr Newly assigned object
+   *  @return Newly assigned object
    */
   Vector2& operator=(const Vector2& rhs) {
     if (this != &rhs) {
@@ -80,9 +82,9 @@ struct CHLIB_EXPORTS Vector2 {
   }
 
   /**
-   *  @name
-   *  @fn
-   *  @brief
+   *  @name Vector2
+   *  @fn ~Vector2(void)
+   *  @brief  Destructor
    */
   ~Vector2(void) {}
 
@@ -314,6 +316,7 @@ struct CHLIB_EXPORTS Vector2 {
  *  @brief  Vector of dimension 3
  *  @author Chrisotphe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  */
 template<typename T>
 struct CHLIB_EXPORTS Vector3 {
@@ -334,6 +337,7 @@ struct CHLIB_EXPORTS Vector3 {
    *  @brief  Constructor
    *  @param[in]  x   X component
    *  @param[in]  y   Y component
+   *  @param[in]  z   Z component
    */
   Vector3(const T x, const T y, const T z) : x_(x), y_(y), z_(z) {}
 
@@ -353,7 +357,7 @@ struct CHLIB_EXPORTS Vector3 {
    *  @fn Vector3& operator=(const Vector3& rhs)
    *  @brief  Assignment operator
    *  @param[in]  rhs Object to assign from
-   *  @reutnr Newly assigned object
+   *  @return Newly assigned object
    */
   Vector3& operator=(const Vector3& rhs) {
     if (this != &rhs) {
@@ -365,9 +369,9 @@ struct CHLIB_EXPORTS Vector3 {
   }
 
   /**
-   *  @name
-   *  @fn
-   *  @brief
+   *  @name ~Vector3
+   *  @fn ~Vector3(void)
+   *  @brief  Destructor
    */
   ~Vector3(void) {}
 
@@ -610,6 +614,7 @@ struct CHLIB_EXPORTS Vector3 {
  *  @brief  Vector of dimension 4
  *  @author Chrisotphe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  */
 template<typename T>
 struct CHLIB_EXPORTS Vector4 {
@@ -626,7 +631,7 @@ struct CHLIB_EXPORTS Vector4 {
 
   /**
    *  @name Vector4
-   *  @fn Vector4(const T x, const T y, const T z)
+   *  @fn Vector4(const T x, const T y, const T z, const T w)
    *  @brief  Constructor
    *  @param[in]  x   X component
    *  @param[in]  y   Y component
@@ -655,7 +660,7 @@ struct CHLIB_EXPORTS Vector4 {
    *  @fn Vector4& operator=(const Vector4& rhs)
    *  @brief  Assignment operator
    *  @param[in]  rhs Object to assign from
-   *  @reutnr Newly assigned object
+   *  @return Newly assigned object
    */
   Vector4& operator=(const Vector4& rhs) {
     if (this != &rhs) {
@@ -668,9 +673,9 @@ struct CHLIB_EXPORTS Vector4 {
   }
 
   /**
-   *  @name
-   *  @fn
-   *  @brief
+   *  @name ~Vector4
+   *  @fn ~Vector4(void)
+   *  @brief  Destructor
    */
   ~Vector4(void) {}
 

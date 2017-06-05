@@ -1,6 +1,7 @@
 /**
  *  @file   mesh.hpp
  *  @brief  3D Mesh container
+ *  @ingroup geometry
  *
  *  @author Christophe Ecabert
  *  @date   02/08/16
@@ -27,6 +28,7 @@ namespace CHLib {
  *  @brief  3D Mesh container
  *  @author Christophe Ecabert
  *  @date   02/08/16
+ *  @ingroup geometry
  */
 template<typename T>
 class CHLIB_EXPORTS Mesh {

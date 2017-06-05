@@ -1,6 +1,7 @@
 /**
  *  @file   library_export.hpp
- *  @brief
+ *  @brief  Export macro for dll
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   30/07/16

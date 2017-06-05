@@ -1,6 +1,7 @@
 /**
  *  @file   jpeg_image.hpp
  *  @brief  JPEG Image object
+ *  @ingroup io
  *
  *  @author Christophe Ecabert
  *  @date   05.03.17
@@ -24,6 +25,7 @@ namespace CHLib {
  *  @brief  JPEG Image object
  *  @author Christophe Ecabert
  *  @date   05.03.17
+ *  @ingroup io
  */
 class JPEGImage : public Image {
  public:

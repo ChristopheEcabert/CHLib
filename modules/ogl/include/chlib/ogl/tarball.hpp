@@ -2,6 +2,7 @@
  *  @file   tarball.hpp
  *  @brief  Helper class to handle orientation in 3D space
  *          Abstract representation of a ball
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   30/07/16
@@ -25,6 +26,7 @@ namespace CHLib {
  *          Uses right hand coordinate system
  *  @author Christophe Ecabert
  *  @date   30/07/16
+ *  @ingroup ogl
  */
 template<typename T>
 struct CHLIB_EXPORTS OGLTarball {

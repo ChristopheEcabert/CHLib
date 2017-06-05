@@ -1,6 +1,7 @@
 /**
  *  @file   string_util.hpp
  *  @brief  Utility function for string handling
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   26/08/16
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  Utility function for string handling
  *  @author Christophe Ecabert
  *  @date   26/08/16
+ *  @ingroup core
  */
 class CHLIB_EXPORTS StringUtil {
  public:
@@ -46,7 +48,10 @@ class CHLIB_EXPORTS StringUtil {
   
   /**
    *  @name ExtractDirectory
-   *  @fn
+   *  @fn static void ExtractDirectory(const std::string& path,
+                                       std::string* dir,
+                                       std::string* file,
+                                       std::string* ext)
    *  @brief  Split path into directory + extension
    *  @param[in]  path  Path where to extract data
    *  @param[out] dir   Extracted directory

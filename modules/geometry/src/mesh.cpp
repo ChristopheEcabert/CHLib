@@ -10,12 +10,11 @@
 #include <assert.h>
 #include <fstream>
 #include <sstream>
-
 #ifdef __APPLE__
 #include <dispatch/dispatch.h>
 #endif
 
-#include "ply.h"
+#include "ply/ply.h"
 
 #include "chlib/geometry/mesh.hpp"
 

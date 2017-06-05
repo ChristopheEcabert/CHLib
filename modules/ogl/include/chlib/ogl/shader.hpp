@@ -2,6 +2,7 @@
  *  @file   shader.hpp
  *  @brief  Basic OpenGL program used to render
  *  @see    http://ogldev.atspace.co.uk
+ *  @ingroup ogl
  *
  *  @author Christophe Ecabert
  *  @date   26/08/16
@@ -32,6 +33,7 @@ struct OGLShaderContext;
  *  @brief  Basic OpenGL program used to render
  *  @author Christophe Ecabert
  *  @date   26/08/16
+ *  @ingroup ogl
  */
 class CHLIB_EXPORTS OGLShader {
  public:
@@ -91,7 +93,7 @@ class CHLIB_EXPORTS OGLShader {
    *  @name Init
    *  @fn virtual int Init(const std::vector<std::string>& paths)
    *  @brief  Initialized OpenGL program
-   *  @param[in]  path  List of shader's files to initialize
+   *  @param[in]  paths  List of shader's files to initialize
    *  @return -1 if error, 0 otherwise
    */
   virtual int Init(const std::vector<std::string>& paths);
@@ -100,7 +102,7 @@ class CHLIB_EXPORTS OGLShader {
 #pragma mark Usage
   
   /**
-   *  @nme  Add
+   *  @name  Add
    *  @fn int Add(const std::string& filename)
    *  @brief  Add a shader to this technique
    *  @param[in]  filename  Path to the file holding shader
@@ -109,7 +111,7 @@ class CHLIB_EXPORTS OGLShader {
   int Add(const std::string& filename);
   
   /**
-   *  @nme  Add
+   *  @name  Add
    *  @fn int Add(const std::string& code, const Type& type)
    *  @brief  Add a shader to this technique
    *  @param[in]  code  Code of the shader to add
@@ -127,15 +129,15 @@ class CHLIB_EXPORTS OGLShader {
   int Finalize(void);
   
   /**
-   *  @name
-   *  @fn
+   *  @name Use
+   *  @fn void Use(void) const
    *  @brief  Activate technique
    */
   void Use(void) const;
   
   /**
-   *  @name
-   *  @fn
+   *  @name StopUsing
+   *  @fn void StopUsing(void) const
    *  @brief  Deactivate technique
    */
   void StopUsing(void) const;

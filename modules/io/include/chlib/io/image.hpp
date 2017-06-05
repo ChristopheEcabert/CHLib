@@ -1,6 +1,7 @@
 /**
  *  @file   image.hpp
  *  @brief  Image abstraction class
+ *  @ingroup io
  *
  *  @author Christophe Ecabert
  *  @date   05.03.17
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  Image abstraction layer
  *  @author Christophe Ecabert
  *  @date   05.03.17
+ *  @ingroup io
  */
 class Image {
  public:

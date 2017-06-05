@@ -1,6 +1,7 @@
 /**
  *  @file   error.hpp
  *  @brief  Error class
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   02/08/16
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  Error class
  *  @author Christophe Ecabert
  *  @date   02/08/16
+ *  @ingroup core
  */
 class CHLIB_EXPORTS CHError : public std::exception {
 

@@ -1,6 +1,7 @@
 /**
  *  @file   type_comparator.hpp
  *  @brief  Helper class to compare floating number
+ *  @ingroup core
  *
  *  @author Christophe Ecabert
  *  @date   30/07/16
@@ -25,6 +26,7 @@ namespace CHLib {
  *  @brief  Class to compare floating number
  *  @author Christophe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  *  @see https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
  */
 template<typename T>
@@ -136,6 +138,7 @@ class CHLIB_EXPORTS TComparator {
  *  @brief  Class to compare floating number
  *  @author Christophe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  *  @see https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
  */
 template<>
@@ -259,6 +262,7 @@ private:
  *  @brief  Class to compare floating number
  *  @author Christophe Ecabert
  *  @date   30/07/16
+ *  @ingroup core
  *  @see https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
  */
 template<>
