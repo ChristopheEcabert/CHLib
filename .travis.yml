@@ -1,0 +1,13 @@
+language: c++
+os:
+  - linux
+  - osx
+compiler:
+  - gcc
+  - clang
+matrix:
+  exclude:
+    - os: osx
+      compiler: gcc
+script:
+  - echo "arch $TRAVIS_OS_NAME"
