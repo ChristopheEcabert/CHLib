@@ -105,5 +105,45 @@ class PNGImage : public Image {
    */
   int Save(std::ostream& stream) const;
 };
+  
+/**
+ *  @class  PNGProxy
+ *  @brief  PNG Image object registration interface
+ *  @autor  Christophe Ecabert
+ *  @date   15.07.17
+ *  @ingroup io
+ */
+class CHLIB_EXPORTS PNGProxy : public ImageProxy {
+ public:
+  
+  /**
+   *  @name PNGProxy
+   *  @fn   PNGProxy(void)
+   *  @brief  Constructor
+   */
+  PNGProxy(void);
+  
+  /**
+   *  @name ~PNGProxy
+   *  @fn   ~PNGProxy(void)
+   *  @brief  Destructor
+   */
+  ~PNGProxy(void);
+  
+  /**
+   *  @name   Create
+   *  @fn     Image* Create(void) const
+   *  @brief  Create an instance of image with proper type
+   */
+  Image* Create(void) const;
+  
+  /**
+   *  @name Extension
+   *  @fn const char* Extension(void) const
+   *  @brief  Return the extension for a given type of image
+   *  @return extension type
+   */
+  const char* Extension(void) const;
+};
 }  // namespace CHLib
 #endif /* __CHLIB_PNG_IMAGE__ */

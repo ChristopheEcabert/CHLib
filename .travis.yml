@@ -10,4 +10,4 @@ matrix:
     - os: osx
       compiler: gcc
 script:
-  - echo "arch $TRAVIS_OS_NAME"
+  - echo arch $TRAVIS_OS_NAME

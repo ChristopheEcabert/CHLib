@@ -288,5 +288,44 @@ int PNGImage::Save(std::ostream& stream) const {
   }
   return err;
 }
+  
+#pragma mark -
+#pragma mark Registration
+  
+/*
+ *  @name PNGProxy
+ *  @fn   PNGProxy(void)
+ *  @brief  Constructor
+ */
+PNGProxy::PNGProxy(void) : CHLib::ImageProxy() {}
+  
+/*
+ *  @name ~PNGProxy
+ *  @fn   ~PNGProxy(void)
+ *  @brief  Destructor
+ */
+PNGProxy::~PNGProxy(void) {}
+  
+/*
+ *  @name   Create
+ *  @fn     Image* Create(void) const
+ *  @brief  Create an instance of image with proper type
+ */
+Image* PNGProxy::Create(void) const {
+  return new PNGImage();
+}
+  
+/*
+ *  @name Extension
+ *  @fn const char* Extension(void) const
+ *  @brief  Return the extension for a given type of image
+ *  @return extension type
+ */
+const char* PNGProxy::Extension(void) const {
+  return "png";
+}
+  
+// Explicit registration
+PNGProxy png_proxy;
 
 }  // namespace CHLib

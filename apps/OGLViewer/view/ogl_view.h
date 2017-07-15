@@ -21,4 +21,16 @@
  */
 -(void) addCallbacks:(OGLCallbacksWrapper*) callback;
 
+/**
+ *  @name startLink
+ *  @brief  Start rendering thread
+ */
+-(void) startLink;
+
+/**
+ *  @name stopLink
+ *  @brief  Stop rendering thread
+ */
+-(void) stopLink;
+
 @end

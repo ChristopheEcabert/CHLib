@@ -10,7 +10,7 @@
 #include <iostream>
 
 #include "chlib/ogl/texture_manager.hpp"
-#include "chlib/io/image_loader.hpp"
+#include "chlib/io/image_factory.hpp"
 #include "chlib/core/string_util.hpp"
 
 /**
@@ -83,32 +83,36 @@ OGLTexture* OGLTextureManager::Add(const std::string& filename,
   const auto it = texture_map_.find(key);
   if (it == texture_map_.end()) {
     // No, add it. First load image, if no isse create OGLTexture
-    Image* img = nullptr;
-    int err = ImageLoader::Load(filename, &img);
-    if (!err) {
-      // Extrac type
-      std::vector<std::string> parts;
-      StringUtil::Split(file, "_", &parts);
-      // Load texture
-      OGLTexture::Type type;
-      tex = new OGLTexture();
-      type = ConvertTypeFromString(parts.back());
-      err = tex->Upload(*img,
-                        type,
-                        this->wrapping_mode_,
-                        this->interp_mode_);
+    Image* img = ImageFactory::Get().CreateByExtension(ext);
+    if (img) {
+      int err = img->Load(filename);
       if (!err) {
-        texture_map_.emplace(key, tex);
+        // Extrac type
+        std::vector<std::string> parts;
+        StringUtil::Split(file, "_", &parts);
+        // Load texture
+        OGLTexture::Type type;
+        tex = new OGLTexture();
+        type = ConvertTypeFromString(parts.back());
+        err = tex->Upload(*img,
+                          type,
+                          this->wrapping_mode_,
+                          this->interp_mode_);
+        if (!err) {
+          texture_map_.emplace(key, tex);
+        } else {
+          std::cout << "Error, can not upload texture" << std::endl;
+          // CLean up
+          delete tex;
+          tex = nullptr;
+        }
+        // Clean up
+        delete img;
       } else {
-        std::cout << "Error, can not upload texture" << std::endl;
-        // CLean up
-        delete tex;
-        tex = nullptr;
+        std::cout << "Unable to open : " << filename << std::endl;
       }
-      // Clean up
-      delete img;
     } else {
-      std::cout << "Unable to open : " << filename << std::endl;
+      std::cout << "Unknown extension type : " << ext << std::endl;
     }
   } else {
     tex = it->second;

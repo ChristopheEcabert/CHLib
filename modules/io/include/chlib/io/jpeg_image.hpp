@@ -100,5 +100,46 @@ class JPEGImage : public Image {
    */
   int Save(std::ostream& stream) const;
 };
+  
+/**
+ *  @class  JPEGProxy
+ *  @brief  JPEG Image object registration interface
+ *  @autor  Christophe Ecabert
+ *  @date   15.07.17
+ *  @ingroup io
+ */
+class CHLIB_EXPORTS JPEGProxy : public ImageProxy {
+ public:
+  
+  /**
+   *  @name JPEGProxy
+   *  @fn   JPEGProxy(void)
+   *  @brief  Constructor
+   */
+  JPEGProxy(void);
+  
+  /**
+   *  @name ~JPEGProxy
+   *  @fn   ~JPEGProxy(void)
+   *  @brief  Destructor
+   */
+  ~JPEGProxy(void);
+  
+  /**
+   *  @name   Create
+   *  @fn     Image* Create(void) const
+   *  @brief  Create an instance of image with proper type
+   */
+  Image* Create(void) const;
+  
+  /**
+   *  @name Extension
+   *  @fn const char* Extension(void) const
+   *  @brief  Return the extension for a given type of image
+   *  @return extension type
+   */
+  const char* Extension(void) const;
+};
+  
 }  // namespace CHLib
 #endif /* __CHLIB_JPEG_IMAGE__ */

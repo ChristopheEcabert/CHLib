@@ -1,6 +1,7 @@
 /**
  *  @file   app00.hpp
  *  @brief  Test application
+ *  @ingroup app
  *
  *  @author Christophe Ecabert
  *  @date   23/08/16
@@ -26,6 +27,7 @@ namespace CHLib {
  *  @brief  Debug class
  *  @author Christophe Ecabert
  *  @date   23/08/16
+ *  @ingroup app
  */
 class App00 : public BaseApp {
  public:
@@ -35,12 +37,12 @@ class App00 : public BaseApp {
   
   /**
    *  @name App00
-   *  @fn App01(void)
+   *  @fn App01(const float width, const float height)
    *  @brief  Constructor
-   *  @param[in]  win_width   View's width
-   *  @param[in]  win_height  View's height
+   *  @param[in]  width   View's width
+   *  @param[in]  height  View's height
    */
-  App00(const float win_width, const float win_height);
+  App00(const float width, const float height);
   
   /**
    *  @name App00
@@ -139,7 +141,56 @@ class App00 : public BaseApp {
   OGLCamera* camera_;
   /** Technique */
   OGLShader* shader_;
+};
   
+/**
+ *  @class  App00Proxy
+ *  @brief  App00 Proxy
+ *  @author Christophe Ecabert
+ *  @date 15.07.17
+ *  @ingroup app
+ */
+class App00Proxy : public AppProxy {
+ public:
+  
+  /**
+   *  @name App00Proxy
+   *  @fn App00Proxy(void);
+   *  @brief  Constructor
+   */
+  App00Proxy(void);
+  
+  /**
+   *  @name App00Proxy
+   *  @fn App00Proxy(void);
+   *  @brief  Constructor
+   */
+  ~App00Proxy(void);
+  
+  /**
+   *  @name Create
+   *  @fn BaseApp* Create(const float width, const float height) const
+   *  @brief  Create an app of a given type
+   *  @param[in]  width Window's width    Window's width
+   *  @param[in]  height Window's height  Window's height
+   */
+  BaseApp* Create(const float width, const float height) const;
+  
+  /**
+   *  @name Id
+   *  @fn size_t Id(void) const
+   *  @brief  Provide ID of the app
+   *  @return App's ID
+   */
+  size_t Id(void) const;
+  
+  /**
+   *  @name Name
+   *  @fn const char* Name(void) const
+   *  @brief  Provide Name of the app
+   *  @return App's name
+   */
+  const char* Name(void) const;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_APP00__ */

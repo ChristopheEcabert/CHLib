@@ -17,16 +17,19 @@
 		9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6DD1D634CA400C37B4A /* ogl_mesh.cpp */; };
 		9D21D6EC1D634FDC00C37B4A /* libCHLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBFE8611D4D073400182698 /* libCHLib.dylib */; };
 		9D229CFB1E742F08005C40C1 /* texture_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D229CFA1E742F08005C40C1 /* texture_manager.cpp */; };
-		9D229CFE1E743736005C40C1 /* image_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D229CFD1E743736005C40C1 /* image_loader.cpp */; };
+		9D229CFE1E743736005C40C1 /* image_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D229CFD1E743736005C40C1 /* image_factory.cpp */; };
 		9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D3362021D4D0B3F009C36CF /* camera.cpp */; };
 		9D62BD7A1D70C92B000DD363 /* ply.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D62BD781D70C92B000DD363 /* ply.h */; };
 		9D62BD7B1D70C92B000DD363 /* plyfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD791D70C92B000DD363 /* plyfile.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		9D62BD7F1D70D074000DD363 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD7E1D70D074000DD363 /* shader.cpp */; };
 		9D62BD821D70E51C000DD363 /* string_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D62BD811D70E51C000DD363 /* string_util.cpp */; };
 		9D6A33DA1D4EAB650060261F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6A33D91D4EAB650060261F /* OpenGL.framework */; };
+		9D9C40871EF6F17100ED3EE5 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9C40861EF6F14B00ED3EE5 /* libgmock.a */; };
+		9D9C40881EF6F17100ED3EE5 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9C40851EF6F13C00ED3EE5 /* libgtest.a */; };
+		9D9C408C1EF6F1A400ED3EE5 /* test_cmd_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C408B1EF6F1A400ED3EE5 /* test_cmd_parser.cpp */; };
+		9DA863551F1A4B8A0074D73D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA863541F1A4B8A0074D73D /* image.cpp */; };
 		9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */; };
 		9DC3AEEB1E6C61EA006CD74E /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC3AEEA1E6C61EA006CD74E /* libjpeg.a */; };
-		9DC3AEF01E6C6280006CD74E /* image_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEEF1E6C6280006CD74E /* image_loader.cpp */; };
 		9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEF11E6C62DA006CD74E /* cmd_parser.cpp */; };
 		9DC3AEF41E6C8CC8006CD74E /* tga_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3AEF31E6C8CC8006CD74E /* tga_image.cpp */; };
 		9DC3AEF61E6C8D05006CD74E /* tga_image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9DC3AEF51E6C8D05006CD74E /* tga_image.hpp */; };
@@ -76,8 +79,8 @@
 		9D21D6EE1D63638000C37B4A /* callbacks.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = callbacks.hpp; path = modules/ogl/include/chlib/ogl/callbacks.hpp; sourceTree = SOURCE_ROOT; };
 		9D229CF91E742EB8005C40C1 /* texture_manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = texture_manager.hpp; path = modules/ogl/include/chlib/ogl/texture_manager.hpp; sourceTree = SOURCE_ROOT; };
 		9D229CFA1E742F08005C40C1 /* texture_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_manager.cpp; path = modules/ogl/src/texture_manager.cpp; sourceTree = SOURCE_ROOT; };
-		9D229CFC1E743622005C40C1 /* image_loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = image_loader.hpp; path = modules/io/include/chlib/io/image_loader.hpp; sourceTree = SOURCE_ROOT; };
-		9D229CFD1E743736005C40C1 /* image_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image_loader.cpp; path = modules/io/src/image_loader.cpp; sourceTree = SOURCE_ROOT; };
+		9D229CFC1E743622005C40C1 /* image_factory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = image_factory.hpp; path = modules/io/include/chlib/io/image_factory.hpp; sourceTree = SOURCE_ROOT; };
+		9D229CFD1E743736005C40C1 /* image_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image_factory.cpp; path = modules/io/src/image_factory.cpp; sourceTree = SOURCE_ROOT; };
 		9D3362021D4D0B3F009C36CF /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = camera.cpp; path = modules/ogl/src/camera.cpp; sourceTree = SOURCE_ROOT; };
 		9D3362041D4D171E009C36CF /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = camera.hpp; path = modules/ogl/include/chlib/ogl/camera.hpp; sourceTree = SOURCE_ROOT; };
 		9D3362051D4D196B009C36CF /* tarball.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = tarball.hpp; path = modules/ogl/include/chlib/ogl/tarball.hpp; sourceTree = SOURCE_ROOT; };
@@ -92,6 +95,10 @@
 		9D62BD801D70E2D7000DD363 /* string_util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = string_util.hpp; path = modules/core/include/chlib/core/string_util.hpp; sourceTree = SOURCE_ROOT; };
 		9D62BD811D70E51C000DD363 /* string_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = string_util.cpp; path = modules/core/src/string_util.cpp; sourceTree = SOURCE_ROOT; };
 		9D6A33D91D4EAB650060261F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		9D9C40851EF6F13C00ED3EE5 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = 3rdparty/install/lib/libgtest.a; sourceTree = "<group>"; };
+		9D9C40861EF6F14B00ED3EE5 /* libgmock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgmock.a; path = 3rdparty/install/lib/libgmock.a; sourceTree = "<group>"; };
+		9D9C408B1EF6F1A400ED3EE5 /* test_cmd_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test_cmd_parser.cpp; path = modules/core/test/test_cmd_parser.cpp; sourceTree = "<group>"; };
+		9DA863541F1A4B8A0074D73D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image.cpp; path = modules/io/src/image.cpp; sourceTree = SOURCE_ROOT; };
 		9DBFE8611D4D073400182698 /* libCHLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCHLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DC3AEE41E6C57F5006CD74E /* image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = image.hpp; path = modules/io/include/chlib/io/image.hpp; sourceTree = SOURCE_ROOT; };
 		9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = jpeg_image.hpp; path = modules/io/include/chlib/io/jpeg_image.hpp; sourceTree = SOURCE_ROOT; };
@@ -113,6 +120,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D21D6EC1D634FDC00C37B4A /* libCHLib.dylib in Frameworks */,
+				9D9C40871EF6F17100ED3EE5 /* libgmock.a in Frameworks */,
+				9D9C40881EF6F17100ED3EE5 /* libgtest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,12 +241,38 @@
 			name = ply;
 			sourceTree = "<group>";
 		};
+		9D9C40841EF6F12500ED3EE5 /* google */ = {
+			isa = PBXGroup;
+			children = (
+				9D9C40861EF6F14B00ED3EE5 /* libgmock.a */,
+				9D9C40851EF6F13C00ED3EE5 /* libgtest.a */,
+			);
+			name = google;
+			sourceTree = "<group>";
+		};
+		9D9C40891EF6F17F00ED3EE5 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				9D9C408A1EF6F18900ED3EE5 /* core */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		9D9C408A1EF6F18900ED3EE5 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				9D9C408B1EF6F1A400ED3EE5 /* test_cmd_parser.cpp */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
 		9DBFE8581D4D073400182698 = {
 			isa = PBXGroup;
 			children = (
 				9DD47BE91D4E9F25003110D9 /* Dependencies */,
 				9DBFE8631D4D073400182698 /* modules */,
-				9DC3AEED1E6C622E006CD74E /* test */,
+				9DC3AEED1E6C622E006CD74E /* example */,
+				9D9C40891EF6F17F00ED3EE5 /* test */,
 				9DBFE8621D4D073400182698 /* Products */,
 				9D21C0991E6D9F08006C0E8E /* Frameworks */,
 			);
@@ -314,7 +349,8 @@
 		9DC3AEE31E6C57D4006CD74E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9D229CFD1E743736005C40C1 /* image_loader.cpp */,
+				9D229CFD1E743736005C40C1 /* image_factory.cpp */,
+				9DA863541F1A4B8A0074D73D /* image.cpp */,
 				9DC3AEE71E6C5A4E006CD74E /* jpeg_image.cpp */,
 				9D21C0941E6D94B2006C0E8E /* png_image.cpp */,
 				9DC3AEF31E6C8CC8006CD74E /* tga_image.cpp */,
@@ -325,7 +361,7 @@
 		9DC3AEE51E6C57FF006CD74E /* include */ = {
 			isa = PBXGroup;
 			children = (
-				9D229CFC1E743622005C40C1 /* image_loader.hpp */,
+				9D229CFC1E743622005C40C1 /* image_factory.hpp */,
 				9DC3AEE41E6C57F5006CD74E /* image.hpp */,
 				9DC3AEE61E6C5953006CD74E /* jpeg_image.hpp */,
 				9D21C0931E6D9430006C0E8E /* png_image.hpp */,
@@ -342,12 +378,12 @@
 			name = jpeg;
 			sourceTree = "<group>";
 		};
-		9DC3AEED1E6C622E006CD74E /* test */ = {
+		9DC3AEED1E6C622E006CD74E /* example */ = {
 			isa = PBXGroup;
 			children = (
 				9DC3AEEE1E6C6238006CD74E /* io */,
 			);
-			name = test;
+			name = example;
 			sourceTree = "<group>";
 		};
 		9DC3AEEE1E6C6238006CD74E /* io */ = {
@@ -361,6 +397,7 @@
 		9DD47BE91D4E9F25003110D9 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				9D9C40841EF6F12500ED3EE5 /* google */,
 				9D1093851E749D4500A57F8F /* assimp */,
 				9D21C0981E6D9D5A006C0E8E /* png */,
 				9DC3AEEC1E6C61EE006CD74E /* jpeg */,
@@ -461,7 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DC3AEF01E6C6280006CD74E /* image_loader.cpp in Sources */,
+				9D9C408C1EF6F1A400ED3EE5 /* test_cmd_parser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,7 +508,7 @@
 			files = (
 				9D3362031D4D0B3F009C36CF /* camera.cpp in Sources */,
 				9D04F1781D51185F00E6E828 /* mesh.cpp in Sources */,
-				9D229CFE1E743736005C40C1 /* image_loader.cpp in Sources */,
+				9D229CFE1E743736005C40C1 /* image_factory.cpp in Sources */,
 				9D62BD7F1D70D074000DD363 /* shader.cpp in Sources */,
 				9D21D6DE1D634CA400C37B4A /* ogl_mesh.cpp in Sources */,
 				9D1093831E745BBB00A57F8F /* model.cpp in Sources */,
@@ -482,6 +519,7 @@
 				9D229CFB1E742F08005C40C1 /* texture_manager.cpp in Sources */,
 				9DC3AEF21E6C62DA006CD74E /* cmd_parser.cpp in Sources */,
 				9D21C0951E6D94B2006C0E8E /* png_image.cpp in Sources */,
+				9DA863551F1A4B8A0074D73D /* image.cpp in Sources */,
 				9DC3AEE81E6C5A4E006CD74E /* jpeg_image.cpp in Sources */,
 				9DC3AEF81E6CADF0006CD74E /* texture.cpp in Sources */,
 			);
@@ -503,6 +541,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rdparty/install/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -513,6 +555,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rdparty/install/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

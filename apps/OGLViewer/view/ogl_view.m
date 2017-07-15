@@ -87,6 +87,22 @@ static CVReturn renderCallback(CVDisplayLinkRef displayLink,
 }
 
 /**
+ *  @name startLink
+ *  @brief  Start rendering thread
+ */
+-(void) startLink {
+  CVDisplayLinkStart(display_link_);
+}
+
+/**
+ *  @name stopLink
+ *  @brief  Stop rendering thread
+ */
+-(void) stopLink {
+  CVDisplayLinkStop(display_link_);
+}
+
+/**
  *  @name awakeFromNib
  *  @fn -(void) awakeFromNib
  *  @brief  Mehtod invoked when Nib file is loaded

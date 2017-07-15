@@ -184,4 +184,55 @@ void App02::OGLResizeCb(const float width, const float height) {
   this->camera_->UpdateProjectionTransform();
 }
   
+#pragma mark -
+#pragma mark Registration
+  
+/*
+ *  @name App02Proxy
+ *  @fn App02Proxy(void);
+ *  @brief  Constructor
+ */
+App02Proxy::App02Proxy(void) : AppProxy() {}
+
+/*
+ *  @name App02Proxy
+ *  @fn App02Proxy(void);
+ *  @brief  Constructor
+ */
+App02Proxy::~App02Proxy(void) {}
+
+/*
+ *  @name Create
+ *  @fn BaseApp* Create(const float width, const float height) const
+ *  @brief  Create an app of a given type
+ *  @param[in]  width Window's width    Window's width
+ *  @param[in]  height Window's height  Window's height
+ */
+BaseApp* App02Proxy::Create(const float width, const float height) const {
+  return new App02(width, height);
+}
+
+/*
+ *  @name Id
+ *  @fn size_t Id(void) const
+ *  @brief  Provide ID of the app
+ *  @return App's ID
+ */
+size_t App02Proxy::Id(void) const {
+  return 2;
+}
+
+/*
+ *  @name Name
+ *  @fn const char* Name(void) const
+ *  @brief  Provide Name of the app
+ *  @return App's name
+ */
+const char* App02Proxy::Name(void) const {
+  return "Texture";
+}
+
+// Explicit registration
+App02Proxy app02_proxy;
+  
 }  // namespace CHLib

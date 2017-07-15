@@ -97,6 +97,7 @@
   NSString* item_name = [item title];
   NSInteger item_idx = [self.app_selector indexOfItemWithTitle: item_name];
   // Disable rendering
+  [self.ogl_view stopLink];
   [self.ogl_view addCallbacks:nil];
   // Load app
   [app_ loadApp: item_name
@@ -109,6 +110,7 @@
   }
   // Set callback to OGLView
   [self.ogl_view addCallbacks:callback_];
+  [self.ogl_view startLink];
 }
 
 @end

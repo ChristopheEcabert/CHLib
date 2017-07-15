@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "apps/OGLViewer/view/ogl_view.m"
-            timestampString = "511530834.329448"
+            timestampString = "521819861.222979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "-mouseDragged:"
             landmarkType = "7">
          </BreakpointContent>

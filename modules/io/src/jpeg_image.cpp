@@ -308,5 +308,44 @@ int JPEGImage::Save(std::ostream& stream) const {
   }
   return err;
 }
+  
+#pragma mark -
+#pragma mark Registration
+  
+/*
+ *  @name JPEGProxy
+ *  @fn   JPEGProxy(void)
+ *  @brief  Constructor
+ */
+JPEGProxy::JPEGProxy(void) : ImageProxy() {}
+
+/*
+ *  @name ~JPEGProxy
+ *  @fn   ~JPEGProxy(void)
+ *  @brief  Destructor
+ */
+JPEGProxy::~JPEGProxy(void) {}
+
+/*
+ *  @name   Create
+ *  @fn     Image* Create(void) const
+ *  @brief  Create an instance of image with proper type
+ */
+Image* JPEGProxy::Create(void) const {
+  return new JPEGImage();
+}
+  
+/*
+ *  @name Extension
+ *  @fn const char* Extension(void) const
+ *  @brief  Return the extension for a given type of image
+ *  @return extension type
+ */
+const char* JPEGProxy::Extension(void) const {
+  return "jpg";
+}
+  
+// Explicit registration
+JPEGProxy jpeg_proxy;
 
 }  // namespace CHLib

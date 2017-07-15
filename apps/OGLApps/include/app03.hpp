@@ -141,5 +141,55 @@ class App03 : public BaseApp {
   /** Technique */
   OGLShader* shader_;
 };
+  
+/**
+ *  @class  App03Proxy
+ *  @brief  App00 Proxy
+ *  @author Christophe Ecabert
+ *  @date 15.07.17
+ *  @ingroup app
+ */
+class App03Proxy : public AppProxy {
+public:
+  
+  /**
+   *  @name App03Proxy
+   *  @fn App03Proxy(void);
+   *  @brief  Constructor
+   */
+  App03Proxy(void);
+  
+  /**
+   *  @name App03Proxy
+   *  @fn App03Proxy(void);
+   *  @brief  Constructor
+   */
+  ~App03Proxy(void);
+  
+  /**
+   *  @name Create
+   *  @fn BaseApp* Create(const float width, const float height) const
+   *  @brief  Create an app of a given type
+   *  @param[in]  width Window's width    Window's width
+   *  @param[in]  height Window's height  Window's height
+   */
+  BaseApp* Create(const float width, const float height) const;
+  
+  /**
+   *  @name Id
+   *  @fn size_t Id(void) const
+   *  @brief  Provide ID of the app
+   *  @return App's ID
+   */
+  size_t Id(void) const;
+  
+  /**
+   *  @name Name
+   *  @fn const char* Name(void) const
+   *  @brief  Provide Name of the app
+   *  @return App's name
+   */
+  const char* Name(void) const;
+};
 }  // namespace CHLib
 #endif /* __CHLIB_APP03__ */

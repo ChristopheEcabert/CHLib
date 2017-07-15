@@ -15,6 +15,7 @@
 #include <ostream>
 
 #include "chlib/io/image.hpp"
+#include "chlib/core/library_export.hpp"
 
 /**
  *  @namespace  CHLib
@@ -29,7 +30,7 @@ namespace CHLib {
  *  @date   05.03.17
  *  @ingroup io
  */
-class TGAImage : public Image {
+class CHLIB_EXPORTS TGAImage : public Image {
  public:
   
 #pragma mark -
@@ -306,6 +307,46 @@ class TGAImage : public Image {
  private:
   /** TGA header */
   TGAHeader header_;
+};
+  
+/**
+ *  @class  TGAProxy
+ *  @brief  TGA Image object registration interface
+ *  @autor  Christophe Ecabert
+ *  @date   15.07.17
+ *  @ingroup io
+ */
+class CHLIB_EXPORTS TGAProxy : public ImageProxy {
+ public:
+  
+  /**
+   *  @name TGAProxy
+   *  @fn   TGAProxy(void)
+   *  @brief  Constructor
+   */
+  TGAProxy(void);
+  
+  /**
+   *  @name ~TGAProxy
+   *  @fn   ~TGAProxy(void)
+   *  @brief  Destructor
+   */
+  ~TGAProxy(void);
+  
+  /**
+   *  @name   Create
+   *  @fn     Image* Create(void) const
+   *  @brief  Create an instance of image with proper type
+   */
+  Image* Create(void) const;
+  
+  /**
+   *  @name Extension
+   *  @fn const char* Extension(void) const
+   *  @brief  Return the extension for a given type of image
+   *  @return extension type
+   */
+  const char* Extension(void) const;
 };
 }  // namespace CHLib
 #endif /* __CHLIB_TGA_IMAGE__ */

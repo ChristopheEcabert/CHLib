@@ -14,12 +14,13 @@ if(build)
   
   # Add sources 
   set(srcs
-    src/image_loader.cpp
+    src/image_factory.cpp
+    src/image.cpp
     src/jpeg_image.cpp
     src/png_image.cpp
     src/tga_image.cpp)
   set(incs
-    include/chlib/${SUBSYS_NAME}/image_loader.hpp
+    include/chlib/${SUBSYS_NAME}/image_factory.hpp
     include/chlib/${SUBSYS_NAME}/image.hpp
     include/chlib/${SUBSYS_NAME}/jpeg_image.hpp
     include/chlib/${SUBSYS_NAME}/png_image.hpp

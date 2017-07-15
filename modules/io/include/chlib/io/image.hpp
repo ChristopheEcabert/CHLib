@@ -16,6 +16,7 @@
 #include <istream>
 #include <fstream>
 
+
 /**
  *  @namespace  CHLib
  *  @brief      Chris dev space
@@ -154,5 +155,47 @@ class Image {
   /** Image data */
   unsigned char* data_;
 };
+  
+  
+/**
+ *  @class  ImageProxy
+ *  @brief  Interface for registration mechanism for Image type
+ *  @author Christophe Ecabert
+ *  @date   15.07.17
+ *  @ingroup io
+ */
+class ImageProxy {
+ public:
+  
+  /**
+   *  @name   ImageProxyBase
+   *  @fn     ImageProxyBase(void)
+   *  @brief  Constructor
+   */
+  ImageProxy(void);
+  
+  /**
+   *  @name   ~ImageProxyBase
+   *  @fn     ~ImageProxyBase(void)
+   *  @brief  Destructor
+   */
+  virtual ~ImageProxy(void);
+  
+  /**
+   *  @name   Create
+   *  @fn     virtual Image* Create(void) = 0
+   *  @brief  Create an instance of image with proper type
+   */
+  virtual Image* Create(void) const = 0;
+  
+  /**
+   *  @name Extension
+   *  @fn virtual const char* Extension(void) const = 0
+   *  @brief  Return the extension for a given type of image
+   *  @return extension type
+   */
+  virtual const char* Extension(void) const = 0;
+};
+  
 }  // namespace CHLib
 #endif /* __CHLIB_IMAGE__ */

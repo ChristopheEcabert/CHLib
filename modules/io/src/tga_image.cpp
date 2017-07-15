@@ -176,4 +176,42 @@ int TGAImage::Save(std::ostream& stream) const {
   return err;
 }
   
+#pragma mark -
+#pragma mark Registration
+  
+/*
+ *  @name TGAProxy
+ *  @fn   TGAProxy(void)
+ *  @brief  Constructor
+ */
+TGAProxy::TGAProxy(void) : ImageProxy() {}
+
+/*
+ *  @name ~TGAProxy
+ *  @fn   ~TGAProxy(void)
+ *  @brief  Destructor
+ */
+TGAProxy::~TGAProxy(void) {}
+
+/*
+ *  @name   Create
+ *  @fn     Image* Create(void) const
+ *  @brief  Create an instance of image with proper type
+ */
+Image* TGAProxy::Create(void) const {
+  return new TGAImage();
+}
+
+/*
+ *  @name Extension
+ *  @fn const char* Extension(void) const
+ *  @brief  Return the extension for a given type of image
+ *  @return extension type
+ */
+const char* TGAProxy::Extension(void) const {
+  return "tga";
+}
+// Explicit registration
+TGAProxy tga_proxy;
+  
 }  // namespace CHLib

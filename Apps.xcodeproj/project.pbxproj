@@ -47,6 +47,8 @@
 		9D9AF0CB1D6CCF5700CDA5CB /* app00_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0CA1D6CCF5700CDA5CB /* app00_config.xml */; };
 		9D9AF0CE1D6CD48000CDA5CB /* app01_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D9AF0CD1D6CD48000CDA5CB /* app01_config.xml */; };
 		9D9AF0D11D6CD62C00CDA5CB /* app01.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */; };
+		9DA863571F1A5EF50074D73D /* base_app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA863561F1A5EF50074D73D /* base_app.cpp */; };
+		9DA8635B1F1A608C0074D73D /* app_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8635A1F1A608C0074D73D /* app_factory.cpp */; };
 		9DC3AF001E6CBBA3006CD74E /* app02_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFB1E6CBBA3006CD74E /* app02_config.xml */; };
 		9DC3AF011E6CBBA3006CD74E /* app02-crate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFC1E6CBBA3006CD74E /* app02-crate.obj */; };
 		9DC3AF021E6CBBA3006CD74E /* app02-fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9DC3AEFD1E6CBBA3006CD74E /* app02-fragment-shader.fs */; };
@@ -132,7 +134,9 @@
 		9D9AF0CD1D6CD48000CDA5CB /* app01_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = app01_config.xml; path = apps/OGLApps/ressources/app01/app01_config.xml; sourceTree = "<group>"; };
 		9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app01.cpp; path = apps/OGLApps/src/app01.cpp; sourceTree = "<group>"; };
 		9D9AF0D21D6CD66600CDA5CB /* app01.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app01.hpp; path = apps/OGLApps/include/app01.hpp; sourceTree = "<group>"; };
-		9D9AF0D31D6CD6F600CDA5CB /* apps.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = apps.hpp; path = apps/OGLApps/include/apps.hpp; sourceTree = "<group>"; };
+		9DA863561F1A5EF50074D73D /* base_app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base_app.cpp; path = apps/OGLApps/src/base_app.cpp; sourceTree = "<group>"; };
+		9DA863591F1A5F6B0074D73D /* app_factory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app_factory.hpp; path = apps/OGLApps/include/app_factory.hpp; sourceTree = "<group>"; };
+		9DA8635A1F1A608C0074D73D /* app_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app_factory.cpp; path = apps/OGLApps/src/app_factory.cpp; sourceTree = "<group>"; };
 		9DBFE8441D4D05B500182698 /* OGLViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OGLViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBFE8471D4D05B500182698 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = apps/OGLViewer/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		9DC042F81D4EA52100F1B9B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = apps/OGLViewer/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -242,8 +246,8 @@
 				9D9AF0D21D6CD66600CDA5CB /* app01.hpp */,
 				9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */,
 				9D8BFAED1E7727E200DD2C0C /* app03.hpp */,
-				9D9AF0D31D6CD6F600CDA5CB /* apps.hpp */,
 				9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */,
+				9DA863591F1A5F6B0074D73D /* app_factory.hpp */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -255,6 +259,8 @@
 				9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */,
 				9D8C8C501E6CC2BA003FC0DD /* app02.cpp */,
 				9D8BFAF61E77289C00DD2C0C /* app03.cpp */,
+				9DA863561F1A5EF50074D73D /* base_app.cpp */,
+				9DA8635A1F1A608C0074D73D /* app_factory.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -499,7 +505,9 @@
 				9D21D6F51D6368E900C37B4A /* callback_wrapper.mm in Sources */,
 				9D9AF0C81D6CC20E00CDA5CB /* apps_wrapper.mm in Sources */,
 				9D8C8C511E6CC2BA003FC0DD /* app02.cpp in Sources */,
+				9DA863571F1A5EF50074D73D /* base_app.cpp in Sources */,
 				9D9AF0D11D6CD62C00CDA5CB /* app01.cpp in Sources */,
+				9DA8635B1F1A608C0074D73D /* app_factory.cpp in Sources */,
 				9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */,
 				9DD47BFF1D4EA1F9003110D9 /* main.m in Sources */,
 				9D9AF0C21D6CA4EC00CDA5CB /* OGLRootViewController.m in Sources */,

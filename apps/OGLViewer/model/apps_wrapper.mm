@@ -12,7 +12,7 @@
 #include "chlib/ogl/texture_manager.hpp"
 
 #include "base_app.hpp"
-#include "apps.hpp"
+#include "app_factory.hpp"
 
 @interface AppsWrapper() {
   /** Application pointer */
@@ -61,20 +61,10 @@
   }
   // Load proper app
   std::string name([app_name UTF8String]);
-  if (name == "Hello World") {
-    app_ = new CHLib::App00(width_, height_);
-    err = app_->Load(std::string([config UTF8String]));
-  } else if (name == "Geometry Shader") {
-    app_ = new CHLib::App01(width_, height_);
-    err = app_->Load(std::string([config UTF8String]));
-  } else if (name == "Texture") {
-    app_ = new CHLib::App02(width_, height_);
-    err = app_->Load(std::string([config UTF8String]));
-  } else if (name == "Model Loader") {
-    app_ = new CHLib::App03(width_, height_);
+  app_ = CHLib::AppFactory::Get().CreateByName(name, width_, height_);
+  if (app_) {
     err = app_->Load(std::string([config UTF8String]));
   }
-
   return err;
 }
 
