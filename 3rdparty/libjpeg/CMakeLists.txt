@@ -10,10 +10,11 @@ IF(NOT CMAKE_BUILD_TYPE)
       "Choose the type of build. Options are: None, Debug, Release, RelWithDebInfo, MinSizeRel"
       FORCE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
+# Get NASM path
+EXECUTE_PROCESS(COMMAND which nasm OUTPUT_VARIABLE NASM_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
 # Define configure args
 IF(APPLE)
   # Apple build
-  SET(NASM_PATH "/opt/local/bin/nasm" PARENT_SCOPE)
   IF(OS_IS_64BIT)
     SET(CONFIG_HOST "x86_64-apple-darwin")
     SET(CONFIG_C_FLAGS "")
@@ -25,7 +26,6 @@ IF(APPLE)
   ENDIF(OS_IS_64BIT)
 ELSEIF(UNIX)
   # Unix
-  SET(NASM_PATH "/usr/local/bin/nasm")
   IF(OS_IS_64BIT)
     SET(CONFIG_HOST "x86_64-pc-linux-gnu")
     SET(CONFIG_C_FLAGS "")
@@ -37,7 +37,7 @@ ELSEIF(UNIX)
   ENDIF(OS_IS_64BIT)
 ELSE(APPLE)
   # Something different
-  MESSAGE(ERROR "Un-handled platform !!!")
+  MESSAGE(ERROR "Unhandled platform !!!")
 ENDIF(APPLE)
 # Add libjpeg-turbo
 ExternalProject_Add(libjpeg_project
