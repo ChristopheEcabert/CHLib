@@ -7,14 +7,12 @@ matrix:
     # Linux - GCC
     - os: linux
       dist: trusty
-      sudo: false
       env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz
       compiler: gcc
     
     # Linux - Clang
     - os: linux
       dist: trusty
-      sudo: false
       env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
       compiler: clang
     
