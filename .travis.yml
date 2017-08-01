@@ -31,7 +31,7 @@ install:
   # Install a recent CMake
   ############################################################################
   - |
-    mkdir cmake && curl -o cmake.tar.gz -O ${CMAKE_URL} && tar -C cmake/ --strip-components=${N_STRIP} -xzf cmake.tar.gz
+    mkdir cmake && curl -o cmake.tar.gz -O ${CMAKE_URL} && tar -C cmake/ --strip-components=${NSTRIP} -xzf cmake.tar.gz
     export PATH=${DEPS_DIR}/cmake/bin:${PATH}
   - cmake --version
   
