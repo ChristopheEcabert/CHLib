@@ -109,7 +109,7 @@ class PNGImage : public Image {
 /**
  *  @class  PNGProxy
  *  @brief  PNG Image object registration interface
- *  @autor  Christophe Ecabert
+ *  @author  Christophe Ecabert
  *  @date   15.07.17
  *  @ingroup io
  */

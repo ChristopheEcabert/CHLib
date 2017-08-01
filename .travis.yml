@@ -1,13 +1,62 @@
+# Based on : https://github.com/boostorg/hana/blob/master/.travis.yml
+# Project language
 language: c++
-os:
-  - linux
-  - osx
-compiler:
-  - gcc
-  - clang
+# Define list of OS and compiler to test on
 matrix:
-  exclude:
-    - os: osx
+  include:
+    # Linux - GCC
+    - os: linux
+      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
       compiler: gcc
+    
+    # Linux - Clang
+    - os: linux
+      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
+      compiler: clang
+    
+    # OSX - Clang
+    - os: osx
+      env: NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Darwin-x86_64.tar.gz
+      compiler: clang
+    
+# Install dependencies needed by library
+install:
+  ############################################################################
+  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
+  ############################################################################
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
+  
+  ############################################################################
+  # Install a recent CMake
+  ############################################################################
+  - |
+    mkdir cmake && curl -o cmake.tar.gz -O ${CMAKE_URL} && tar -C cmake/ --strip-components=${N_STRIP} -xzt cmake.tar.gz
+    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+  - cmake --version
+  
+  ############################################################################
+  # Install a recent Doxygen
+  ############################################################################
+  - echo "Installing Doxygen ..."
+  
+before_script:
+  ############################################################################
+  # Set the git identity (for pushing the documentation and the benchmarks)
+  ############################################################################
+  - git config --global user.name "Travis bot"
+  - git config --global user.email "<>"
+  
+# Compilation scripts start here
 script:
-  - echo arch $TRAVIS_OS_NAME
+  ############################################################################
+  # Go back to the root of the project and setup the build directory
+  ############################################################################
+  - cd ${TRAVIS_BUILD_DIR}
+  - mkdir -p build && cd build && cmake ${CMAKE_OPTIONS} .. && make -j8
+# Run test
+after_script:
+  - make test
+  
+# Deploy doc if success
+#after_sucess:

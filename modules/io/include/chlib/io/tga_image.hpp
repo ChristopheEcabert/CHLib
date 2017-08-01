@@ -312,7 +312,7 @@ class CHLIB_EXPORTS TGAImage : public Image {
 /**
  *  @class  TGAProxy
  *  @brief  TGA Image object registration interface
- *  @autor  Christophe Ecabert
+ *  @author  Christophe Ecabert
  *  @date   15.07.17
  *  @ingroup io
  */

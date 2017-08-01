@@ -168,15 +168,15 @@ class ImageProxy {
  public:
   
   /**
-   *  @name   ImageProxyBase
-   *  @fn     ImageProxyBase(void)
+   *  @name   ImageProxy
+   *  @fn     ImageProxy(void)
    *  @brief  Constructor
    */
   ImageProxy(void);
   
   /**
-   *  @name   ~ImageProxyBase
-   *  @fn     ~ImageProxyBase(void)
+   *  @name   ~ImageProxy
+   *  @fn     ~ImageProxy(void)
    *  @brief  Destructor
    */
   virtual ~ImageProxy(void);

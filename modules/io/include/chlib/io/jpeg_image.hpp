@@ -104,7 +104,7 @@ class JPEGImage : public Image {
 /**
  *  @class  JPEGProxy
  *  @brief  JPEG Image object registration interface
- *  @autor  Christophe Ecabert
+ *  @author  Christophe Ecabert
  *  @date   15.07.17
  *  @ingroup io
  */
