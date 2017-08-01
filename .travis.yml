@@ -6,16 +6,21 @@ matrix:
   include:
     # Linux - GCC
     - os: linux
-      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
+      dist: trusty
+      sudo: false
+      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz
       compiler: gcc
     
     # Linux - Clang
     - os: linux
+      dist: trusty
+      sudo: false
       env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
       compiler: clang
     
     # OSX - Clang
     - os: osx
+      osx_image: xcode8.3
       env: NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Darwin-x86_64.tar.gz
       compiler: clang
     
