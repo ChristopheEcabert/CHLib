@@ -10,6 +10,7 @@
 #include <fstream>
 #include <setjmp.h>
 #include <vector>
+#include <cstring>
 
 #include "jpeglib.h"
 #include "chlib/core/string_util.hpp"
