@@ -48,7 +48,7 @@ install:
     else
       brew upgrade nasm || brew install nasm
     fi
-  - nasm -v
+  - nasm -v && which nasm
       
   ############################################################################
   # Install a recent Doxygen
