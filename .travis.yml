@@ -2,7 +2,7 @@
 # Project language
 language: c++
 # sudo 
-sudo: false
+sudo: required
 # Define list of OS and compiler to test on
 matrix:
   include:
@@ -45,8 +45,8 @@ install:
   ############################################################################
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      apt-get -qq update
-      apt-get install -y nasm
+      sudo apt-get -qq update
+      sudo apt-get install -y nasm
     else
       brew upgrade nasm || brew install nasm
     fi
