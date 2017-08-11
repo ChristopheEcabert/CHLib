@@ -6,11 +6,11 @@ Tools to work with OpenGL frameworks.
 
 Go through the installation process.
 
-### System Requirements
+### System Requirements
 
 At the moment only *macOS* and *Ubuntu* platforms are supported.
 
-### Prerequisities
+### Prerequisities
 
 The project depends on severals external libraries that need to be installed on the system. An exhaustive list is provided below:
 
