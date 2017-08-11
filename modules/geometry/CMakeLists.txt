@@ -4,34 +4,34 @@ set(SUBSYS_DESC "CHLib geometry processing library")
 set(SUBSYS_DEPS core)
 
 set(build TRUE)
-CHLIB_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
+OGLKIT_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
 #Add dependencies as well as external dependencies
-CHLIB_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} EXT_DEPS "")
+OGLKIT_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} EXT_DEPS "")
 if(build)
   # Add sources 
   set(srcs
     src/mesh.cpp)
   set(srcs_ext
-    ${CHLIB_SOURCE_DIR}/3rdparty/ply/plyfile.c)
+    ${OGLKIT_SOURCE_DIR}/3rdparty/ply/plyfile.c)
   set(incs
-    include/chlib/${SUBSYS_NAME}/aabb.hpp
-    include/chlib/${SUBSYS_NAME}/mesh.hpp)
+    include/oglkit/${SUBSYS_NAME}/aabb.hpp
+    include/oglkit/${SUBSYS_NAME}/mesh.hpp)
   # Set library name
-  set(LIB_NAME "chlib_${SUBSYS_NAME}")
+  set(LIB_NAME "oglkit_${SUBSYS_NAME}")
   # Add include folder location
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CHLIB_SOURCE_DIR}/3rdparty)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${OGLKIT_SOURCE_DIR}/3rdparty)
 
   # Add library
-  CHLIB_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" FILES ${srcs} ${incs} ${srcs_ext})
+  OGLKIT_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" FILES ${srcs} ${incs} ${srcs_ext})
 
   #EXAMPLES
   IF(WITH_EXAMPLES)
-      #LTS5_ADD_EXAMPLE(chlib_video_splitter FILES file LINK_WITH lib)
+      #LTS5_ADD_EXAMPLE(oglkit_video_splitter FILES file LINK_WITH lib)
   ENDIF(WITH_EXAMPLES)
 
   # TESTS
-  #CHLIB_ADD_TEST(cmd_parser chlib_test_cmd_parser FILES test/test_cmd_parser.cpp WORKING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test" ARGUMENTS "" LINK_WITH chlib_core)
+  #OGLKIT_ADD_TEST(cmd_parser oglkit_test_cmd_parser FILES test/test_cmd_parser.cpp WORKING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test" ARGUMENTS "" LINK_WITH oglkit_core)
 
   # Install include files
-  CHLIB_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}" ${incs})
+  OGLKIT_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}" ${incs})
 endif(build)

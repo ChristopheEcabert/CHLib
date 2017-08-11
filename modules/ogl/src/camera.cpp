@@ -11,16 +11,16 @@
 #include <limits>
 #include <assert.h>
 
-#include "chlib/ogl/camera.hpp"
-#include "chlib/core/math/vector.hpp"
-#include "chlib/core/math/matrix.hpp"
-#include "chlib/core/math/quaternion.hpp"
+#include "oglkit/ogl/camera.hpp"
+#include "oglkit/core/math/vector.hpp"
+#include "oglkit/core/math/matrix.hpp"
+#include "oglkit/core/math/quaternion.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
 
 #pragma mark -
 #pragma mark Initialization
@@ -30,17 +30,18 @@ namespace CHLib {
  *  @fn OGLCamera(void)
  *  @brief  Constructor
  */
-OGLCamera::OGLCamera(void) :  position_(0.f, 0.f, 1.f),
-                              target_(0.f, 0.f, 0.f),
-                              aspect_(1.25f),
-                              near_(0.01f),
-                              far_(100.f),
-                              fov_(M_PI/6.f),
-                              state_(kNone),
-                              move_speed_(0.002f),
-                              rotation_speed_(1.f),
-                              rotations_start_(0.f, 0.f, 0.f),
-                              rotations_end_(0.f, 0.f, 0.f) {
+template<typename T>
+OGLCamera<T>::OGLCamera(void) :  position_(0.0, 0.0, 1.0),
+                                 target_(0.0, 0.0, 0.0),
+                                 aspect_(1.25f),
+                                 near_(0.01f),
+                                 far_(100.0),
+                                 fov_(M_PI/6.0),
+                                 state_(kNone),
+                                 move_speed_(0.002f),
+                                 rotation_speed_(1.0),
+                                 rotations_start_(0.0, 0.0, 0.0),
+                                 rotations_end_(0.0, 0.0, 0.0) {
   // Define view
   this->LookAt(position_, target_);
   // Define projection
@@ -54,18 +55,19 @@ OGLCamera::OGLCamera(void) :  position_(0.f, 0.f, 1.f),
  *  @param[in]  position  Where to place the camera
  *  @param[in]  target    Where to point at
  */
-OGLCamera::OGLCamera(const Vec3& position, const Vec3& target) :
+template<typename T>
+OGLCamera<T>::OGLCamera(const Vec3& position, const Vec3& target) :
   position_(position),
   target_(target),
   aspect_(1.25f),
   near_(0.01f),
-  far_(1000.f),
-  fov_(M_PI/6.f),
+  far_(1000.0),
+  fov_(M_PI/6.0),
   state_(kNone),
-  move_speed_(5.f),
-  rotation_speed_(1.f),
-  rotations_start_(0.f, 0.f, 0.f),
-  rotations_end_(0.f, 0.f, 0.f) {
+  move_speed_(5.0),
+  rotation_speed_(1.0),
+  rotations_start_(0.0, 0.0, 0.0),
+  rotations_end_(0.0, 0.0, 0.0) {
   // Define view
   this->LookAt(position_, target_);
   // Define projection
@@ -77,7 +79,8 @@ OGLCamera::OGLCamera(const Vec3& position, const Vec3& target) :
  *  @fn ~OGLCamera(void)
  *  @brief  Destructor
  */
-OGLCamera::~OGLCamera(void) {
+template<typename T>
+OGLCamera<T>::~OGLCamera(void) {
 }
   
 /*
@@ -87,13 +90,14 @@ OGLCamera::~OGLCamera(void) {
  *  @param[in]  position  Where to place the camera
  *  @param[in]  target    Where to point at
  */
-void OGLCamera::LookAt(const Vec3& position, const Vec3& target) {
+template<typename T>
+void OGLCamera<T>::LookAt(const Vec3& position, const Vec3& target) {
   // Define target direction
   position_ = position;
   target_ = position_ - target;
   target_.Normalize();
   // Define right
-  Vec3 worldUp(0.f, 1.f, 0.f);
+  Vec3 worldUp(0.0, 1.0, 0.0);
   right_ = worldUp ^ target_;
   // Define up vector
   up_ = target_ ^ right_;
@@ -106,31 +110,32 @@ void OGLCamera::LookAt(const Vec3& position, const Vec3& target) {
   
 /*
  *  @name UpdateProjectionTransform
- *  @fn void UpdateProjectionTransform(const float fov,
-                                       const float z_near,
-                                       const float z_far,
-                                       const float aspect);
+ *  @fn void UpdateProjectionTransform(const T fov,
+                                       const T z_near,
+                                       const T z_far,
+                                       const T aspect);
  *  @brief  Update projection transform
  *  @param[in]  fovy    Field of view in Y axis
  *  @param[in]  z_near  New near plane
  *  @param[in]  z_fat   New far plane
  *  @param[in]  aspect  Window aspect ratio
  */
-void OGLCamera::UpdateProjectionTransform(const float fovy,
-                                          const float z_near,
-                                          const float z_far,
-                                          const float aspect) {
-  assert(std::abs(aspect - std::numeric_limits<float>::epsilon()) > 0.f);
-  assert(z_near > 0.f && z_far > z_near);
+template<typename T>
+void OGLCamera<T>::UpdateProjectionTransform(const T fovy,
+                                             const T z_near,
+                                             const T z_far,
+                                             const T aspect) {
+  assert(std::abs(aspect - std::numeric_limits<T>::epsilon()) > 0.0);
+  assert(z_near > 0.0 && z_far > z_near);
   aspect_ = aspect;
   near_ = z_near;
   far_ = z_far;
-  const float tanHalfFovy = std::tan(fovy / 2.f);
-  projection_[0] = 1.f  / (aspect * tanHalfFovy);
-  projection_[5] = 1.f  / tanHalfFovy;
+  const T tanHalfFovy = std::tan(fovy / 2.0);
+  projection_[0] = 1.0  / (aspect * tanHalfFovy);
+  projection_[5] = 1.0  / tanHalfFovy;
   projection_[10] = - (far_ + near_) / (far_ - near_);
-  projection_[11] = -1.f;
-  projection_[14] = - (2.f * far_ * near_) / (far_ - near_);
+  projection_[11] = -1.0;
+  projection_[14] = - (2.0 * far_ * near_) / (far_ - near_);
   projection_[15] = 0;
 }
   
@@ -139,13 +144,14 @@ void OGLCamera::UpdateProjectionTransform(const float fovy,
  *  @fn void UpdateProjectionTransform(void);
  *  @brief  Update projection transform
  */
-void OGLCamera::UpdateProjectionTransform(void) {
-  const float tanHalfFovy = std::tan(fov_ / 2.f);
-  projection_[0] = 1.f  / (aspect_ * tanHalfFovy);
-  projection_[5] = 1.f  / tanHalfFovy;
+template<typename T>
+void OGLCamera<T>::UpdateProjectionTransform(void) {
+  const T tanHalfFovy = std::tan(fov_ / 2.0);
+  projection_[0] = 1.0  / (aspect_ * tanHalfFovy);
+  projection_[5] = 1.0  / tanHalfFovy;
   projection_[10] = - (far_ + near_) / (far_ - near_);
-  projection_[11] = -1.f;
-  projection_[14] = - (2.f * far_ * near_) / (far_ - near_);
+  projection_[11] = -1.0;
+  projection_[14] = - (2.0 * far_ * near_) / (far_ - near_);
   projection_[15] = 0;
 }
   
@@ -157,9 +163,10 @@ void OGLCamera::UpdateProjectionTransform(void) {
  *  @param[in]  state State of the key (Pressed or released)
  *  @param[in]  dt    Delta time between each rendering pass
  */
-void OGLCamera::OnKeyboard(const OGLKey& key,
-                           const OGLKeyState& state,
-                           const float dt) {
+template<typename T>
+void OGLCamera<T>::OnKeyboard(const OGLKey& key,
+                              const OGLKeyState& state,
+                              const T dt) {
   // Action based on key
   switch (key) {
     case OGLKey::kw : position_ -= target_ * move_speed_ * dt;
@@ -192,10 +199,11 @@ void OGLCamera::OnKeyboard(const OGLKey& key,
  *  @param[in]  x       X Position in the view
  *  @param[in]  y       Y Position in the view
  */
-void OGLCamera::OnMouseClick(const OGLMouse& button,
-                             const OGLKeyState& state,
-                             const int x,
-                             const int y) {
+template<typename T>
+void OGLCamera<T>::OnMouseClick(const OGLMouse& button,
+                                const OGLKeyState& state,
+                                const int x,
+                                const int y) {
   if (state != OGLKeyState::kPress) {
     state_ = CameraState::kNone;
   } else {
@@ -213,24 +221,25 @@ void OGLCamera::OnMouseClick(const OGLMouse& button,
  * @param x   Current cursor X position
  * @param y   Current cursor Y position
  */
-void OGLCamera::OnMouseMove(const int x, const int y) {
+template<typename T>
+void OGLCamera<T>::OnMouseMove(const int x, const int y) {
   if (state_ == CameraState::kRotate) {
     // Should update transformation
     // Get new projection
     this->GetMouseProjectionOnBall(x, y, &rotations_end_);
     // update transform, compute axis + angle
-    float angle = std::acos(rotations_start_ * rotations_end_);
-    if (!std::isnan(angle) && angle != 0.f) {
+    T angle = std::acos(rotations_start_ * rotations_end_);
+    if (!std::isnan(angle) && angle != 0.0) {
       angle *= rotation_speed_;
-      Vector3<float> axis = rotations_start_ ^ rotations_end_;
-      if (axis.x_ != 0.f || axis.y_ != 0.f || axis.z_ != 0.f) {
+      Vector3<T> axis = rotations_start_ ^ rotations_end_;
+      if (axis.x_ != 0.0 || axis.y_ != 0.0 || axis.z_ != 0.0) {
         // Save position
         rotations_start_ = rotations_end_;
         // Setup quaternion
-        Quaternion<float> quat(axis, -angle);
+        Quaternion<T> quat(axis, -angle);
         quat.Normalize();
         // Get transformation
-        Matrix3<float> rot;
+        Matrix3<T> rot;
         quat.ToRotationMatrix(&rot);
         // Update camera orientation
         target_ = rot * target_;
@@ -251,45 +260,55 @@ void OGLCamera::OnMouseMove(const int x, const int y) {
  *  @fn void UpdateViewTransform(void);
  *  @brief  Update view transform
  */
-void OGLCamera::UpdateViewTransform(void) {
+template<typename T>
+void OGLCamera<T>::UpdateViewTransform(void) {
   // Define view transform
-  Mat4 R, T;
+  Mat4 R, Tx;
   R[0] = right_.x_; R[4] = right_.y_; R[8] = right_.z_;
   R[1] = up_.x_; R[5] = up_.y_; R[9] = up_.z_;
   R[2] = target_.x_; R[6] = target_.y_; R[10] = target_.z_;
-  T[12] = -position_.x_;
-  T[13] = -position_.y_;
-  T[14] = -position_.z_;
-  view_ = R * T;
+  Tx[12] = -position_.x_;
+  Tx[13] = -position_.y_;
+  Tx[14] = -position_.z_;
+  view_ = R * Tx;
 }
   
 /*
  * @name  GetMouseProjectionOnBall
  * @fn void GetMouseProjectionOnBall(const int x,
                                      const int y,
-                                     Vector3<float>3* pts)
+                                     Vector3<T>3* pts)
  * @brief Project screen loation onto ball
  * @param[in] x       Cursor X position on the screen
  * @param[in] y       Cursor Y position on the screen
  * @param[out] pts    Corresponding points on sphere
  * @see https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Arcball
  */
-void OGLCamera::GetMouseProjectionOnBall(const int x,
-                                         const int y,
-                                         Vector3<float>* pts) {
+template<typename T>
+void OGLCamera<T>::GetMouseProjectionOnBall(const int x,
+                                            const int y,
+                                            Vector3<T>* pts) {
   // Convert screen coordinate into [-1, 1] range,
-  pts->x_ = ((2.f * x) / win_width_) - 1.f;
-  pts->y_ = 1.f - ((2.f * y) / win_height_);
-  pts->z_ = 0.f;
+  pts->x_ = ((2.0 * x) / win_width_) - 1.0;
+  pts->y_ = 1.0 - ((2.0 * y) / win_height_);
+  pts->z_ = 0.0;
   // Compute distance from O -> Pts
-  float norm = pts->x_ * pts->x_ + pts->y_ * pts->y_;
-  if (norm <= 1.f) {
+  T norm = pts->x_ * pts->x_ + pts->y_ * pts->y_;
+  if (norm <= 1.0) {
     // pythagore
-    pts->z_ = std::sqrt(1.f - norm);
+    pts->z_ = std::sqrt(1.0 - norm);
   } else {
     // Nearest points
     pts->Normalize();
   }
 }
-
-}  // namespace CHLib
+  
+#pragma mark -
+#pragma mark Explicit instantiation
+  
+/** Float Camera */
+template class OGLCamera<float>;
+/** double Camera */
+template class OGLCamera<double>;
+  
+}  // namespace OGLKit

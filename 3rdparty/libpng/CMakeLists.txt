@@ -24,12 +24,12 @@ ExternalProject_Add(libpng_project
         CMAKE_ARGS -G${CMAKE_GENERATOR} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DPNG_SHARED=OFF -DPNG_TESTS=OFF
         CMAKE_CACHE_ARGS -DCMAKE_C_FLAGS:STRING=-fPIC
         # Folder destination
-        PREFIX ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libpng
-        TMP_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libpng/tmp
-        STAMP_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libpng/stamp
-        DOWNLOAD_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libpng/download
-        SOURCE_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libpng/src
-        BINARY_DIR ${CHLIB_BINARY_DIR}/lib
+        PREFIX ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng
+        TMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/tmp
+        STAMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/stamp
+        DOWNLOAD_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/download
+        SOURCE_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/src
+        BINARY_DIR ${OGLKIT_BINARY_DIR}/lib
         # Disable install step
         INSTALL_COMMAND cmake -E echo "Skipping install step."
         # Wrap download, configure and build steps in a script to log output
@@ -39,7 +39,7 @@ ExternalProject_Add(libpng_project
 
 # Specify include dir
 ExternalProject_Get_Property(libpng_project source_dir)
-SET(LIBPNG_INCLUDE_DIR ${source_dir} ${CHLIB_BINARY_DIR}/lib PARENT_SCOPE)
+SET(LIBPNG_INCLUDE_DIR ${source_dir} ${OGLKIT_BINARY_DIR}/lib PARENT_SCOPE)
 # Library
 ExternalProject_Get_Property(libpng_project binary_dir)
 SET(LIBPNG_LIBRARY_PATH ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}png.a)

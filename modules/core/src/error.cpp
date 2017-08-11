@@ -7,13 +7,13 @@
  *  Copyright © 2016 Christophe Ecabert. All rights reserved.
  */
 
-#include "chlib/core/error.hpp"
+#include "oglkit/core/error.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
 
 #pragma mark -
 #pragma mark Initialization
@@ -63,4 +63,4 @@ const char* CHError::what() const throw() {
   return msg_.c_str();
 }
 
-}  // namespace CHLib
+}  // namespace OGLKit

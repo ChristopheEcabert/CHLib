@@ -7,13 +7,13 @@
  *  Copyright © 2016 Christophe Ecabert. All rights reserved.
  */
 
-#include "chlib/core/string_util.hpp"
+#include "oglkit/core/string_util.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /*
  *  @name Split
@@ -69,4 +69,4 @@ void StringUtil::ExtractDirectory(const std::string& path,
   }
 }
   
-}  // namespace CHLib
+}  // namespace OGLKit

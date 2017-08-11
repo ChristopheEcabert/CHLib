@@ -1,0 +1,50 @@
+set(OGLKIT_SUBSYSTEMS_MODULES ${OGLKIT_SUBSYSTEMS})
+
+set(OGLKITCONFIG_AVAILABLE_COMPONENTS)
+set(OGLKITCONFIG_AVAILABLE_COMPONENTS_LIST)
+set(OGLKITCONFIG_INTERNAL_DEPENDENCIES)
+foreach(_ss ${OGLKIT_SUBSYSTEMS_MODULES})
+  OGLKIT_GET_SUBSYS_STATUS(_status ${_ss})
+  if(_status)
+    set(OGLKITCONFIG_AVAILABLE_COMPONENTS "${OGLKITCONFIG_AVAILABLE_COMPONENTS} ${_ss}")
+    set(OGLKITCONFIG_AVAILABLE_COMPONENTS_LIST "${OGLKITCONFIG_AVAILABLE_COMPONENTS_LIST}\n# - ${_ss}")
+    GET_IN_MAP(_deps OGLKIT_SUBSYS_DEPS ${_ss})
+    if(_deps)
+        set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES}set(oglkit_${_ss}_int_dep ")
+        foreach(_dep ${_deps})
+            set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES}${_dep} ")
+        endforeach(_dep)
+        set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES})\n")
+    endif(_deps)
+    #look for subsystems
+    string(TOUPPER "OGLKIT_${_ss}_SUBSYS" OGLKIT_SUBSYS_SUBSYS)
+    if (${OGLKIT_SUBSYS_SUBSYS})
+      string(TOUPPER "OGLKIT_${_ss}_SUBSYS_STATUS" OGLKIT_SUBSYS_SUBSYS_STATUS)
+      foreach(_sub ${${OGLKIT_SUBSYS_SUBSYS}})
+        OGLKIT_GET_SUBSUBSYS_STATUS(_sub_status ${_ss} ${_sub})
+        if (_sub_status)
+          set(OGLKITCONFIG_AVAILABLE_COMPONENTS "${OGLKITCONFIG_AVAILABLE_COMPONENTS} ${_sub}")
+          set(OGLKITCONFIG_AVAILABLE_COMPONENTS_LIST "${OGLKITCONFIG_AVAILABLE_COMPONENTS_LIST}\n# - ${_sub}")
+          GET_IN_MAP(_deps OGLKIT_SUBSYS_DEPS ${_ss}_${sub})
+          if(_deps)
+            set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES}set(oglkit_${_sub}_int_dep ")
+            foreach(_dep ${_deps})
+              set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES}${_dep} ")
+            endforeach(_dep)
+            set(OGLKITCONFIG_INTERNAL_DEPENDENCIES "${OGLKITCONFIG_INTERNAL_DEPENDENCIES})\n")
+          endif(_deps)
+        endif(_sub_status)
+      endforeach(_sub)
+    endif (${OGLKIT_SUBSYS_SUBSYS})
+  endif(_status)
+endforeach(_ss)
+
+configure_file("${OGLKIT_SOURCE_DIR}/cmake/OGLKITConfig.cmake.in"
+               "${OGLKIT_BINARY_DIR}/OGLKITConfig.cmake" @ONLY)
+configure_file("${OGLKIT_SOURCE_DIR}/cmake/OGLKITConfigVersion.cmake.in"
+               "${OGLKIT_BINARY_DIR}/OGLKITConfigVersion.cmake" @ONLY)
+install(FILES
+        "${OGLKIT_BINARY_DIR}/OGLKITConfig.cmake"
+        "${OGLKIT_BINARY_DIR}/OGLKITConfigVersion.cmake"
+        COMPONENT oglkitconfig
+        DESTINATION ${OGLKITCONFIG_INSTALL_DIR})

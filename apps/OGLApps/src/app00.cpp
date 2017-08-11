@@ -12,16 +12,16 @@
 #endif
 
 #include "app00.hpp"
-#include "chlib/core/string_util.hpp"
+#include "oglkit/core/string_util.hpp"
 
-#include "chlib/io/jpeg_image.hpp"
+#include "oglkit/io/jpeg_image.hpp"
 
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Initialization
@@ -35,12 +35,12 @@ namespace CHLib {
  */
 App00::App00(const float win_width, const float win_height) {
   // Mesh
-  this->mesh_ = new CHLib::OGLMesh<float>();
+  this->mesh_ = new OGLKit::OGLMesh<float>();
   // Camera
-  this->camera_ = new CHLib::OGLCamera();
+  this->camera_ = new OGLKit::OGLCamera<float>();
   this->camera_->set_window_dimension(win_width, win_height);
   // Technique
-  this->shader_ = new CHLib::OGLShader();
+  this->shader_ = new OGLKit::OGLShader();
 }
 
 /*
@@ -73,7 +73,7 @@ App00::~App00(void) {
 int App00::Load(const std::string& config) {
   int err = -1;
   std::string dir, file, ext;
-  CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
+  OGLKit::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
   err = this->mesh_->Load(dir + "bunny.ply");
   this->mesh_->ComputeVertexNormal();
@@ -231,4 +231,4 @@ const char* App00Proxy::Name(void) const {
 // Explicit registration
 App00Proxy app00_proxy;
   
-}  // namespace CHLib
+}  // namespace OGLKit

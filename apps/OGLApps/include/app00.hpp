@@ -8,19 +8,19 @@
  *  Copyright © 2016 Christophe Ecabert. All rights reserved.
  */
 
-#ifndef __CHLIB_APP00__
-#define __CHLIB_APP00__
+#ifndef __OGLKIT_APP00__
+#define __OGLKIT_APP00__
 
 #include "base_app.hpp"
-#include "chlib/ogl/ogl_mesh.hpp"
-#include "chlib/ogl/camera.hpp"
-#include "chlib/ogl/shader.hpp"
+#include "oglkit/ogl/ogl_mesh.hpp"
+#include "oglkit/ogl/camera.hpp"
+#include "oglkit/ogl/shader.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /**
  *  @class  App00
@@ -138,7 +138,7 @@ class App00 : public BaseApp {
   /** Mesh */
   OGLMesh<float>* mesh_;
   /** Camera */
-  OGLCamera* camera_;
+  OGLCamera<float>* camera_;
   /** Technique */
   OGLShader* shader_;
 };
@@ -192,5 +192,5 @@ class App00Proxy : public AppProxy {
    */
   const char* Name(void) const;
 };
-}  // namespace CHLib
-#endif /* __CHLIB_APP00__ */
+}  // namespace OGLKit
+#endif /* __OGLKIT_APP00__ */

@@ -16,13 +16,13 @@
 
 #include "ply/ply.h"
 
-#include "chlib/geometry/mesh.hpp"
+#include "oglkit/geometry/mesh.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
 
 #pragma mark -
 #pragma mark Type definition
@@ -480,7 +480,7 @@ int Mesh<T>::SaveOBJ(const std::string& path) {
   std::ofstream out_stream(path, std::ios_base::out);
   if (out_stream.is_open()) {
     // Header
-    out_stream << "# wavefront file written by CHLib c++ library" << std::endl;
+    out_stream << "# wavefront file written by OGLKit c++ library" << std::endl;
 
     // Vertex
     if (vertex_.size() > 0) {
@@ -649,4 +649,4 @@ template class Mesh<float>;
 template class Mesh<double>;
 
 
-}  // namespace CHLib
+}  // namespace OGLKit

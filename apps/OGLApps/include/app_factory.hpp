@@ -8,18 +8,18 @@
  *  Copyright © 2017 Christophe Ecabert. All rights reserved.
  */
 
-#ifndef __CHLIB_APP_FACOTRY__
-#define __CHLIB_APP_FACOTRY__
+#ifndef __OGLKIT_APP_FACOTRY__
+#define __OGLKIT_APP_FACOTRY__
 
 #include <unordered_set>
 
 #include "base_app.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /**
  *  @class AppFactory
@@ -116,5 +116,5 @@ class AppFactory {
   /** Application proxies */
   std::unordered_set<const AppProxy*> proxies_;
 };
-}  // namespace CHLib
-#endif /* __CHLIB_APP_FACOTRY__ */
+}  // namespace OGLKit
+#endif /* __OGLKIT_APP_FACOTRY__ */

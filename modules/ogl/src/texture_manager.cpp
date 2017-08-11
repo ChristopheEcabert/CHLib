@@ -9,15 +9,15 @@
 
 #include <iostream>
 
-#include "chlib/ogl/texture_manager.hpp"
-#include "chlib/io/image_factory.hpp"
-#include "chlib/core/string_util.hpp"
+#include "oglkit/ogl/texture_manager.hpp"
+#include "oglkit/io/image_factory.hpp"
+#include "oglkit/core/string_util.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 OGLTexture::Type ConvertTypeFromString(const std::string& type) {
   if (type == "diffuse" || type == "D") {
@@ -171,4 +171,4 @@ OGLTextureManager::OGLTextureManager(void) {
   interp_mode_ = OGLTexture::InterpolationMode::kLinear;
 }
   
-}  // namespace CHLib
+}  // namespace OGLKit

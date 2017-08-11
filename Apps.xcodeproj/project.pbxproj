@@ -10,6 +10,8 @@
 		9D21D6DB1D634ACF00C37B4A /* libCHLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21D6D61D634AAA00C37B4A /* libCHLib.dylib */; };
 		9D21D6F51D6368E900C37B4A /* callback_wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6F41D6368E900C37B4A /* callback_wrapper.mm */; };
 		9D21D6FC1D63743A00C37B4A /* ogl_view.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6FB1D63743A00C37B4A /* ogl_view.m */; };
+		9D4591321F3A2A01001EAD01 /* app04.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D4591311F3A2A01001EAD01 /* app04.cpp */; };
+		9D4591361F3A2BD3001EAD01 /* app04_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9D4591351F3A2BD3001EAD01 /* app04_config.xml */; };
 		9D65408C1D71BC04005D1890 /* fragment-shader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408A1D71BC04005D1890 /* fragment-shader.fs */; };
 		9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408B1D71BC04005D1890 /* vertex-shader.vs */; };
 		9D6540901D71BD64005D1890 /* bunny.ply in Resources */ = {isa = PBXBuildFile; fileRef = 9D65408F1D71BD64005D1890 /* bunny.ply */; };
@@ -90,6 +92,9 @@
 		9D21D6F41D6368E900C37B4A /* callback_wrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = callback_wrapper.mm; path = apps/OGLViewer/model/callback_wrapper.mm; sourceTree = SOURCE_ROOT; };
 		9D21D6FA1D63743A00C37B4A /* ogl_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ogl_view.h; path = apps/OGLViewer/view/ogl_view.h; sourceTree = SOURCE_ROOT; };
 		9D21D6FB1D63743A00C37B4A /* ogl_view.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ogl_view.m; path = apps/OGLViewer/view/ogl_view.m; sourceTree = SOURCE_ROOT; };
+		9D4591311F3A2A01001EAD01 /* app04.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = app04.cpp; path = apps/OGLApps/src/app04.cpp; sourceTree = "<group>"; };
+		9D4591341F3A2A49001EAD01 /* app04.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = app04.hpp; path = apps/OGLApps/include/app04.hpp; sourceTree = "<group>"; };
+		9D4591351F3A2BD3001EAD01 /* app04_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = app04_config.xml; path = apps/OGLApps/ressources/app04/app04_config.xml; sourceTree = "<group>"; };
 		9D65408A1D71BC04005D1890 /* fragment-shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "fragment-shader.fs"; path = "apps/OGLApps/ressources/app00/fragment-shader.fs"; sourceTree = "<group>"; };
 		9D65408B1D71BC04005D1890 /* vertex-shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "vertex-shader.vs"; path = "apps/OGLApps/ressources/app00/vertex-shader.vs"; sourceTree = "<group>"; };
 		9D65408F1D71BD64005D1890 /* bunny.ply */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bunny.ply; path = apps/OGLApps/ressources/app00/bunny.ply; sourceTree = "<group>"; };
@@ -192,6 +197,14 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		9D4591371F3A2BDA001EAD01 /* app04 */ = {
+			isa = PBXGroup;
+			children = (
+				9D4591351F3A2BD3001EAD01 /* app04_config.xml */,
+			);
+			name = app04;
+			sourceTree = "<group>";
+		};
 		9D8BFAEF1E77280A00DD2C0C /* app03 */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +259,7 @@
 				9D9AF0D21D6CD66600CDA5CB /* app01.hpp */,
 				9D8C8C4F1E6CC2AE003FC0DD /* app02.hpp */,
 				9D8BFAED1E7727E200DD2C0C /* app03.hpp */,
+				9D4591341F3A2A49001EAD01 /* app04.hpp */,
 				9D9AF0BB1D6C97CD00CDA5CB /* base_app.hpp */,
 				9DA863591F1A5F6B0074D73D /* app_factory.hpp */,
 			);
@@ -259,6 +273,7 @@
 				9D9AF0D01D6CD62C00CDA5CB /* app01.cpp */,
 				9D8C8C501E6CC2BA003FC0DD /* app02.cpp */,
 				9D8BFAF61E77289C00DD2C0C /* app03.cpp */,
+				9D4591311F3A2A01001EAD01 /* app04.cpp */,
 				9DA863561F1A5EF50074D73D /* base_app.cpp */,
 				9DA8635A1F1A608C0074D73D /* app_factory.cpp */,
 			);
@@ -281,6 +296,7 @@
 				9D9AF0CF1D6CD48600CDA5CB /* app01 */,
 				9DC3AEFA1E6CBB73006CD74E /* app02 */,
 				9D8BFAEF1E77280A00DD2C0C /* app03 */,
+				9D4591371F3A2BDA001EAD01 /* app04 */,
 			);
 			name = ressources;
 			sourceTree = "<group>";
@@ -451,6 +467,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D4591361F3A2BD3001EAD01 /* app04_config.xml in Resources */,
 				9DC3AF011E6CBBA3006CD74E /* app02-crate.obj in Resources */,
 				9D6540901D71BD64005D1890 /* bunny.ply in Resources */,
 				9D65408D1D71BC04005D1890 /* vertex-shader.vs in Resources */,
@@ -511,6 +528,7 @@
 				9D9AF0BD1D6C99EF00CDA5CB /* app00.cpp in Sources */,
 				9DD47BFF1D4EA1F9003110D9 /* main.m in Sources */,
 				9D9AF0C21D6CA4EC00CDA5CB /* OGLRootViewController.m in Sources */,
+				9D4591321F3A2A01001EAD01 /* app04.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,11 +51,11 @@ ExternalProject_Add(libjpeg_project
         #CMAKE_ARGS -G${CMAKE_GENERATOR} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DPNG_SHARED=OFF -DPNG_TESTS=OFF
         #CMAKE_CACHE_ARGS -DCMAKE_C_FLAGS:STRING=-fPIC
         # Folder destination
-        PREFIX ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg
-        TMP_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/tmp
-        STAMP_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/stamp
-        DOWNLOAD_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/download
-        SOURCE_DIR ${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/src
+        PREFIX ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg
+        TMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/tmp
+        STAMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/stamp
+        DOWNLOAD_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/download
+        SOURCE_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libjpeg/src
         # generate configure
         UPDATE_COMMAND autoreconf -fiv
         # Configure step

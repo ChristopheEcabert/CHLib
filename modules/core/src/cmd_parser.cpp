@@ -10,13 +10,13 @@
 #include <iostream>
 #include <algorithm>
 
-#include "chlib/core/cmd_parser.hpp"
+#include "oglkit/core/cmd_parser.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
 
 /*
  *  @name   GetCmdOption
@@ -105,7 +105,7 @@ int CmdLineParser::AddArgument(const std::string& key,
 int CmdLineParser::ParseCmdLine(const int argc, const char** argv) {
   int error = -1;
   // Look first for help, then for other elements
-  if (CHLib::CmdOptionExists(argv, argv + argc, "-h") ||
+  if (OGLKit::CmdOptionExists(argv, argv + argc, "-h") ||
       (argc == 1 && argument_.size() == 1)) {
     this->PrintHelp();
   } else {
@@ -113,9 +113,9 @@ int CmdLineParser::ParseCmdLine(const int argc, const char** argv) {
     std::vector<Args*>::iterator arg_it = argument_.begin();
     for (; arg_it != argument_.end(); ++arg_it) {
       // Argument present ?
-      if (CHLib::CmdOptionExists(argv, argv + argc, (*arg_it)->key)) {
+      if (OGLKit::CmdOptionExists(argv, argv + argc, (*arg_it)->key)) {
         // Yes, get value
-        (*arg_it)->value = CHLib::GetCmdOption(argv,
+        (*arg_it)->value = OGLKit::GetCmdOption(argv,
                                               argv + argc,
                                               (*arg_it)->key);
         error = 0;

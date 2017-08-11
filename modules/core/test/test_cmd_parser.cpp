@@ -12,9 +12,9 @@
 
 #include "gtest/gtest.h"
 
-#include "chlib/core/cmd_parser.hpp"
+#include "oglkit/core/cmd_parser.hpp"
 
-using CmdParser = CHLib::CmdLineParser;
+using CmdParser = OGLKit::CmdLineParser;
 
 TEST(Parser, NoArgs) {
   CmdParser parser;

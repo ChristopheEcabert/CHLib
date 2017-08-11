@@ -10,14 +10,14 @@
 #include <fstream>
 #include <iostream>
 
-#include "chlib/io/tga_image.hpp"
-#include "chlib/core/string_util.hpp"
+#include "oglkit/io/tga_image.hpp"
+#include "oglkit/core/string_util.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark - 
 #pragma mark Type definition
@@ -214,4 +214,4 @@ const char* TGAProxy::Extension(void) const {
 // Explicit registration
 TGAProxy tga_proxy;
   
-}  // namespace CHLib
+}  // namespace OGLKit

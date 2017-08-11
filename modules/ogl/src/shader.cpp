@@ -12,19 +12,19 @@
 #include <sstream>
 #include <assert.h>
 
-#include "chlib/core/error.hpp"
-#include "chlib/core/string_util.hpp"
-#include "chlib/ogl/shader.hpp"
+#include "oglkit/core/error.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/ogl/shader.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #endif
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Type definition
@@ -192,7 +192,7 @@ int OGLShader::Add(const std::string& code, const Type& type) {
       msg += strInfoLog;
       delete[] strInfoLog;
       // Throw error
-      throw CHLib::CHError(CHError::kGeneric, msg, FUNC_NAME);
+      throw OGLKit::CHError(CHError::kGeneric, msg, FUNC_NAME);
     } else {
       glAttachShader(ctx_->program, shader);
       err = 0;
@@ -224,7 +224,7 @@ int OGLShader::Finalize(void) {
     msg += strInfoLog;
     delete[] strInfoLog;
     // Show error
-    throw CHLib::CHError(CHError::kGeneric, msg, FUNC_NAME);
+    throw OGLKit::CHError(CHError::kGeneric, msg, FUNC_NAME);
   } else {
     // Everything went smooth, release shader object
     for (auto& shader : ctx_->shaders) {
@@ -432,7 +432,7 @@ void OGLShader::SetUniform(const std::string& uniform_name,
 OGLShader::Type OGLShader::ExtractType(const std::string& filename) const {
   // Extract extension
   std::string dir, file, ext;
-  CHLib::StringUtil::ExtractDirectory(filename, &dir, &file, &ext);
+  OGLKit::StringUtil::ExtractDirectory(filename, &dir, &file, &ext);
   if (ext == "vs") {
     return Type::kVertex;
   } else if (ext == "gs") {
@@ -444,4 +444,4 @@ OGLShader::Type OGLShader::ExtractType(const std::string& filename) const {
 }
   
   
-}  // namespace CHLib
+}  // namespace OGLKit

@@ -7,14 +7,14 @@
  *  Copyright © 2017 Christophe Ecabert. All rights reserved.
  */
 
-#include "chlib/io/image.hpp"
-#include "chlib/io/image_factory.hpp"
+#include "oglkit/io/image.hpp"
+#include "oglkit/io/image_factory.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /*
  *  @name   ImageProxy
@@ -32,4 +32,4 @@ ImageProxy::ImageProxy(void) {
  */
 ImageProxy::~ImageProxy(void) {}
   
-}  // namespace CHLib
+}  // namespace OGLKit

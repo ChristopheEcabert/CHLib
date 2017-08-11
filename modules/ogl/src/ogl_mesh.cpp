@@ -7,17 +7,17 @@
  *  Copyright © 2016 Christophe Ecabert. All rights reserved.
  */
 
-#include "chlib/ogl/ogl_mesh.hpp"
+#include "oglkit/ogl/ogl_mesh.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #endif
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Type definition
@@ -277,4 +277,4 @@ template class OGLMesh<float>;
 /** OGLMesh - Double */
 template class OGLMesh<double>;
   
-}  // namespace CHLib
+}  // namespace OGLKit

@@ -13,14 +13,14 @@
 #include <cstring>
 
 #include "jpeglib.h"
-#include "chlib/core/string_util.hpp"
-#include "chlib/io/jpeg_image.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/io/jpeg_image.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /**
  *  @struct ErrorManager
@@ -349,4 +349,4 @@ const char* JPEGProxy::Extension(void) const {
 // Explicit registration
 JPEGProxy jpeg_proxy;
 
-}  // namespace CHLib
+}  // namespace OGLKit

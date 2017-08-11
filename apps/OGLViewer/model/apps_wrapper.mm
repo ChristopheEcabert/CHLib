@@ -9,14 +9,14 @@
 
 #import "apps_wrapper.h"
 
-#include "chlib/ogl/texture_manager.hpp"
+#include "oglkit/ogl/texture_manager.hpp"
 
 #include "base_app.hpp"
 #include "app_factory.hpp"
 
 @interface AppsWrapper() {
   /** Application pointer */
-  CHLib::BaseApp* app_;
+  OGLKit::BaseApp* app_;
   /** View width */
   float width_;
   /** View height */
@@ -39,7 +39,7 @@
   self = [super init];
   if (self) {
     // Release already loaded texture
-    CHLib::OGLTextureManager::Instance().Remove("");
+    OGLKit::OGLTextureManager::Instance().Remove("");
     // Load new app
     width_ = size.width;
     height_ = size.height;
@@ -61,7 +61,7 @@
   }
   // Load proper app
   std::string name([app_name UTF8String]);
-  app_ = CHLib::AppFactory::Get().CreateByName(name, width_, height_);
+  app_ = OGLKit::AppFactory::Get().CreateByName(name, width_, height_);
   if (app_) {
     err = app_->Load(std::string([config UTF8String]));
   }

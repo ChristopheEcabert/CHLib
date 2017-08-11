@@ -13,15 +13,15 @@
 
 #include "app02.hpp"
 
-#include "chlib/core/string_util.hpp"
-#include "chlib/ogl/texture_manager.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/ogl/texture_manager.hpp"
 
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Initialization
@@ -35,12 +35,12 @@ namespace CHLib {
  */
 App02::App02(const float win_width, const float win_height) {
   // Mesh
-  this->mesh_ = new CHLib::OGLMesh<float>();
+  this->mesh_ = new OGLKit::OGLMesh<float>();
   // Camera
-  this->camera_ = new CHLib::OGLCamera();
+  this->camera_ = new OGLKit::OGLCamera<float>();
   this->camera_->set_window_dimension(win_width, win_height);
   // Technique
-  this->shader_ = new CHLib::OGLShader();
+  this->shader_ = new OGLKit::OGLShader();
 }
 
 /*
@@ -73,7 +73,7 @@ App02::~App02(void) {
 int App02::Load(const std::string& config) {
   int err = -1;
   std::string dir, file, ext;
-  CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
+  OGLKit::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
   err = this->mesh_->Load(dir + "app02-crate.obj");
   err |= this->mesh_->InitOpenGLContext();
@@ -235,4 +235,4 @@ const char* App02Proxy::Name(void) const {
 // Explicit registration
 App02Proxy app02_proxy;
   
-}  // namespace CHLib
+}  // namespace OGLKit

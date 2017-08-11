@@ -13,14 +13,14 @@
 #include <iostream>
 
 #include "png.h"
-#include "chlib/core/string_util.hpp"
-#include "chlib/io/png_image.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/io/png_image.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
 
 /**
  *  @name
@@ -297,7 +297,7 @@ int PNGImage::Save(std::ostream& stream) const {
  *  @fn   PNGProxy(void)
  *  @brief  Constructor
  */
-PNGProxy::PNGProxy(void) : CHLib::ImageProxy() {}
+PNGProxy::PNGProxy(void) : OGLKit::ImageProxy() {}
   
 /*
  *  @name ~PNGProxy
@@ -328,4 +328,4 @@ const char* PNGProxy::Extension(void) const {
 // Explicit registration
 PNGProxy png_proxy;
 
-}  // namespace CHLib
+}  // namespace OGLKit

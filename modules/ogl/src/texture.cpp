@@ -9,17 +9,17 @@
 
 #include <iostream>
 
-#include "chlib/ogl/texture.hpp"
+#include "oglkit/ogl/texture.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #endif
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Type definition + helper function
@@ -219,4 +219,4 @@ void OGLTexture::Unbind(void) const {
   glBindTexture(GL_TEXTURE_2D, 0);
 }
   
-}  // namespace CHLib
+}  // namespace OGLKit

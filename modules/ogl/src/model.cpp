@@ -14,15 +14,15 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
-#include "chlib/core/string_util.hpp"
-#include "chlib/ogl/model.hpp"
-#include "chlib/ogl/texture_manager.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/ogl/model.hpp"
+#include "oglkit/ogl/texture_manager.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Initialization
@@ -106,10 +106,10 @@ void OGLModel<T>::Render(const OGLShader& shader) {
  */
 template<typename T>
 int OGLModel<T>::ProcessScene(const aiScene& scene) {
-  using Vertex = typename CHLib::OGLMesh<T>::Vertex;
-  using Normal = typename CHLib::OGLMesh<T>::Normal;
-  using TCoord = typename CHLib::OGLMesh<T>::TCoord;
-  using Triangle = typename CHLib::OGLMesh<T>::Triangle;
+  using Vertex = typename OGLKit::OGLMesh<T>::Vertex;
+  using Normal = typename OGLKit::OGLMesh<T>::Normal;
+  using TCoord = typename OGLKit::OGLMesh<T>::TCoord;
+  using Triangle = typename OGLKit::OGLMesh<T>::Triangle;
   // Avoid recursion by using stack
   int err = 0;
   std::stack<aiNode*> queue;
@@ -211,4 +211,4 @@ template class OGLModel<float>;
 /** Double */
 template class OGLModel<double>;
 
-}  // namespace CHLib
+}  // namespace OGLKit

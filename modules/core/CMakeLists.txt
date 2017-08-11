@@ -4,9 +4,9 @@ set(SUBSYS_DESC "CHLib core element library")
 set(SUBSYS_DEPS)
 
 set(build TRUE)
-CHLIB_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
+OGLKIT_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
 #Add dependencies as well as external dependencies
-CHLIB_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} EXT_DEPS "")
+OGLKIT_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} EXT_DEPS "")
 if(build)
   # Add sources 
   set(srcs
@@ -16,31 +16,31 @@ if(build)
     src/cmd_parser.cpp)
 
   set(incs
-    include/chlib/${SUBSYS_NAME}/cmd_parser.hpp
-    include/chlib/${SUBSYS_NAME}/error.hpp
-    include/chlib/${SUBSYS_NAME}/library_export.hpp)
+    include/oglkit/${SUBSYS_NAME}/cmd_parser.hpp
+    include/oglkit/${SUBSYS_NAME}/error.hpp
+    include/oglkit/${SUBSYS_NAME}/library_export.hpp)
   set(incs_math
-    include/chlib/${SUBSYS_NAME}/math/matrix.hpp
-    include/chlib/${SUBSYS_NAME}/math/quaternion.hpp
-    include/chlib/${SUBSYS_NAME}/math/type_comparator.hpp
-    include/chlib/${SUBSYS_NAME}/math/vector.hpp)
+    include/oglkit/${SUBSYS_NAME}/math/matrix.hpp
+    include/oglkit/${SUBSYS_NAME}/math/quaternion.hpp
+    include/oglkit/${SUBSYS_NAME}/math/type_comparator.hpp
+    include/oglkit/${SUBSYS_NAME}/math/vector.hpp)
   # Set library name
-  set(LIB_NAME "chlib_${SUBSYS_NAME}")
+  set(LIB_NAME "oglkit_${SUBSYS_NAME}")
   # Add include folder location
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
   # Add library
-  CHLIB_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" FILES ${srcs} ${incs} ${incs_math})
+  OGLKIT_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" FILES ${srcs} ${incs} ${incs_math})
 
   #EXAMPLES
   IF(WITH_EXAMPLES)
-      #LTS5_ADD_EXAMPLE(chlib_video_splitter FILES file LINK_WITH lib)
+      #LTS5_ADD_EXAMPLE(oglkit_video_splitter FILES file LINK_WITH lib)
   ENDIF(WITH_EXAMPLES)
 
   # TESTS
-  CHLIB_ADD_TEST(cmd_parser chlib_test_cmd_parser FILES test/test_cmd_parser.cpp WORKING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test" ARGUMENTS "" LINK_WITH chlib_core)
+  OGLKIT_ADD_TEST(cmd_parser oglkit_test_cmd_parser FILES test/test_cmd_parser.cpp WORKING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test" ARGUMENTS "" LINK_WITH oglkit_core)
 
   # Install include files
-  CHLIB_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}" ${incs})
-  CHLIB_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}/math" ${incs_math})
+  OGLKIT_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}" ${incs})
+  OGLKIT_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}/math" ${incs_math})
 endif(build)

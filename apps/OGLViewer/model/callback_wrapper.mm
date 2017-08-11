@@ -12,11 +12,11 @@
 
 #import "callback_wrapper.h"
 
-#import "chlib/ogl/callbacks.hpp"
+#import "oglkit/ogl/callbacks.hpp"
 
 @interface OGLCallbacksWrapper() {
   // Callback instance
-  CHLib::OGLCallbacks* callbacks_;
+  OGLKit::OGLCallbacks* callbacks_;
 }
 @end
 
@@ -44,7 +44,7 @@
 -(id) initWithPointer: (void*) pointer {
   self = [super init];
   if (self) {
-    callbacks_ = (CHLib::OGLCallbacks*)pointer;
+    callbacks_ = (OGLKit::OGLCallbacks*)pointer;
   }
   return self;
 }
@@ -55,7 +55,7 @@
  *  @param[in]  pointer Pointer to OGLCallbacks instance
  */
 -(void) setPointer:(void*) pointer {
-  callbacks_ = (CHLib::OGLCallbacks*)pointer;
+  callbacks_ = (OGLKit::OGLCallbacks*)pointer;
 }
 
 /*
@@ -67,10 +67,10 @@
  */
 -(void) onKeyboard:(char) key withState:(KeyState) state {
   if (callbacks_) {
-    CHLib::OGLKeyState key_state = (state == kKeyPressed ?
-                                    CHLib::OGLKeyState::kPress :
-                                    CHLib::OGLKeyState::kRelease);
-    callbacks_->OGLKeyboardCb((CHLib::OGLKey)key, key_state);
+    OGLKit::OGLKeyState key_state = (state == kKeyPressed ?
+                                    OGLKit::OGLKeyState::kPress :
+                                    OGLKit::OGLKeyState::kRelease);
+    callbacks_->OGLKeyboardCb((OGLKit::OGLKey)key, key_state);
   }
 }
 
@@ -96,12 +96,12 @@
            withState:(KeyState) state
                   at:(NSPoint*) position; {
   if (callbacks_) {
-    CHLib::OGLKeyState key_state = (state == kKeyPressed ?
-                                    CHLib::OGLKeyState::kPress :
-                                    CHLib::OGLKeyState::kRelease);
-    CHLib::OGLMouse mouse = (key == kMouseLeftButton ?
-                             CHLib::OGLMouse::kMouseLeft :
-                             CHLib::OGLMouse::kMouseRight);
+    OGLKit::OGLKeyState key_state = (state == kKeyPressed ?
+                                    OGLKit::OGLKeyState::kPress :
+                                    OGLKit::OGLKeyState::kRelease);
+    OGLKit::OGLMouse mouse = (key == kMouseLeftButton ?
+                             OGLKit::OGLMouse::kMouseLeft :
+                             OGLKit::OGLMouse::kMouseRight);
     callbacks_->OGLMouseCb(mouse, key_state, position->x, position->y);
   }
 }

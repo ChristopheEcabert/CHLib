@@ -13,15 +13,15 @@
 
 #include "app03.hpp"
 
-#include "chlib/core/string_util.hpp"
-#include "chlib/ogl/texture_manager.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/ogl/texture_manager.hpp"
 
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Initialization
@@ -35,13 +35,13 @@ namespace CHLib {
  */
 App03::App03(const float win_width, const float win_height) {
   // Model
-  this->model_ = new CHLib::OGLModel<float>();
+  this->model_ = new OGLKit::OGLModel<float>();
   // Camera
-  this->camera_ = new CHLib::OGLCamera();
+  this->camera_ = new OGLKit::OGLCamera<float>();
   this->camera_->set_window_dimension(win_width, win_height);
   this->camera_->set_move_speed(0.02f);
   // Technique
-  this->shader_ = new CHLib::OGLShader();
+  this->shader_ = new OGLKit::OGLShader();
   // Update wrapping mode
   auto mode = OGLTexture::WrappingMode::kRepeat;
   OGLTextureManager::Instance().set_wraping_model(mode);
@@ -77,7 +77,7 @@ App03::~App03(void) {
 int App03::Load(const std::string& config) {
   int err = -1;
   std::string dir, file, ext;
-  CHLib::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
+  OGLKit::StringUtil::ExtractDirectory(config, &dir, &file, &ext);
   // Load mesh
   err = this->model_->Load(dir + "nanosuit.obj");
   if (!err) {
@@ -227,4 +227,4 @@ const char* App03Proxy::Name(void) const {
 // Explicit registration
 App03Proxy app03_proxy;
   
-}  // namespace CHLib
+}  // namespace OGLKit

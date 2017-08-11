@@ -11,10 +11,10 @@
 #include "app_factory.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /*
  *  @name AppProxy
@@ -32,4 +32,4 @@ AppProxy::AppProxy(void) {
  */
 AppProxy::~AppProxy(void) {}
   
-}  // namespace CHLib
+}  // namespace OGLKit

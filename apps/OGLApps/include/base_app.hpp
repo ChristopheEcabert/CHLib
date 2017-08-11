@@ -7,21 +7,21 @@
  *  Copyright © 2016 Christophe Ecabert. All rights reserved.
  */
 
-#ifndef __CHLIB_BASE_APP__
-#define __CHLIB_BASE_APP__
+#ifndef __OGLKIT_BASE_APP__
+#define __OGLKIT_BASE_APP__
 
 #include <string>
 
-#include "chlib/ogl/callbacks.hpp"
-#include "chlib/ogl/ogl_mesh.hpp"
-#include "chlib/ogl/camera.hpp"
-#include "chlib/ogl/shader.hpp"
+#include "oglkit/ogl/callbacks.hpp"
+#include "oglkit/ogl/ogl_mesh.hpp"
+#include "oglkit/ogl/camera.hpp"
+#include "oglkit/ogl/shader.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 /**
  *  @class  BaseApp
@@ -96,5 +96,5 @@ class AppProxy {
   virtual const char* Name(void) const = 0;
 };
   
-}  // namespace CHLib
-#endif /* __CHLIB_BASE_APP__ */
+}  // namespace OGLKit
+#endif /* __OGLKIT_BASE_APP__ */

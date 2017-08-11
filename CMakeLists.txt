@@ -1,4 +1,4 @@
-### ---[ CHLIB global CMake
+### ---[ OGLKIT global CMake
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 if(POLICY CMP0017)
@@ -26,7 +26,7 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "build type default to Release" FORCE)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
 
-project(CHLIB)
+project(OGLKIT)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 
 ### ---[ Find universal dependencies
@@ -37,21 +37,7 @@ include (FindPkgConfig)
 
 # ---[ Release/Debug specific flags
 if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-  add_definitions("-DBOOST_DISABLE_ASSERTS -DEIGEN_NO_DEBUG")
-endif()
-if(WIN32 AND NOT MINGW)
-  if(NOT DEFINED CMAKE_DEBUG_POSTFIX)
-    set(CMAKE_DEBUG_POSTFIX "_debug")
-  endif()
-  if(NOT DEFINED CMAKE_RELEASE_POSTFIX)
-    set(CMAKE_RELEASE_POSTFIX "_release")
-  endif()
-  if(NOT DEFINED CMAKE_RELWITHDEBINFO_POSTFIX)
-    set(CMAKE_RELWITHDEBINFO_POSTFIX "_release")
-  endif()
-  if(NOT DEFINED CMAKE_MINSIZEREL_POSTFIX)
-    set(CMAKE_MINSIZEREL_POSTFIX "_release")
-  endif()
+  add_definitions("-DEIGEN_NO_DEBUG")
 endif()
 
 # ---[ special maintainer mode
@@ -90,8 +76,8 @@ elseif(MSVC)
   set(CMAKE_COMPILER_IS_MSVC 1)
 endif()
 
-include("${CHLIB_SOURCE_DIR}/cmake/chlib_targets.cmake")
-include("${CHLIB_SOURCE_DIR}/cmake/chlib_options.cmake")
+include("${OGLKIT_SOURCE_DIR}/cmake/oglkit_targets.cmake")
+include("${OGLKIT_SOURCE_DIR}/cmake/oglkit_options.cmake")
 
 # ---[ Unix/Darwin/Windows specific flags
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -119,20 +105,20 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   endif()
 
   if(WIN32)
-    if(CHLIB_SHARED_LIBS)
+    if(OGLKIT_SHARED_LIBS)
       SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-all-symbols -Wl,--enable-auto-import")
       if (MINGW)
         add_definitions("-DBOOST_THREAD_USE_LIB")
         SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--allow-multiple-definition")
       endif()
-    else(CHLIB_SHARED_LIBS)
+    else(OGLKIT_SHARED_LIBS)
       add_definitions("-DBOOST_LIB_DIAGNOSTIC -DBOOST_THREAD_USE_LIB")
-    endif(CHLIB_SHARED_LIBS)
+    endif(OGLKIT_SHARED_LIBS)
   endif()
 endif()
 
 if(CMAKE_COMPILER_IS_MSVC)
-  add_definitions("-DBOOST_ALL_NO_LIB -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -DNOMINMAX -DCHLIB_ONLY_CORE_POINT_TYPES /bigobj ${SSE_DEFINITIONS}")
+  add_definitions("-DBOOST_ALL_NO_LIB -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -DNOMINMAX -DOGLKIT_ONLY_CORE_POINT_TYPES /bigobj ${SSE_DEFINITIONS}")
   if("${CMAKE_CXX_FLAGS}" STREQUAL " /DWIN32 /D_WINDOWS /W3 /GR /EHsc")	# Check against default flags
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /fp:precise /wd4800 /wd4521 /wd4251 /wd4275 /wd4305 /wd4355 ${SSE_FLAGS}")
 
@@ -174,37 +160,37 @@ if (CMAKE_COMPILER_IS_CLANG)
   SET(CLANG_LIBRARIES "c++")
 endif()
 
-include("${CHLIB_SOURCE_DIR}/cmake/chlib_utils.cmake")
-set(CHLIB_VERSION 1.0.0 CACHE STRING "CHLib version")
+include("${OGLKIT_SOURCE_DIR}/cmake/oglkit_utils.cmake")
+set(OGLKIT_VERSION 1.0.0 CACHE STRING "OGLKit version")
 DISSECT_VERSION()
 GET_OS_INFO()
 SET_INSTALL_DIRS()
 
-set(CHLIB_OUTPUT_LIB_DIR "${CHLIB_BINARY_DIR}/${LIB_INSTALL_DIR}")
-set(CHLIB_OUTPUT_BIN_DIR "${CHLIB_BINARY_DIR}/${BIN_INSTALL_DIR}")
-set(CHLIB_OUTPUT_3RDPARTY_LIB_DIR "${CHLIB_BINARY_DIR}/3rdparty")
-make_directory("${CHLIB_OUTPUT_LIB_DIR}")
-make_directory("${CHLIB_OUTPUT_BIN_DIR}")
-make_directory("${CHLIB_OUTPUT_3RDPARTY_LIB_DIR}")
+set(OGLKIT_OUTPUT_LIB_DIR "${OGLKIT_BINARY_DIR}/${LIB_INSTALL_DIR}")
+set(OGLKIT_OUTPUT_BIN_DIR "${OGLKIT_BINARY_DIR}/${BIN_INSTALL_DIR}")
+set(OGLKIT_OUTPUT_3RDPARTY_LIB_DIR "${OGLKIT_BINARY_DIR}/3rdparty")
+make_directory("${OGLKIT_OUTPUT_LIB_DIR}")
+make_directory("${OGLKIT_OUTPUT_BIN_DIR}")
+make_directory("${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}")
 if(WIN32)
   foreach(config ${CMAKE_CONFIGURATION_TYPES})
     string(TOUPPER ${config} CONFIG)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${CONFIG} "${CHLIB_OUTPUT_LIB_DIR}")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${CONFIG} "${CHLIB_OUTPUT_BIN_DIR}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${CONFIG} "${OGLKIT_OUTPUT_LIB_DIR}")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${CONFIG} "${OGLKIT_OUTPUT_BIN_DIR}")
     # ---[ Windows requires DLLs (shared libraries) to be installed in the same directory as executables
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG} "${CHLIB_OUTPUT_BIN_DIR}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG} "${OGLKIT_OUTPUT_BIN_DIR}")
   endforeach(config)
 else(WIN32)
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CHLIB_OUTPUT_LIB_DIR}")
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CHLIB_OUTPUT_BIN_DIR}")
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CHLIB_OUTPUT_LIB_DIR}")
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OGLKIT_OUTPUT_LIB_DIR}")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OGLKIT_OUTPUT_BIN_DIR}")
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OGLKIT_OUTPUT_LIB_DIR}")
 endif(WIN32)
 
 # Add an "uninstall" target
-configure_file("${CHLIB_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
-               "${CHLIB_BINARY_DIR}/uninstall_target.cmake" IMMEDIATE @ONLY)
+configure_file("${OGLKIT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
+               "${OGLKIT_BINARY_DIR}/uninstall_target.cmake" IMMEDIATE @ONLY)
 add_custom_target(uninstall "${CMAKE_COMMAND}" -P
-                  "${CHLIB_BINARY_DIR}/uninstall_target.cmake")
+                  "${OGLKIT_BINARY_DIR}/uninstall_target.cmake")
 
 ###
 # this is copy paste form http://www.itk.org/Wiki/CMake_RPATH_handling
@@ -264,10 +250,10 @@ ENDIF(OPENGL_FOUND)
 
 
 ### ---[ Create the config.h file
-set(chlib_config_h_in "${CMAKE_CURRENT_SOURCE_DIR}/cmake/chlib_config.h.in")
-set(chlib_config_h "${CMAKE_CURRENT_BINARY_DIR}/include/chlib/chlib_config.h")
-configure_file("${chlib_config_h_in}" "${chlib_config_h}")
-CHLIB_ADD_INCLUDES("" "" "${chlib_config_h}")
+set(oglkit_config_h_in "${CMAKE_CURRENT_SOURCE_DIR}/cmake/oglkit_config.h.in")
+set(oglkit_config_h "${CMAKE_CURRENT_BINARY_DIR}/include/oglkit/oglkit_config.h")
+configure_file("${oglkit_config_h_in}" "${oglkit_config_h}")
+OGLKIT_ADD_INCLUDES("" "" "${oglkit_config_h}")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 
 ### ---[ Set up for tests
@@ -281,18 +267,18 @@ IF(WITH_DOCS)
 ENDIF(WITH_DOCS)
 
 ### ---[ Add the libraries subdirectories (i.e. modules)
-collect_subproject_directory_names("${CHLIB_SOURCE_DIR}/modules" "CMakeLists.txt" CHLIB_MODULES_NAMES CHLIB_MODULES_DIRS doc)
-set(CHLIB_MODULES_NAMES_UNSORTED ${CHLIB_MODULES_NAMES})
-topological_sort(CHLIB_MODULES_NAMES CHLIB_ _DEPENDS)
-sort_relative(CHLIB_MODULES_NAMES_UNSORTED CHLIB_MODULES_NAMES CHLIB_MODULES_DIRS)
-foreach(subdir ${CHLIB_MODULES_DIRS})
-  add_subdirectory("${CHLIB_SOURCE_DIR}/modules/${subdir}")
+collect_subproject_directory_names("${OGLKIT_SOURCE_DIR}/modules" "CMakeLists.txt" OGLKIT_MODULES_NAMES OGLKIT_MODULES_DIRS doc)
+set(OGLKIT_MODULES_NAMES_UNSORTED ${OGLKIT_MODULES_NAMES})
+topological_sort(OGLKIT_MODULES_NAMES OGLKIT_ _DEPENDS)
+sort_relative(OGLKIT_MODULES_NAMES_UNSORTED OGLKIT_MODULES_NAMES OGLKIT_MODULES_DIRS)
+foreach(subdir ${OGLKIT_MODULES_DIRS})
+  add_subdirectory("${OGLKIT_SOURCE_DIR}/modules/${subdir}")
 endforeach(subdir)
 
-### ---[ Configure CHLIBConfig.cmake
-include("${CHLIB_SOURCE_DIR}/cmake/chlib_config.cmake")
+### ---[ Configure OGLKITConfig.cmake
+include("${OGLKIT_SOURCE_DIR}/cmake/oglkit_config.cmake")
 
 ### ---[ Finish up
-CHLIB_WRITE_STATUS_REPORT()
-CHLIB_RESET_MAPS()
+OGLKIT_WRITE_STATUS_REPORT()
+OGLKIT_RESET_MAPS()
 

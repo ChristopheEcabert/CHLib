@@ -9,15 +9,15 @@
 
 #include <iostream>
 
-#include "chlib/core/cmd_parser.hpp"
-#include "chlib/core/string_util.hpp"
-#include "chlib/io/image_loader.hpp"
+#include "oglkit/core/cmd_parser.hpp"
+#include "oglkit/core/string_util.hpp"
+#include "oglkit/io/image_factory.hpp"
 
 int main(const int argc, const char** argv) {
   // Define argument needed
-  CHLib::CmdLineParser parser;
+  OGLKit::CmdLineParser parser;
   parser.AddArgument("-i",
-                     CHLib::CmdLineParser::ArgState::kNeeded,
+                     OGLKit::CmdLineParser::ArgState::kNeeded,
                      "Input image");
   // Parse
   int err = parser.ParseCmdLine(argc, argv);
@@ -26,12 +26,11 @@ int main(const int argc, const char** argv) {
     parser.HasArgument("-i", &imagepath);
 
     // Load image based on type
-    CHLib::Image* image;
-    err = CHLib::ImageLoader::Load(imagepath, &image);
+    std::string dir, file, ext;
+    OGLKit::StringUtil::ExtractDirectory(imagepath, &dir, &file, &ext);
+    OGLKit::Image* image = OGLKit::ImageFactory::Get().CreateByExtension(ext);
     // Save input
-    if (!err) {
-      std::string dir, file, ext;
-      CHLib::StringUtil::ExtractDirectory(imagepath, &dir, &file, &ext);
+    if (image && !image->Load(imagepath)) {
       std::string f = (dir.empty() ?
                        file + "_save" :
                        dir + "/" + file + "_save");

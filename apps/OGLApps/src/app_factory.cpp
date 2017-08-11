@@ -11,10 +11,10 @@
 #include "app_factory.hpp"
 
 /**
- *  @namespace  CHLib
+ *  @namespace  OGLKit
  *  @brief      Chris dev space
  */
-namespace CHLib {
+namespace OGLKit {
   
 #pragma mark -
 #pragma mark Initialization
@@ -107,4 +107,4 @@ void AppFactory::Register(const AppProxy* object) {
   }
 }
   
-}  // namespace CHLib
+}  // namespace OGLKit
