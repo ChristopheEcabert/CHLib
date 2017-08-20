@@ -2,7 +2,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "CHLib Library"
+PROJECT_NAME           = "OGLKit Library"
 PROJECT_NUMBER         = @OGLKIT_VERSION@
 PROJECT_BRIEF          = 
 PROJECT_LOGO           =

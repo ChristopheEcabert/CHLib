@@ -152,10 +152,8 @@ if (CMAKE_COMPILER_IS_CLANG)
     SET(CMAKE_C_FLAGS "-Qunused-arguments")
   endif()
   if("${CMAKE_CXX_FLAGS}" STREQUAL "")
-    SET(CMAKE_CXX_FLAGS "-ftemplate-depth=1024 -Qunused-arguments -Wno-invalid-offsetof -std=c++11 ${SSE_FLAGS}") # Unfortunately older Clang versions do not have this: -Wno-unnamed-type-template-args
-    if(APPLE AND WITH_CUDA AND CUDA_FOUND)
-      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    endif()
+    # Unfortunately older Clang versions do not have this: -Wno-unnamed-type-template-args
+    SET(CMAKE_CXX_FLAGS "-ftemplate-depth=1024 -Qunused-arguments -Wno-invalid-offsetof -std=c++11 ${SSE_FLAGS}") 
   endif()
   SET(CLANG_LIBRARIES "c++")
 endif()
@@ -210,7 +208,7 @@ ENDIF("${is_system_dir}" STREQUAL "-1")
 
 ### ---[ Find universal dependencies
 # the gcc-4.2.1 coming with MacOS X is not compatible with the OpenMP pragmas we use, so disabling OpenMP for it
-if((NOT APPLE) OR (NOT CMAKE_COMPILER_IS_GNUCXX) OR (GCC_VERSION VERSION_GREATER 4.2.1) OR (CMAKE_COMPILER_IS_CLANG))
+if(((NOT APPLE) AND (NOT CMAKE_COMPILER_IS_CLANG)) OR (CMAKE_COMPILER_IS_GNUCXX) OR (GCC_VERSION VERSION_GREATER 4.2.1))
   find_package(OpenMP)
 endif()
 if(OPENMP_FOUND)
@@ -242,11 +240,14 @@ else(OPENMP_FOUND)
   message (STATUS "Not found OpenMP")
 endif()
 
-# OpenGL
+### ---[ OpenGL Framework
 FIND_PACKAGE(OpenGL REQUIRED)
 IF(OPENGL_FOUND)
   INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
 ENDIF(OPENGL_FOUND)
+
+### ---[ Doxygen
+FIND_PACKAGE(Doxygen QUIET)
 
 
 ### ---[ Create the config.h file

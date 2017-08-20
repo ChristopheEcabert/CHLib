@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D21D6DB1D634ACF00C37B4A /* libCHLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21D6D61D634AAA00C37B4A /* libCHLib.dylib */; };
 		9D21D6F51D6368E900C37B4A /* callback_wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6F41D6368E900C37B4A /* callback_wrapper.mm */; };
 		9D21D6FC1D63743A00C37B4A /* ogl_view.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21D6FB1D63743A00C37B4A /* ogl_view.m */; };
 		9D4591321F3A2A01001EAD01 /* app04.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D4591311F3A2A01001EAD01 /* app04.cpp */; };
@@ -60,34 +59,34 @@
 		9DD47C011D4EA212003110D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD47C001D4EA212003110D9 /* AppDelegate.m */; };
 		9DD47C061D4EA288003110D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD47C051D4EA288003110D9 /* Assets.xcassets */; };
 		9DD47C091D4EA29D003110D9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DD47C071D4EA29D003110D9 /* MainMenu.xib */; };
+		9DEC5EFA1F3DDE9100B01604 /* libOGLKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEC5EF51F3DDE6400B01604 /* libOGLKit.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9D21D6D51D634AAA00C37B4A /* PBXContainerItemProxy */ = {
+		9DEC5EF41F3DDE6400B01604 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */;
+			containerPortal = 9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9DBFE8611D4D073400182698;
-			remoteInfo = CHLib;
+			remoteInfo = OGLKit;
 		};
-		9D21D6D91D634AC700C37B4A /* PBXContainerItemProxy */ = {
+		9DEC5EF61F3DDE6400B01604 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9DBFE8601D4D073400182698;
-			remoteInfo = CHLib;
-		};
-		9D21D6F11D6367F800C37B4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */;
+			containerPortal = 9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9D21D6E31D634F3700C37B4A;
-			remoteInfo = CHLibTest;
+			remoteInfo = OGLKitTest;
+		};
+		9DEC5EF81F3DDE8A00B01604 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DBFE8601D4D073400182698;
+			remoteInfo = OGLKit;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CHLib.xcodeproj; sourceTree = "<group>"; };
 		9D21D6F31D63684200C37B4A /* callback_wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = callback_wrapper.h; path = apps/OGLViewer/model/callback_wrapper.h; sourceTree = SOURCE_ROOT; };
 		9D21D6F41D6368E900C37B4A /* callback_wrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = callback_wrapper.mm; path = apps/OGLViewer/model/callback_wrapper.mm; sourceTree = SOURCE_ROOT; };
 		9D21D6FA1D63743A00C37B4A /* ogl_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ogl_view.h; path = apps/OGLViewer/view/ogl_view.h; sourceTree = SOURCE_ROOT; };
@@ -154,6 +153,7 @@
 		9DD47C001D4EA212003110D9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = apps/OGLViewer/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		9DD47C051D4EA288003110D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = apps/OGLViewer/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		9DD47C081D4EA29D003110D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = apps/OGLViewer/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
+		9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = OGLKit.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,22 +161,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D21D6DB1D634ACF00C37B4A /* libCHLib.dylib in Frameworks */,
+				9DEC5EFA1F3DDE9100B01604 /* libOGLKit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D21D6D11D634AAA00C37B4A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9D21D6D61D634AAA00C37B4A /* libCHLib.dylib */,
-				9D21D6F21D6367F800C37B4A /* CHLibTest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9D21D6EF1D6367F800C37B4A /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,9 +372,18 @@
 		9DD47BEA1D4EA0EA003110D9 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */,
+				9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */,
 			);
 			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		9DEC5EF01F3DDE6300B01604 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DEC5EF51F3DDE6400B01604 /* libOGLKit.dylib */,
+				9DEC5EF71F3DDE6400B01604 /* OGLKitTest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,7 +400,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				9D21D6DA1D634AC700C37B4A /* PBXTargetDependency */,
+				9DEC5EF91F3DDE8A00B01604 /* PBXTargetDependency */,
 			);
 			name = OGLViewer;
 			productName = OGLViewer;
@@ -434,8 +434,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9D21D6D11D634AAA00C37B4A /* Products */;
-					ProjectRef = 9D21D6D01D634AAA00C37B4A /* CHLib.xcodeproj */;
+					ProductGroup = 9DEC5EF01F3DDE6300B01604 /* Products */;
+					ProjectRef = 9DEC5EEF1F3DDE6300B01604 /* OGLKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -446,18 +446,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9D21D6D61D634AAA00C37B4A /* libCHLib.dylib */ = {
+		9DEC5EF51F3DDE6400B01604 /* libOGLKit.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libCHLib.dylib;
-			remoteRef = 9D21D6D51D634AAA00C37B4A /* PBXContainerItemProxy */;
+			path = libOGLKit.dylib;
+			remoteRef = 9DEC5EF41F3DDE6400B01604 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9D21D6F21D6367F800C37B4A /* CHLibTest */ = {
+		9DEC5EF71F3DDE6400B01604 /* OGLKitTest */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = CHLibTest;
-			remoteRef = 9D21D6F11D6367F800C37B4A /* PBXContainerItemProxy */;
+			path = OGLKitTest;
+			remoteRef = 9DEC5EF61F3DDE6400B01604 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -535,10 +535,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9D21D6DA1D634AC700C37B4A /* PBXTargetDependency */ = {
+		9DEC5EF91F3DDE8A00B01604 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CHLib;
-			targetProxy = 9D21D6D91D634AC700C37B4A /* PBXContainerItemProxy */;
+			name = OGLKit;
+			targetProxy = 9DEC5EF81F3DDE8A00B01604 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

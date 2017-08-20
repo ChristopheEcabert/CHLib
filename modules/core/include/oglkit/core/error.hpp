@@ -18,18 +18,18 @@
 
 /**
  *  @namespace  OGLKit
- *  @brief      Chris dev space
+ *  @brief      OpenGL development space
  */
 namespace OGLKit {
 
 /**
- *  @class  CHError
+ *  @class  OGLError
  *  @brief  Error class
  *  @author Christophe Ecabert
  *  @date   02/08/16
  *  @ingroup core
  */
-class OGLKIT_EXPORTS CHError : public std::exception {
+class OGLKIT_EXPORTS OGLError : public std::exception {
 
  public:
 
@@ -53,15 +53,15 @@ class OGLKIT_EXPORTS CHError : public std::exception {
 #pragma mark Initialization
 
   /**
-   *  @name CHError
-   *  @fn CHError(void)
+   *  @name OGLError
+   *  @fn OGLError(void)
    *  @brief  Constructor
    */
-  CHError(void);
+  OGLError(void);
 
   /**
-   *  @name CHError
-   *  @fn CHError(const Type err_code, 
+   *  @name OGLError
+   *  @fn OGLError(const Type err_code, 
                   const std::string& message,
                   const std::string& function_name)
    *  @brief  Constructor
@@ -69,16 +69,16 @@ class OGLKIT_EXPORTS CHError : public std::exception {
    *  @param[in]  message       Error message
    *  @param[in]  function_name Name of the function that trigger the exception
    */
-  CHError(const Type err_code,
+  OGLError(const Type err_code,
           const std::string& message,
           const std::string& function_name);
 
   /**
-   *  @name ~CHError
-   *  @fn virtual ~CHError(void) throw()
+   *  @name ~OGLError
+   *  @fn virtual ~OGLError(void) throw()
    *  @brief  Destructor
    */
-  virtual ~CHError(void) throw();
+  virtual ~OGLError(void) throw();
 
 #pragma mark -
 #pragma mark Usage

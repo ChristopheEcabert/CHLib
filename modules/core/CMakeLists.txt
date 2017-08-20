@@ -1,5 +1,5 @@
 set(SUBSYS_NAME core)
-set(SUBSYS_DESC "CHLib core element library")
+set(SUBSYS_DESC "OGLKit core element library")
 #Set internal library dependencies, here there isn't other dependencies
 set(SUBSYS_DEPS)
 

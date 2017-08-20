@@ -18,7 +18,7 @@
 
 /**
  *  @namespace  OGLKit
- *  @brief      Chris dev space
+ *  @brief      OpenGL development space
  */
 namespace OGLKit {
   

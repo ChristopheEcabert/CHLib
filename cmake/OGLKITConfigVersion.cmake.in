@@ -1,6 +1,6 @@
 # Check whether the requested PACKAGE_FIND_VERSION is compatible
 
-set(PACKAGE_VERSION @CHLIB_VERSION@)
+set(PACKAGE_VERSION @OGLKIT_VERSION@)
 
 # Check whether the requested PACKAGE_FIND_VERSION is compatible
 if("${PACKAGE_VERSION}" VERSION_LESS "${PACKAGE_FIND_VERSION}")

@@ -3,6 +3,10 @@
 language: c++
 # sudo 
 sudo: required
+# Global variable
+env:
+  global:
+    - DEPS_ROOT=~/deps
 # Define list of OS and compiler to test on
 matrix:
   include:
@@ -29,8 +33,16 @@ install:
   ############################################################################
   # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
   ############################################################################
-  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-  - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
+  - mkdir -p $DEPS_ROOT && cd $DEPS_ROOT
+  
+  ############################################################################
+  # Add libc++ for linux/clangs
+  # See: https://github.com/mapbox/mapbox-gl-native/issues/287
+  ############################################################################
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "clang++" ]]; then
+      sudo apt-get install -y libc++1 libc++-dev
+    fi
   
   ############################################################################
   # Install a recent CMake
@@ -69,9 +81,10 @@ script:
   ############################################################################
   # Go back to the root of the project and setup the build directory
   ############################################################################
-  - cd ${TRAVIS_BUILD_DIR}
+  - cd $TRAVIS_BUILD_DIR
   - mkdir -p build && cd build && cmake ${CMAKE_OPTIONS} .. && make -j8
   - make test
+  - cat Testing/Temporary/LastTest.log
   
 # Deploy doc if success
 #after_sucess:

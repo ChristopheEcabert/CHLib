@@ -22,7 +22,7 @@
 
 /**
  *  @namespace  OGLKit
- *  @brief      Chris dev space
+ *  @brief      OpenGL development space
  */
 namespace OGLKit {
   
@@ -192,7 +192,7 @@ int OGLShader::Add(const std::string& code, const Type& type) {
       msg += strInfoLog;
       delete[] strInfoLog;
       // Throw error
-      throw OGLKit::CHError(CHError::kGeneric, msg, FUNC_NAME);
+      throw OGLKit::OGLError(OGLError::kGeneric, msg, FUNC_NAME);
     } else {
       glAttachShader(ctx_->program, shader);
       err = 0;
@@ -224,7 +224,7 @@ int OGLShader::Finalize(void) {
     msg += strInfoLog;
     delete[] strInfoLog;
     // Show error
-    throw OGLKit::CHError(CHError::kGeneric, msg, FUNC_NAME);
+    throw OGLKit::OGLError(OGLError::kGeneric, msg, FUNC_NAME);
   } else {
     // Everything went smooth, release shader object
     for (auto& shader : ctx_->shaders) {
