@@ -117,7 +117,7 @@ RECURSIVE              = YES
 EXCLUDE                = "@OGLKIT_SOURCE_DIR@/cmake" \
                          "@OGLKIT_SOURCE_DIR@/apps" \
 EXCLUDE_SYMLINKS       = YES
-EXCLUDE_PATTERNS       = */build* */3rdparty*
+EXCLUDE_PATTERNS       = *OGLKit/build* *OGLKit/3rdparty*
 EXCLUDE_SYMBOLS        = OGLKIT_EXPORTS
 EXAMPLE_PATH           = 
 EXAMPLE_PATTERNS       = *
