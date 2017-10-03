@@ -83,6 +83,18 @@ install:
     fi
     
   ############################################################################
+  # Install nasm for jpeg-turbo lib
+  ############################################################################
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      sudo apt-get -qq update
+      sudo apt-get install -y nasm
+    else
+      brew upgrade nasm || brew install nasm
+    fi
+    nasm -v && which nasm
+    
+  ############################################################################
   # Install OpenCV
   ############################################################################
   - $TRAVIS_BUILD_DIR/travis/install-opencv.sh $OPENCV_ROOT
