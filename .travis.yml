@@ -56,6 +56,7 @@ cache:
     - $OPENBLAS_ROOT
     - $OPENCV_ROOT
     - $DOXYGEN_ROOT
+    - $HOME/Library/Caches/Homebrew
 # Limit cloning depth
 git:
   depth: 3
