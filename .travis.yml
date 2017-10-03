@@ -7,6 +7,10 @@ sudo: required
 env:
   global:
     - DEPS_ROOT=~/deps
+    - OPENBLAS_ROOT=$DEPS_ROOT/openblas
+    - OPENCV_ROOT=$DEPS_ROOT/opencv
+    - DOXYGEN_ROOT=$DEPS_ROOT/doyxgen
+    - CMAKE_OPTIONS=-DWITH_EXAMPLES=ON
 # Define list of OS and compiler to test on
 matrix:
   include:
@@ -27,7 +31,34 @@ matrix:
       osx_image: xcode8.3
       env: NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Darwin-x86_64.tar.gz
       compiler: clang
-    
+      
+    # Doc Generator
+    - os: linux
+      dist: trusty
+      env: DOCUMENTATION=TRUE NSTRIP=1 DOXYGEN_URL=http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.13.linux.bin.tar.gz CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_DOCS=ON"
+      compiler: gcc
+# Add packages
+addons:
+  apt:
+    packages:
+      # Add libc++ https://github.com/mapbox/mapbox-gl-native/issues/287
+      - libc++1
+      - libc++-dev
+      - gfortran
+      # Doxygen
+      - graphviz
+      - flex
+      - bison
+      - libiconv-hook*
+# Cache dependencies
+cache:
+  directories:
+    - $OPENBLAS_ROOT
+    - $OPENCV_ROOT
+    - $DOXYGEN_ROOT
+# Limit cloning depth
+git:
+  depth: 3
 # Install dependencies needed by library
 install:
   ############################################################################
@@ -36,38 +67,34 @@ install:
   - mkdir -p $DEPS_ROOT && cd $DEPS_ROOT
   
   ############################################################################
-  # Add libc++ for linux/clangs
-  # See: https://github.com/mapbox/mapbox-gl-native/issues/287
-  ############################################################################
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "clang++" ]]; then
-      sudo apt-get install -y libc++1 libc++-dev
-    fi
-  
-  ############################################################################
   # Install a recent CMake
   ############################################################################
   - |
     mkdir cmake && curl -o cmake.tar.gz -O ${CMAKE_URL} && tar -C cmake/ --strip-components=${NSTRIP} -xzf cmake.tar.gz
-    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+    export PATH=$DEPS_ROOT/cmake/bin:${PATH}
   - cmake --version
   
   ############################################################################
-  # Install nasm for jpeg-turbo lib
+  # Install OpenBLAS (only on linux)
   ############################################################################
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      sudo apt-get -qq update
-      sudo apt-get install -y nasm
-    else
-      brew upgrade nasm || brew install nasm
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      $TRAVIS_BUILD_DIR/travis/install-openblas.sh $OPENBLAS_ROOT
     fi
-  - nasm -v && which nasm
-      
+    
+  ############################################################################
+  # Install OpenCV
+  ############################################################################
+  - $TRAVIS_BUILD_DIR/travis/install-opencv.sh $OPENCV_ROOT
+  
   ############################################################################
   # Install a recent Doxygen
   ############################################################################
-  - echo "Installing Doxygen ..."
+  - |
+    if [[ "$DOCUMENTATION" == "TRUE" ]]; then
+      $TRAVIS_BUILD_DIR/travis/install-doxygen.sh $DOXYGEN_ROOT
+      doxygen --version
+    fi
   
 before_script:
   ############################################################################
@@ -78,13 +105,30 @@ before_script:
   
 # Compilation scripts start here
 script:
-  ############################################################################
-  # Go back to the root of the project and setup the build directory
-  ############################################################################
-  - cd $TRAVIS_BUILD_DIR
-  - mkdir -p build && cd build && cmake ${CMAKE_OPTIONS} .. && make -j8
-  - make test
-  - cat Testing/Temporary/LastTest.log
+  - $TRAVIS_BUILD_DIR/travis/build-library.sh
+  # Run UnitTest
+  - $TRAVIS_BUILD_DIR/travis/test-library.sh
+  # Build docs
+  - $TRAVIS_BUILD_DIR/travis/build-doc.sh
+
+# Setup SSH for deployment
+before_deploy:
+  - |
+    cd $TRAVIS_BUILD_DIR
+    openssl aes-256-cbc -K $encrypted_59ae97b0ca3d_key -iv $encrypted_59ae97b0ca3d_iv -in travis/.deploy-key.enc -out deploy-key -d
+    chmod 600 deploy-key
+    eval `ssh-agent -s`
+    ssh-add deploy-key
+# Push freshly build documentation online
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: $TRAVIS_BUILD_DIR/travis/deploy-doc.sh
+  on:
+    branch: develop
   
-# Deploy doc if success
-#after_sucess:
+# Notifications
+notifications:
+  slack:
+    secure: gm1JLklGqHggZ1RzY3W+XK8BEW76xBwiEToP+z9pJDJAG+mMXoTKB/grMkv3xzApy1FslMfaPJIDnKLlpNXEqXR2p3UYbKLEo1jERccVs5bncdc+DR2qeRBkrMbbmrJwTT6UwRqD/JCU7lW2LJHqcJye0yqiO6WbP+sNPmWAgfCBl7V7kFHFGF26Pmxry1UZ+jAPjNI3Ttg6agBHo2gnDoLwzKrfZf5dq7xazIoblpdDw+KDFh/TXLThhF2yl1uRzwOIQ6xOg0dZx4esqbGfVl5u9m/pNNj/21SDRuUlhQb8kps4UePemGVqeLxx4wV6EEOkGiUCao2/27XfEJ+reuipx7Xrinsg+Ek1GccKq6SAlokP2qE5TTy+sufHX5HZEISyuzyMEzl8jKgyolzX2ty5AxzhJUws938E5prEjmmVtmHbtOaD6QnuIjdAn8gHmr22SzxALdK1McHt5Y7pCT3HkEAl283CTLbBeQypIluTSKDncyIKl2+Pd21xRAWuCoE0tKnR2AADYVsX529PPG6Pexq4q1LiVIy8CkrYP57PRLBO3Zx2+ChDMXecuaGopVeOuCL7u1lCmyyg/BNqkAxToGFnV2LgY2b7UYK9gi2MW/DPbLRdVMJ8dAZp0Lxnc4/KWsGk+iccWAiIuOPkR3e9NcQpPLNOfv/hJXMYwkA=
+  

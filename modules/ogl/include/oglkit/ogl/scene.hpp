@@ -65,9 +65,9 @@ class OGLKIT_EXPORTS OGLScene {
   OGLScene& operator=(const OGLScene& rhs) = delete;
   
   /**
-   *  @name
-   *  @fn
-   *  @brief
+   *  @name ~OGLScene
+   *  @fn ~OGLScene(void)
+   *  @brief Destructor
    */
   ~OGLScene(void);
   

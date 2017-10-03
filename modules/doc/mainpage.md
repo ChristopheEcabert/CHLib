@@ -1,6 +1,6 @@
 ## Overview 
 
-Documentation for CHLib C++ library, 
+Documentation for OGLKit library, 
 
 
 ## Issues
