@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>OGLKit Library: Overview</title>
+<title>OGLKit Library: Search</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,16 +49,10 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div class="header">
-  <div class="headertitle">
-<div class="title">Overview </div>  </div>
-</div><!--header-->
-<div class="contents">
-<div class="textblock"><p>Documentation for OGLKit library,</p>
-<h2>Issues</h2>
-<p>Use tracker </p>
-</div></div><!-- contents -->
+<script language="php">
+require_once "search_functions.php";
+main();
+</script>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Tue Oct 3 2017 12:25:31 for OGLKit Library by &#160;<a href="http://www.doxygen.org/index.html">
