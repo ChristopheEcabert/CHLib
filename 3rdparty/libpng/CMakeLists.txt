@@ -25,11 +25,6 @@ ExternalProject_Add(libpng_project
         CMAKE_CACHE_ARGS -DCMAKE_C_FLAGS:STRING=-fPIC
         # Folder destination
         PREFIX ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng
-        TMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/tmp
-        STAMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/stamp
-        DOWNLOAD_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/download
-        SOURCE_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/libpng/src
-        BINARY_DIR ${OGLKIT_BINARY_DIR}/lib
         # Disable install step
         INSTALL_COMMAND cmake -E echo "Skipping install step."
         # Wrap download, configure and build steps in a script to log output
@@ -37,9 +32,6 @@ ExternalProject_Add(libpng_project
         LOG_CONFIGURE ON
         LOG_BUILD ON)
 
-# Specify include dir
-ExternalProject_Get_Property(libpng_project source_dir)
-SET(LIBPNG_INCLUDE_DIR ${source_dir} ${OGLKIT_BINARY_DIR}/lib PARENT_SCOPE)
 # Library
 ExternalProject_Get_Property(libpng_project binary_dir)
 SET(LIBPNG_LIBRARY_PATH ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}png.a)
@@ -48,3 +40,7 @@ SET_PROPERTY(TARGET libpng PROPERTY IMPORTED_LOCATION ${LIBPNG_LIBRARY_PATH} )
 ADD_DEPENDENCIES(libpng libpng_project)
 # Export libraries
 SET(PNG_LIBRARIES libpng ${ZLIB_LIBRARIES} PARENT_SCOPE)
+# Specify include dir
+ExternalProject_Get_Property(libpng_project source_dir)
+SET(LIBPNG_INCLUDE_DIR ${source_dir} ${binary_dir} PARENT_SCOPE)
+

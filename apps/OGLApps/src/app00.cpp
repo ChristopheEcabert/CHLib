@@ -125,7 +125,7 @@ void App00::OGLRenderCb(void) {
   this->mesh_->Bind();
   // Enable program
   this->shader_->Use();
-  this->shader_->SetUniform("camera", this->camera_->get_transform());
+  this->shader_->SetUniform("camera", this->camera_->get_transform(), GL_FALSE);
   // Draw triangle
   this->mesh_->Render(*this->shader_);
   // Make sure the VAO is not changed from the outside

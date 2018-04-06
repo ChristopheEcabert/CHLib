@@ -23,11 +23,6 @@ ExternalProject_Add(tinyxml_project
         #CMAKE_CACHE_ARGS -DCMAKE_C_FLAGS:STRING=-fPIC
         # Folder destination
         PREFIX ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/tinyxml
-        TMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/tinyxml/tmp
-        STAMP_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/tinyxml/stamp
-        DOWNLOAD_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/tinyxml/download
-        SOURCE_DIR ${OGLKIT_OUTPUT_3RDPARTY_LIB_DIR}/tinyxml/src
-        BINARY_DIR ${OGLKIT_BINARY_DIR}/lib
         # Disable install step
         INSTALL_COMMAND cmake -E echo "Skipping install step."
         # Wrap download, configure and build steps in a script to log output
@@ -35,9 +30,6 @@ ExternalProject_Add(tinyxml_project
         LOG_CONFIGURE ON
         LOG_BUILD ON)
 
-# Specify include dir
-ExternalProject_Get_Property(tinyxml_project source_dir)
-SET(TINYXML_INCLUDE_DIR ${source_dir} ${OGLKIT_BINARY_DIR}/lib PARENT_SCOPE)
 # Library
 ExternalProject_Get_Property(tinyxml_project binary_dir)
 SET(TINYXML_LIBRARY_PATH ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}tinyxml2.a)
@@ -46,3 +38,6 @@ SET_PROPERTY(TARGET tinyxml PROPERTY IMPORTED_LOCATION ${TINYXML_LIBRARY_PATH} )
 ADD_DEPENDENCIES(tinyxml tinyxml_project)
 # Export libraries
 SET(TINYXML_LIBRARIES tinyxml PARENT_SCOPE)
+# Specify include dir
+ExternalProject_Get_Property(tinyxml_project source_dir)
+SET(TINYXML_INCLUDE_DIR ${source_dir} ${binary_dir} PARENT_SCOPE)
