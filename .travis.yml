@@ -88,7 +88,13 @@ cache:
 git:
   depth: 1
 # Install dependencies needed by library
+before_install:
+  - eval "${MATRIX_EVAL}"
+  
 install:
+  # Check gcc version is properly update to 5.x
+  - $CC --version
+  
   ############################################################################
   # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
   ############################################################################
@@ -148,6 +154,12 @@ script:
   # Build docs
   - $TRAVIS_BUILD_DIR/travis/build-doc.sh
 
+after_failure:
+  - |
+    if [ -f $TRAVIS_BUILD_DIR/build/Testing/Temporary/LastTest.log ]; then
+      cat $TRAVIS_BUILD_DIR/build/Testing/Temporary/LastTest.log
+    fi
+    
 # Setup SSH for deployment
 before_deploy:
   - |
