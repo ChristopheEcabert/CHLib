@@ -1,9 +1,11 @@
 #! /bin/bash
+# See: https://gist.github.com/domenic/ec8b0fc8ab45f39403dd
+#      https://github.com/boostorg/hana/blob/master/.travis.yml
 set -e
 echo "Deploy - Documentation"
 if [ -d "$TRAVIS_BUILD_DIR/build/modules/doc/html" ]; then
   cd $TRAVIS_BUILD_DIR/build
-  if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_REPO_SLUG" == "ChristopheEcabert/OGLKit" ]]; then
+  if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_REPO_SLUG" == "ChristopheEcabert/FaceKit" ]]; then
     echo "Get exisitin documentation"
     # Suppress output to avoid leaking the token when the command fails
     REPO=`git config remote.origin.url`

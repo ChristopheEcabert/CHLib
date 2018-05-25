@@ -19,6 +19,8 @@ case "$OSTYPE" in
   linux*)   
     echo "LINUX"
     EXT=".so"
+    # Linux has some issue with assembly code -> http://answers.opencv.org/question/185307/dnn-build-error-via-mingw64/
+    EXTRA_CMAKE_OPTION=-DCPU_DISPATCH=""
     ;;
   msys*)    
     echo "WINDOWS"
@@ -32,19 +34,27 @@ esac
 
 #INSTALL_DIR=`readlink -f $1`
 INSTALL_DIR=$1
-if [ -d "$INSTALL_DIR" ] && ls $INSTALL_DIR/build/lib/*$EXT >/dev/null 2>&1; then
+if [ -d "$INSTALL_DIR" ] && ls $INSTALL_DIR/lib/*$EXT >/dev/null 2>&1; then
     echo "Using cached build at $INSTALL_DIR ..."
 else
     rm -rf $INSTALL_DIR
-    git clone https://github.com/opencv/opencv.git ${INSTALL_DIR} --depth 1
-    cd $INSTALL_DIR
+    git clone https://github.com/opencv/opencv.git ${INSTALL_DIR}/source --depth 1
+    cd $INSTALL_DIR/source
+    # Update path in order to find BLAS/LAPACK
+    export PATH=${OPENBLAS_ROOT}:${PATH}
     # Redirect build output to a log and only show it if an error occurs
     # Otherwise there is too much output for TravisCI to display properly
-    LOG_FILE=$LOCAL_DIR/opencv-build.log
     mkdir -p build && cd build
-    cmake -DCMAKE_PREFIX_INSTALL=/usr/local -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF ..
+    if [ "$CXX" == "clang++" ] ; then
+      COMPILER_FLAGS="-DCMAKE_CXX_FLAGS=-stdlib=libc++ -DCMAKE_EXE_LINKER_FLAGS=-stdlib=libc++"
+    fi
+    echo "cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF $COMPILER_FLAGS  .."
+    cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF $EXTRA_CMAKE_OPTION $COMPILER_FLAGS  ..
     #make -j8 >$LOG_FILE 2>&1 || (cat $LOG_FILE && false)
     make -j8
+    make install
+    # Remove source, not needed anymore
+    cd ${INSTALL_DIR} && rm -rf ${INSTALL_DIR}/source
 fi
-cd $INSTALL_DIR/build
-sudo make install
+# Update path file
+export PATH=$INSTALL_DIR:${PATH}

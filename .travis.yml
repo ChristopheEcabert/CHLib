@@ -2,7 +2,7 @@
 # Project language
 language: c++
 # sudo 
-sudo: required
+#sudo: required
 # Global variable
 env:
   global:
@@ -17,49 +17,76 @@ matrix:
     # Linux - GCC
     - os: linux
       dist: trusty
-      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz
+      env: 
+        - NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.8/cmake-3.8.0-Linux-x86_64.tar.gz MATRIX_EVAL="CC=gcc-5 && CXX=g++-5 && FC=gfortran-5"
       compiler: gcc
+      addons:
+        apt:
+          sources: &sources
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+            - gfortran-5
+            - nasm
     
     # Linux - Clang
     - os: linux
       dist: trusty
-      env: NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.tar.gz 
+      env: 
+        - NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.8/cmake-3.8.0-Linux-x86_64.tar.gz MATRIX_EVAL="FC=gfortran"
       compiler: clang
+      addons:
+        apt:
+          packages:
+            # Add libc++ https://github.com/mapbox/mapbox-gl-native/issues/287
+            - libc++1
+            - libc++-dev
+            - gfortran
+            # Libjpeg
+            - nasm
     
-    # OSX - Clang
+    # OSX 10.13 - Clang
+    - os: osx
+      osx_image: xcode9.2
+      env: 
+        - NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.8/cmake-3.8.0-Darwin-x86_64.tar.gz
+      compiler: clang
+      
+    # OSX 10.12 - Clang
     - os: osx
       osx_image: xcode8.3
-      env: NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.4/cmake-3.4.3-Darwin-x86_64.tar.gz
+      env: 
+        - NSTRIP=3 CMAKE_URL=https://cmake.org/files/v3.8/cmake-3.8.0-Darwin-x86_64.tar.gz
       compiler: clang
       
     # Doc Generator
     - os: linux
       dist: trusty
-      env: DOCUMENTATION=TRUE NSTRIP=1 DOXYGEN_URL=http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.13.linux.bin.tar.gz CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_DOCS=ON"
+      env: 
+        - NSTRIP=1 CMAKE_URL=https://cmake.org/files/v3.8/cmake-3.8.0-Linux-x86_64.tar.gz  MATRIX_EVAL="CC=gcc-5 && CXX=g++-5 && FC=gfortran-5" DOCUMENTATION=TRUE NSTRIP=1 DOXYGEN_URL=http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.13.linux.bin.tar.gz CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_DOCS=ON"
       compiler: gcc
-# Add packages
-addons:
-  apt:
-    packages:
-      # Add libc++ https://github.com/mapbox/mapbox-gl-native/issues/287
-      - libc++1
-      - libc++-dev
-      - gfortran
-      # Doxygen
-      - graphviz
-      - flex
-      - bison
-      - libiconv-hook*
+      addons:
+        apt:
+          sources: *sources
+          packages:
+            - g++-5
+            - gfortran-5
+            # Doxygen
+            - graphviz
+            - flex
+            - bison
+            - libiconv-hook*
+            # Libjpeg
+            - nasm
 # Cache dependencies
 cache:
   directories:
     - $OPENBLAS_ROOT
     - $OPENCV_ROOT
     - $DOXYGEN_ROOT
-    - $HOME/Library/Caches/Homebrew
 # Limit cloning depth
 git:
-  depth: 3
+  depth: 1
 # Install dependencies needed by library
 install:
   ############################################################################
@@ -87,10 +114,7 @@ install:
   # Install nasm for jpeg-turbo lib
   ############################################################################
   - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      sudo apt-get -qq update
-      sudo apt-get install -y nasm
-    else
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       brew upgrade nasm || brew install nasm
     fi
     nasm -v && which nasm
